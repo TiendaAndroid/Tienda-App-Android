@@ -1,1 +1,0 @@
-# Tienda-App-Android
