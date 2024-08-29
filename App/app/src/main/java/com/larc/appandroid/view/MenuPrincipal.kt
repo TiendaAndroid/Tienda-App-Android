@@ -32,31 +32,31 @@ import com.larc.appandroid.ui.theme.AppAndroidTheme
 @Composable
 fun MenuPrincipal(modifier: Modifier = Modifier) {
     Column {
-        TopAppBar(
-            title = { Text("") },
-            navigationIcon = {
-                IconButton(
-                    onClick = { },
-                    modifier = Modifier.padding(top = 16.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Menu,
-                        contentDescription = "Menú"
-                    )
-                }
-            },
-            actions = {
-                IconButton(
-                    onClick = { },
-                    modifier = Modifier.padding(top = 16.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Carrito"
-                    )
-                }
-            }
-        )
+//        TopAppBar(
+//            title = { Text("") },
+//            navigationIcon = {
+//                IconButton(
+//                    onClick = { },
+//                    modifier = Modifier.padding(top = 16.dp)
+//                ) {
+//                    Icon(
+//                        imageVector = Icons.Default.Menu,
+//                        contentDescription = "Menú"
+//                    )
+//                }
+//            },
+//            actions = {
+//                IconButton(
+//                    onClick = { },
+//                    modifier = Modifier.padding(top = 16.dp)
+//                ) {
+//                    Icon(
+//                        imageVector = Icons.Default.Search,
+//                        contentDescription = "Carrito"
+//                    )
+//                }
+//            }
+//        )
         LazyColumn(
             modifier = modifier
                 .padding(16.dp)
