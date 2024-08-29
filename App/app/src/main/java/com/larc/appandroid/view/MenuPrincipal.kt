@@ -31,56 +31,50 @@ import com.larc.appandroid.ui.theme.AppAndroidTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuPrincipal(modifier: Modifier = Modifier) {
-        Column {
-            TopAppBar(
-                title = { Text("") },
-                navigationIcon = {
-                    IconButton(onClick = { }) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = "Menú"
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {  }) {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "Carrito"
-                        )
-                    }
+    Column {
+        TopAppBar(
+            title = { Text("") },
+            navigationIcon = {
+                IconButton(
+                    onClick = { },
+                    modifier = Modifier.padding(top = 16.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = "Menú"
+                    )
                 }
-            )
-            LazyColumn(
-                modifier = modifier
-                    .padding(16.dp)
-                    .weight(1f)
-            ) {
-//                item {
-//                    Text(
-//                        text = "",
-//                        fontSize = 24.sp,
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .padding(bottom = 16.dp),
-//                        textAlign = TextAlign.Center
-//                    )
-//                }
-
-                items(50) { index ->
-                    Text(
-                        text = "Elemento $index",
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp),
-                        textAlign = TextAlign.Center
+            },
+            actions = {
+                IconButton(
+                    onClick = { },
+                    modifier = Modifier.padding(top = 16.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Carrito"
                     )
                 }
             }
+        )
+        LazyColumn(
+            modifier = modifier
+                .padding(16.dp)
+                .weight(1f)
+        ) {
+            items(50) { index ->
+                Text(
+                    text = "Elemento $index",
+                    fontSize = 18.sp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
-
+}
 
 @Preview(showBackground = true, widthDp = 450, heightDp = 3000)
 @Composable
