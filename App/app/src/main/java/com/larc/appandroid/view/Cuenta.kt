@@ -37,7 +37,7 @@ fun Perfil(modifier: Modifier = Modifier) {
             Text(
                 text = "Lucio Mendoza",
                 fontSize = 24.sp,
-                modifier = Modifier.padding(start = 16.dp, top = 14.dp, bottom = 50.dp)
+                modifier = Modifier.padding(start = 16.dp, top = 14.dp, bottom = 30.dp)
             )
         }
 
@@ -48,9 +48,9 @@ fun Perfil(modifier: Modifier = Modifier) {
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            AlargadoButton(text = "Mis Pedidos", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Mis Pedidos */ })
+            BotonApachurrable(text = "Mis pedidos", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Mis Pedidos */ })
             Spacer(modifier = Modifier.width(16.dp))
-            AlargadoButton(text = "Inicio", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Inicio */ })
+            BotonApachurrable(text = "Mi información", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Inicio */ })
         }
 
         // Segunda fila de botones
@@ -60,9 +60,9 @@ fun Perfil(modifier: Modifier = Modifier) {
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            AlargadoButton(text = "Direcciones", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Direcciones */ })
+            BotonApachurrable(text = "Direcciones", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Direcciones */ })
             Spacer(modifier = Modifier.width(16.dp))
-            AlargadoButton(text = "Servicio", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Servicio */ })
+            BotonApachurrable(text = "Servicio al cliente", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Servicio */ })
         }
 
         // Tercera fila de botones con solo uno
@@ -72,21 +72,21 @@ fun Perfil(modifier: Modifier = Modifier) {
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            AlargadoButton(text = "Configuración", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Configuración */ })
+            BotonApachurrable(text = "Pagos", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Configuración */ })
         }
     }
 }
 
 @Composable
-fun AlargadoButton(text: String, color: Color, onClick: () -> Unit) {
+fun BotonApachurrable(text: String, color: Color, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
-            .size(100.dp), // Ancho y alto de 100dp para hacer el botón cuadrado
+            .size(150.dp), // Ancho y alto de 100dp para hacer el botón cuadrado
         shape = RectangleShape, // Establece la forma como un rectángulo
         colors = ButtonDefaults.buttonColors(
-            containerColor = color, // Usa el color hexadecimal proporcionado
+            containerColor = color,
             contentColor = Color.Black   // Cambia el color del texto a negro
         )
     ) {
