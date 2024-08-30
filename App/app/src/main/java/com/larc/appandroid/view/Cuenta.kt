@@ -21,7 +21,6 @@ fun Perfil(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Sección de texto
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -41,7 +40,6 @@ fun Perfil(modifier: Modifier = Modifier) {
             )
         }
 
-        // Primera fila de botones
         Row(
             modifier = Modifier
                 .fillMaxWidth()
