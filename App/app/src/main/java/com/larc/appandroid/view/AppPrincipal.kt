@@ -82,7 +82,6 @@ fun AppTopBar(
                 )
             }
 
-            // Menú desplegable
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false } // Cierra el menú al hacer clic fuera

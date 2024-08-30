@@ -16,7 +16,7 @@ object Pantallas {
     const val RUTA_HOME = "home"
     const val RUTA_PERFIL = "perfil"
     const val RUTA_CARRITO = "carrito"
-    //const val RUTA_MIS_PEDIDOS = "mis_pedidos"
+    const val RUTA_MIS_PEDIDOS = "mis_pedidos"
 
     val listaPantallas = listOf(
         Pantalla("Home", RUTA_HOME, Icons.Filled.Home),
