@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -66,10 +67,10 @@ fun AppTopBar(
                     Text("Busca un producto")
                 },
                 singleLine = true,
-                shape = RoundedCornerShape(40.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
+                    .clip(RoundedCornerShape(40.dp))
             )
         },
         actions = {
@@ -128,8 +129,10 @@ fun AppTopBar(
 
 fun navigateTo(navController: NavHostController, ruta: String) {
     navController.navigate(ruta) {
-        popUpTo(navController.graph.findStartDestination().id) {
-            saveState = true
+        if (ruta == Pantallas.RUTA_HOME) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                inclusive = true
+            }
         }
         launchSingleTop = true
         restoreState = true
@@ -146,12 +149,13 @@ fun AppBottomBar(navController: NavHostController) {
             NavigationBarItem(
                 selected = pantalla.ruta == pantallaActual?.route,
                 onClick = {
-                    navController.navigate(pantalla.ruta) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+                    if (pantalla.ruta == Pantallas.RUTA_HOME) {
+                        navigateTo(navController, pantalla.ruta)
+                    } else {
+                        navController.navigate(pantalla.ruta) {
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
                 },
                 label = { Text(text = pantalla.etiqueta) },
@@ -181,9 +185,6 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
         composable(Pantallas.RUTA_CUENTA) {
             Cuenta(navigateTo = { route ->
                 navController.navigate(route) {
-                    popUpTo(navController.graph.findStartDestination().id) {
-                        saveState = true
-                    }
                     launchSingleTop = true
                     restoreState = true
                 }

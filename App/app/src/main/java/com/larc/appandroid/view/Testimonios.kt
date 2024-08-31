@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 @Composable
 fun Testimonios(modifier: Modifier = Modifier) {
     Box(
-        modifier = Modifier.fillMaxSize(), // Make the Box fill the entire screen
-        contentAlignment = Alignment.Center // Center content horizontally and vertically
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         Text(text = "Testimonios")
     }

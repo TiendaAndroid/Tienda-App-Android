@@ -111,7 +111,7 @@ fun ProductoItem(producto: String, cantidad: Int, onAdd: () -> Unit, onRemove: (
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 contentDescription = null,
-                modifier = Modifier.size(60.dp) // Tamaño de la imagen
+                modifier = Modifier.size(60.dp)
             )
 
             Spacer(modifier = Modifier.width(16.dp))
