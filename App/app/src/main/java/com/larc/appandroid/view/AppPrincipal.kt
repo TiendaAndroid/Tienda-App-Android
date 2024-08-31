@@ -90,7 +90,7 @@ fun AppTopBar(
                     text = { Text("Mis pedidos") },
                     onClick = {
                         expanded = false
-                        //navController.navigate(Pantallas.RUTA_MIS_PEDIDOS) // Navegar a Mis Pedidos
+                        navController.navigate(Pantallas.RUTA_MIS_PEDIDOS) // Navegar a Mis Pedidos
                     }
                 )
                 DropdownMenuItem(
@@ -178,7 +178,11 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
         composable(Pantallas.RUTA_CARRITO) {
             Carrito()
         }
-
+        // Agregar esta línea para la ruta de Mis Pedidos
+        composable(Pantallas.RUTA_MIS_PEDIDOS) {
+            MisPedidos()
+        }
     }
 }
+
 

@@ -17,15 +17,13 @@ import com.larc.appandroid.ui.theme.AppAndroidTheme
 @Composable
 fun SignUp() {
     AppAndroidTheme {
-        // Layout principal de la pantalla
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
-                .background(Color.White), // Fondo blanco
+                .background(Color.White),
             verticalArrangement = Arrangement.Center
         ) {
-            // Título grande y negro
             Text(
                 text = "Sign Up",
                 fontSize = 32.sp,
@@ -33,7 +31,6 @@ fun SignUp() {
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
-            // Campo para ingresar el correo
             var email by remember { mutableStateOf("") }
             TextField(
                 value = email,
@@ -44,7 +41,7 @@ fun SignUp() {
                     imeAction = ImeAction.Done
                 ),
                 keyboardActions = KeyboardActions(
-                    onDone = { /* Manejar acción de teclado si es necesario */ }
+                    onDone = {  }
                 ),
                 modifier = Modifier
                     .fillMaxWidth()

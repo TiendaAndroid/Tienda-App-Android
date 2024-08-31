@@ -22,7 +22,6 @@ object Pantallas {
         Pantalla("Home", RUTA_HOME, Icons.Filled.Home),
         Pantalla("Perfil", RUTA_PERFIL, Icons.Filled.Person),
         Pantalla("Carrito", RUTA_CARRITO, Icons.Filled.ShoppingCart),
-        //Pantalla("Mis Pedidos", RUTA_MIS_PEDIDOS, Icons.Filled.List)
     )
 }
 
