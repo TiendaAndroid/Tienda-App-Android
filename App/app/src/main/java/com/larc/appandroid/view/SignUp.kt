@@ -25,10 +25,10 @@ fun SignUp() {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Sign Up",
+                text = "Iniciar Sesión",
                 fontSize = 32.sp,
                 color = Color.Black,
-                modifier = Modifier.padding(bottom = 24.dp)
+                modifier = Modifier.padding(bottom = 30.dp)
             )
 
             var email by remember { mutableStateOf("") }

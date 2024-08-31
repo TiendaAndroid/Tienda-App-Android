@@ -46,9 +46,9 @@ fun Perfil(modifier: Modifier = Modifier) {
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            BotonApachurrable(text = "Mis pedidos", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Mis Pedidos */ })
+            BotonApachurrable(text = "Mis pedidos", color = Color(0xFFD5507C), onClick = { /* Navegar a Mis Pedidos */ })
             Spacer(modifier = Modifier.width(16.dp))
-            BotonApachurrable(text = "Mi información", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Inicio */ })
+            BotonApachurrable(text = "Mi información", color = Color(0xFFD5507C), onClick = { /* Navegar a Inicio */ })
         }
 
         // Segunda fila de botones
@@ -58,9 +58,9 @@ fun Perfil(modifier: Modifier = Modifier) {
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            BotonApachurrable(text = "Direcciones", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Direcciones */ })
+            BotonApachurrable(text = "Direcciones", color = Color(0xFFD5507C), onClick = { /* Navegar a Direcciones */ })
             Spacer(modifier = Modifier.width(16.dp))
-            BotonApachurrable(text = "Servicio al cliente", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Servicio */ })
+            BotonApachurrable(text = "Servicio al cliente", color = Color(0xFFD5507C), onClick = { /* Navegar a Servicio */ })
         }
 
         // Tercera fila de botones con solo uno
@@ -70,7 +70,7 @@ fun Perfil(modifier: Modifier = Modifier) {
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            BotonApachurrable(text = "Pagos", color = Color(0xFFF4D0CB), onClick = { /* Navegar a Configuración */ })
+            BotonApachurrable(text = "Pagos", color = Color(0xFFD5507C), onClick = { /* Navegar a Configuración */ })
         }
     }
 }
@@ -85,7 +85,7 @@ fun BotonApachurrable(text: String, color: Color, onClick: () -> Unit) {
         shape = RectangleShape, // Establece la forma como un rectángulo
         colors = ButtonDefaults.buttonColors(
             containerColor = color,
-            contentColor = Color.Black   // Cambia el color del texto a negro
+            contentColor = Color.White   // Cambia el color del texto a negro
         )
     ) {
         Box(
@@ -94,7 +94,7 @@ fun BotonApachurrable(text: String, color: Color, onClick: () -> Unit) {
         ) {
             Text(
                 text = text,
-                fontSize = 14.sp,
+                fontSize = 17.sp,
                 fontWeight = FontWeight.Bold
             )
         }
