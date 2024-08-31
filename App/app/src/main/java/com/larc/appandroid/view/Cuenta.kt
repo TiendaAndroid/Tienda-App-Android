@@ -13,9 +13,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 @Composable
-fun Perfil(modifier: Modifier = Modifier) {
+fun Cuenta(modifier: Modifier = Modifier,
+           navigateTo: (String) -> Unit
+) {
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
@@ -46,24 +49,22 @@ fun Perfil(modifier: Modifier = Modifier) {
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            BotonApachurrable(text = "Mis pedidos", color = Color(0xFFD5507C), onClick = { /* Navegar a Mis Pedidos */ })
+            BotonApachurrable(text = "Mis pedidos", color = Color(0xFFD5507C), onClick = { navigateTo(Pantallas.RUTA_MIS_PEDIDOS) })
             Spacer(modifier = Modifier.width(16.dp))
-            BotonApachurrable(text = "Mi información", color = Color(0xFFD5507C), onClick = { /* Navegar a Inicio */ })
+            BotonApachurrable(text = "Mi información", color = Color(0xFFD5507C), onClick = { navigateTo(Pantallas.RUTA_MI_INFORMACION) })
         }
 
-        // Segunda fila de botones
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-            BotonApachurrable(text = "Direcciones", color = Color(0xFFD5507C), onClick = { /* Navegar a Direcciones */ })
+            BotonApachurrable(text = "Direcciones", color = Color(0xFFD5507C), onClick = { navigateTo(Pantallas.RUTA_DIRECCIONES) })
             Spacer(modifier = Modifier.width(16.dp))
-            BotonApachurrable(text = "Servicio al cliente", color = Color(0xFFD5507C), onClick = { /* Navegar a Servicio */ })
+            BotonApachurrable(text = "Servicio al cliente", color = Color(0xFFD5507C), onClick = { navigateTo(Pantallas.RUTA_SERVICIO_CLIENTE) })
         }
 
-        // Tercera fila de botones con solo uno
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -81,11 +82,11 @@ fun BotonApachurrable(text: String, color: Color, onClick: () -> Unit) {
         onClick = onClick,
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
-            .size(150.dp), // Ancho y alto de 100dp para hacer el botón cuadrado
-        shape = RectangleShape, // Establece la forma como un rectángulo
+            .size(150.dp),
+        shape = RectangleShape,
         colors = ButtonDefaults.buttonColors(
             containerColor = color,
-            contentColor = Color.White   // Cambia el color del texto a negro
+            contentColor = Color.White
         )
     ) {
         Box(
@@ -101,8 +102,8 @@ fun BotonApachurrable(text: String, color: Color, onClick: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
-fun PerfilPreview() {
-    Perfil()
-}
+fun CuentaPreview() {
+    Cuenta()
+}*/

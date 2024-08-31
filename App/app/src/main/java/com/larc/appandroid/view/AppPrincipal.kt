@@ -30,7 +30,7 @@ fun AppPrincipal() {
         Scaffold(
             topBar = {
                 AppTopBar(
-                    navController = navController, // Pasar el NavController aquí
+                    navController = navController,
                     onSearchTextChanged = onSearchTextChanged,
                     searchText = searchText
                 )
@@ -45,11 +45,11 @@ fun AppPrincipal() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppTopBar(
-    navController: NavHostController, // Recibir el NavController como parámetro
+    navController: NavHostController,
     onSearchTextChanged: (String) -> Unit,
     searchText: String
 ) {
-    var expanded by remember { mutableStateOf(false) } // Controla el estado del menú desplegable
+    var expanded by remember { mutableStateOf(false) }
 
     TopAppBar(
         title = {
@@ -74,59 +74,66 @@ fun AppTopBar(
         },
         actions = {
             IconButton(
-                onClick = { expanded = true } // Cambia el estado para mostrar el menú
+                onClick = { expanded = true }
             ) {
                 Icon(
                     imageVector = Icons.Default.Menu,
                     contentDescription = "Menu"
                 )
             }
-
             DropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false } // Cierra el menú al hacer clic fuera
+                onDismissRequest = { expanded = false }
             ) {
                 DropdownMenuItem(
-                    text = { Text("Mis pedidos") },
+                    text = { Text("Acerca de") },
                     onClick = {
                         expanded = false
-                        navController.navigate(Pantallas.RUTA_MIS_PEDIDOS) // Navegar a Mis Pedidos
+                        navigateTo(navController, Pantallas.RUTA_ACERCAC_DE)
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Mi información") },
+                    text = { Text("Tienda") },
                     onClick = {
                         expanded = false
-                        navController.navigate(Pantallas.RUTA_PERFIL) // Navegar a Perfil
+                        navigateTo(navController, Pantallas.RUTA_TIENDA_UNO)
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Direcciones") },
+                    text = { Text("Testimonios") },
                     onClick = {
                         expanded = false
-                        // Navegar a la pantalla de Direcciones, si la tienes
+                        navigateTo(navController, Pantallas.RUTA_TESTIMONIOS)
                     }
                 )
-
+                DropdownMenuItem(
+                    text = { Text("Preguntas frecuentes") },
+                    onClick = {
+                        expanded = false
+                        navigateTo(navController, Pantallas.RUTA_FAQS)
+                    }
+                )
                 DropdownMenuItem(
                     text = { Text("Servicio al cliente") },
                     onClick = {
                         expanded = false
-                        // Navegar a la pantalla de Servicio al Cliente, si la tienes
-                    }
-                )
-
-                DropdownMenuItem(
-                    text = { Text("Pagos") },
-                    onClick = {
-                        expanded = false
-                        // Navegar a la pantalla de Pagos, si la tienes
+                        navigateTo(navController, Pantallas.RUTA_SERVICIO_CLIENTE)
                     }
                 )
             }
         },
         modifier = Modifier.padding(top = 16.dp)
     )
+}
+
+fun navigateTo(navController: NavHostController, ruta: String) {
+    navController.navigate(ruta) {
+        popUpTo(navController.graph.findStartDestination().id) {
+            saveState = true
+        }
+        launchSingleTop = true
+        restoreState = true
+    }
 }
 
 @Composable
@@ -139,7 +146,6 @@ fun AppBottomBar(navController: NavHostController) {
             NavigationBarItem(
                 selected = pantalla.ruta == pantallaActual?.route,
                 onClick = {
-                    // Usa navigate con una opción de popUpTo para evitar pilas de navegación innecesarias
                     navController.navigate(pantalla.ruta) {
                         popUpTo(navController.graph.findStartDestination().id) {
                             saveState = true
@@ -172,15 +178,43 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
         composable(Pantallas.RUTA_HOME) {
             Home()
         }
-        composable(Pantallas.RUTA_PERFIL) {
-            Perfil()
+        composable(Pantallas.RUTA_CUENTA) {
+            Cuenta(navigateTo = { route ->
+                navController.navigate(route) {
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            })
         }
         composable(Pantallas.RUTA_CARRITO) {
             Carrito()
         }
-        // Agregar esta línea para la ruta de Mis Pedidos
         composable(Pantallas.RUTA_MIS_PEDIDOS) {
             MisPedidos()
+        }
+        composable(Pantallas.RUTA_FAQS) {
+            Faqs()
+        }
+        composable(Pantallas.RUTA_ACERCAC_DE) {
+            AcercaDe()
+        }
+        composable(Pantallas.RUTA_SERVICIO_CLIENTE) {
+            ServicioCliente()
+        }
+        composable(Pantallas.RUTA_TESTIMONIOS) {
+            Testimonios()
+        }
+        composable(Pantallas.RUTA_TIENDA_UNO) {
+            TiendaUno()
+        }
+        composable(Pantallas.RUTA_MI_INFORMACION) {
+            MiInformacion()
+        }
+        composable(Pantallas.RUTA_DIRECCIONES) {
+            Direcciones()
         }
     }
 }
