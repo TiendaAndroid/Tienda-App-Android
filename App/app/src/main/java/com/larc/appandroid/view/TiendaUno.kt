@@ -31,6 +31,7 @@ fun TiendaUno(modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
             text="Explora nuestro catálogo",
             fontWeight = FontWeight.Bold,
@@ -50,31 +51,24 @@ fun TiendaUno(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                Spacer(modifier = Modifier.height(16.dp))
                 BotonApachurrableDos(
                     text = "Ejemplo de categoría",
                     color = Color(0xFFD5507C),
                     onClick = {})
-                Spacer(modifier = Modifier.height(16.dp))
                 BotonApachurrableDos(
                     text = "Toallas regulares",
                     color = Color(0xFFD5507C),
                     onClick = {})
-                Spacer(modifier = Modifier.height(16.dp))
                 BotonApachurrableDos(
                     text = "Toallas nocturnas",
                     color = Color(0xFFD5507C),
                     onClick = {})
-                Spacer(modifier = Modifier.height(16.dp))
                 BotonApachurrableDos(text = "Toallas teen", color = Color(0xFFD5507C), onClick = {})
-                Spacer(modifier = Modifier.height(16.dp))
                 BotonApachurrableDos(
                     text = "Pantiprotectores",
                     color = Color(0xFFD5507C),
                     onClick = {})
-                Spacer(modifier = Modifier.height(16.dp))
                 BotonApachurrableDos(text = "Kits", color = Color(0xFFD5507C), onClick = {})
-                Spacer(modifier = Modifier.height(16.dp))
                 BotonApachurrableDos(
                     text = "Todos los productos",
                     color = Color(0xFFD5507C),
@@ -86,6 +80,7 @@ fun TiendaUno(modifier: Modifier = Modifier) {
 
 @Composable
 fun BotonApachurrableDos(text: String, color: Color, onClick: () -> Unit) {
+    Spacer(modifier = Modifier.height(16.dp))
     Button(
         onClick = onClick,
         contentPadding = PaddingValues(0.dp),
