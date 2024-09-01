@@ -51,32 +51,15 @@ fun TiendaUno(modifier: Modifier = Modifier) {
         ) {
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-
+                BotonApachurrableDos(
+                    text = "Ejemplo de categoría",
+                    color = Color(0xFFD5507C),
+                    onClick = {})
+                Spacer(modifier = Modifier.height(16.dp))
                 BotonApachurrableDos(
                     text = "Toallas regulares",
                     color = Color(0xFFD5507C),
                     onClick = {})
-                Spacer(modifier = Modifier.height(16.dp))
-                BotonApachurrableDos(
-                    text = "Toallas nocturnas",
-                    color = Color(0xFFD5507C),
-                    onClick = {})
-                Spacer(modifier = Modifier.height(16.dp))
-                BotonApachurrableDos(text = "Toallas teen", color = Color(0xFFD5507C), onClick = {})
-                Spacer(modifier = Modifier.height(16.dp))
-                BotonApachurrableDos(
-                    text = "Pantiprotectores",
-                    color = Color(0xFFD5507C),
-                    onClick = {})
-                Spacer(modifier = Modifier.height(16.dp))
-                BotonApachurrableDos(text = "Kits", color = Color(0xFFD5507C), onClick = {})
-                Spacer(modifier = Modifier.height(16.dp))
-                BotonApachurrableDos(
-                    text = "Todos los productos",
-                    color = Color(0xFFD5507C),
-                    onClick = {})
-
-
                 Spacer(modifier = Modifier.height(16.dp))
                 BotonApachurrableDos(
                     text = "Toallas nocturnas",
