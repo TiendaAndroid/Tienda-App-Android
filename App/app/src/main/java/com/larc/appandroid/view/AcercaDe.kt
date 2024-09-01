@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -66,28 +67,41 @@ fun AcercaDe(modifier: Modifier = Modifier) {
 fun ExpandableTextButton(title: String, content: String) {
     var expanded by remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier.padding(vertical = 8.dp)) {
+    Column(modifier = Modifier.padding(vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             text = title,
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = Color(0xFFD5507C),
+            textAlign = TextAlign.Center,
             modifier = Modifier
                 .padding(bottom = 8.dp)
                 .clickable { expanded = !expanded }
+                .fillMaxWidth()
         )
 
         AnimatedVisibility(
             visible = expanded,
             enter = expandVertically(),
-            exit = shrinkVertically()
+            exit = shrinkVertically(),
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text(
-                text = content,
-                fontSize = 16.sp,
-                color = Color.Black,
-                modifier = Modifier.padding(top = 8.dp)
-            )
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = content,
+                    fontSize = 16.sp,
+                    color = Color.Black,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth(0.85f)
+                        .padding(top = 8.dp)
+                        .align(Alignment.Center)
+                )
+            }
         }
     }
 }
@@ -100,10 +114,8 @@ val expandableSections = listOf(
 
 data class ExpandableSection(val title: String, val content: String)
 
-
 @Preview(showBackground = true)
 @Composable
 fun AcercaDePreview() {
     AcercaDe()
 }
-

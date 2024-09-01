@@ -8,9 +8,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,8 +22,8 @@ fun Faqs(modifier: Modifier = Modifier) {
         "¿Qué es menstruación?" to "La menstruación es un fenómeno que se produce de forma cíclica, cada vez que una mujer ovula, pero no se queda embarazada.",
         "¿Qué es la ovulación?" to "Es el nombre del proceso en el que los cambios hormonales hacen que un ovario libere un óvulo y se produce normalmente una vez en cada ciclo menstrual. Solo puede quedarse embarazada si un espermatozoide fecunda un óvulo. La ovulación se produce, generalmente, de 12 a 16 días antes del inicio del siguiente periodo.",
         "¿Cuándo es más fértil una mujer?" to "Los días de mayor fertilidad de cada ciclo y, por tanto, en los que tiene mayor probabilidad de quedarse embarazada tras tener relaciones sexuales sin protección, son el día de la ovulación y el día previo.",
-        "¿Cuántos días tiene un ciclo menstrual normal?" to "En la mayoría de los casos, el ciclo menstrual tiene entre 28 y 35 días. Sin embargo, los ciclos menstruales que tienen entre 24 y 38 días de diferencia todavía se consideran «normales».",
-        "¿Cuántos días debe durar la menstruación?" to "En la mayoría de los casos, el período menstrual dura de 4 a 6 días. Sin embargo, hasta 8 días de pérdidas menstruales se consideran normales",
+        "¿Cuántos días tiene un ciclo menstrual normal?" to "En la mayoría de los casos, el ciclo menstrual tiene entre 28 y 35 días. Sin embargo, los ciclos menstruales que tienen entre 24 y 38 días de diferencia todavía se consideran normales.",
+        "¿Cuántos días debe durar la menstruación?" to "En la mayoría de los casos, el período menstrual dura de 4 a 6 días. Sin embargo, hasta 8 días de pérdidas menstruales se consideran normales.",
         "¿Cómo se llama la primera menstruación?" to  "El primer periodo menstrual se llama menarca.",
         "¿Cuáles son las principales causas de la menstruación retrasada?" to "La principal causa de retraso menstrual es el embarazo. Sin embargo, infecciones, uso de medicamentos, estrés, cambios significativos de peso corporal, cambios hormonales, también pueden ser causa de un retraso.",
         "¿Cuál es la edad normal para el primer período?" to "Se considera normal cuando la menarquia se presenta entre los 9 y los 15 años.",
@@ -92,6 +92,8 @@ fun FaqItem(pregunta: String, respuesta: String) {
             Text(
                 text = pregunta,
                 fontSize = 20.sp,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
                 color = Color.White // Texto blanco
             )
 
