@@ -209,13 +209,17 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             Testimonios()
         }
         composable(Pantallas.RUTA_TIENDA_UNO) {
-            TiendaUno()
+            TiendaUno(navController)
         }
         composable(Pantallas.RUTA_MI_INFORMACION) {
             MiInformacion()
         }
         composable(Pantallas.RUTA_DIRECCIONES) {
             Direcciones()
+        }
+        composable(Pantallas.RUTA_TIENDA_DOS + "/{cat}") {
+            val cat = it.arguments?.getString("cat")
+            TiendaDos(cat!!)
         }
     }
 }

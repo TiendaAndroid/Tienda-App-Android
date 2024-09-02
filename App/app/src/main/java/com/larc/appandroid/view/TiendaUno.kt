@@ -25,9 +25,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 @Composable
-fun TiendaUno(modifier: Modifier = Modifier) {
+fun TiendaUno(navController: NavHostController, modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -54,25 +55,29 @@ fun TiendaUno(modifier: Modifier = Modifier) {
                 BotonApachurrableDos(
                     text = "Ejemplo de categoría",
                     color = Color(0xFFD5507C),
-                    onClick = {})
+                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Ejemplo de categoría") })
                 BotonApachurrableDos(
                     text = "Toallas regulares",
                     color = Color(0xFFD5507C),
-                    onClick = {})
+                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas regulares") })
                 BotonApachurrableDos(
                     text = "Toallas nocturnas",
                     color = Color(0xFFD5507C),
-                    onClick = {})
-                BotonApachurrableDos(text = "Toallas teen", color = Color(0xFFD5507C), onClick = {})
+                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas nocturnas") })
+                BotonApachurrableDos(text = "Toallas teen",
+                    color = Color(0xFFD5507C),
+                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas teen") })
                 BotonApachurrableDos(
                     text = "Pantiprotectores",
                     color = Color(0xFFD5507C),
-                    onClick = {})
-                BotonApachurrableDos(text = "Kits", color = Color(0xFFD5507C), onClick = {})
+                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Pantiprotectores") })
+                BotonApachurrableDos(text = "Kits",
+                    color = Color(0xFFD5507C),
+                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Kits") })
                 BotonApachurrableDos(
                     text = "Todos los productos",
                     color = Color(0xFFD5507C),
-                    onClick = {})
+                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Todos los productos") })
             }
         }
     }
@@ -107,8 +112,8 @@ fun BotonApachurrableDos(text: String, color: Color, onClick: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun TiendaUnoPreview() {
     TiendaUno()
-}
+}*/

@@ -38,24 +38,27 @@ import androidx.compose.ui.unit.sp
 import com.larc.appandroid.R
 
 @Composable
-fun TiendaDos(modifier: Modifier = Modifier) {
+fun TiendaDos(cat: String, modifier: Modifier = Modifier) {
     Column(modifier = Modifier.fillMaxSize()
     ) {
         Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text="Explorando:",
-            fontWeight = FontWeight.Normal,
-            fontSize = 26.sp,
-            modifier = Modifier.padding(start = 16.dp)
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text="Categoría seleccionada",
-            fontWeight = FontWeight.Normal,
-            fontSize = 20.sp,
-            modifier = Modifier.padding(start = 16.dp)
-        )
-        Spacer(modifier = Modifier.height(16.dp))
+        Row {
+            Text(
+                text="Explorando:",
+                fontWeight = FontWeight.Normal,
+                fontSize = 26.sp,
+                modifier = Modifier.padding(start = 16.dp)
+                    .weight(4f)
+            )
+            Text(
+                text = cat,
+                fontWeight = FontWeight.Normal,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(start = 2.dp, top = 4.dp)
+                    .weight(6f)
+            )
+        }
+        Spacer(modifier = Modifier.height(6.dp))
         LazyColumn(modifier = Modifier
             .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -190,8 +193,8 @@ fun BotonAgregar(onClick: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun TiendaDosPreview() {
-    TiendaDos()
-}
+///*@Preview(showBackground = true)
+//@Composable
+//fun TiendaDosPreview() {
+//    TiendaDos()
+//}*/

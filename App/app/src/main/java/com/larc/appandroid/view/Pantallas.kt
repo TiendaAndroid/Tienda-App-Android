@@ -20,6 +20,7 @@ object Pantallas {
     const val RUTA_TESTIMONIOS = "testimonios"
     const val RUTA_FAQS = "faqs"
     const val RUTA_TIENDA_UNO = "tienda_uno"
+    const val RUTA_TIENDA_DOS = "tienda_dos"
     const val RUTA_MI_INFORMACION = "mi_informacion"
     const val RUTA_DIRECCIONES = "direcciones"
 
