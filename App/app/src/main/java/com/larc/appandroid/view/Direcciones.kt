@@ -42,7 +42,7 @@ fun Direcciones(modifier: Modifier = Modifier) {
 
         TextField(
             value = colonia,
-            onValueChange = { ciudad = it },
+            onValueChange = { colonia = it }, // Cambiado a "colonia"
             label = { Text("Colonia") },
             modifier = Modifier
                 .fillMaxWidth()
