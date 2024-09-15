@@ -1,5 +1,6 @@
 package com.larc.appandroid.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -53,84 +54,93 @@ fun AppTopBar(
     var expanded by remember { mutableStateOf(false) }
 
     TopAppBar(
+        modifier = Modifier.height(116.dp),
         title = {
-            TextField(
-                value = searchText,
-                onValueChange = onSearchTextChanged,
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search"
-                    )
-                },
-                placeholder = {
-                    Text("Busca un producto")
-                },
-                singleLine = true,
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .clip(RoundedCornerShape(40.dp))
-            )
+                    .padding(top = 20.dp) // Adjust padding here
+            ) {
+                TextField(
+                    value = searchText,
+                    onValueChange = onSearchTextChanged,
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Search",
+                            tint = AppColors.RosaZazil
+                        )
+                    },
+                    label = { Text("Busca un producto", color = AppColors.RosaZazil) },
+                    singleLine = true,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(40.dp))
+                )
+            }
         },
         actions = {
             IconButton(
-                onClick = { expanded = true }
+                onClick = { expanded = true },
+                modifier = Modifier.padding(top = 20.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Menu,
-                    contentDescription = "Menu"
+                    contentDescription = "Menu",
+                    tint = AppColors.RosaZazil,
                 )
             }
             DropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onDismissRequest = { expanded = false },
+                modifier = Modifier.background(AppColors.GrisClaro)
             ) {
                 DropdownMenuItem(
-                    text = { Text("Acerca de") },
+                    text = { Text("Acerca de", color = AppColors.GrisOscuro) },
                     onClick = {
                         expanded = false
                         navigateTo(navController, Pantallas.RUTA_ACERCAC_DE)
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Tienda") },
+                    text = { Text("Tienda", color = AppColors.GrisOscuro) },
                     onClick = {
                         expanded = false
                         navigateTo(navController, Pantallas.RUTA_TIENDA_UNO)
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Testimonios") },
+                    text = { Text("Testimonios", color = AppColors.GrisOscuro) },
                     onClick = {
                         expanded = false
                         navigateTo(navController, Pantallas.RUTA_TESTIMONIOS)
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Preguntas frecuentes") },
+                    text = { Text("Preguntas frecuentes", color = AppColors.GrisOscuro) },
                     onClick = {
                         expanded = false
                         navigateTo(navController, Pantallas.RUTA_FAQS)
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Servicio al cliente") },
+                    text = { Text("Servicio al cliente", color = AppColors.GrisOscuro) },
                     onClick = {
                         expanded = false
                         navigateTo(navController, Pantallas.RUTA_SERVICIO_CLIENTE)
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Cerrar sesión") },
+                    text = { Text("Cerrar sesión", color = AppColors.GrisOscuro) },
                     onClick = {
                         expanded = false
-                        // navigateTo(navController, Pantallas.RUTA_SERVICIO_CLIENTE)
                     }
                 )
             }
         },
-        modifier = Modifier.padding(top = 16.dp)
+        colors = TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = AppColors.GrisClaro
+        )
     )
 }
 
@@ -148,7 +158,9 @@ fun navigateTo(navController: NavHostController, ruta: String) {
 
 @Composable
 fun AppBottomBar(navController: NavHostController) {
-    BottomAppBar {
+    BottomAppBar(
+        containerColor = AppColors.GrisClaro,
+    ) {
         val pilaNavegacion by navController.currentBackStackEntryAsState()
         val pantallaActual = pilaNavegacion?.destination
 
@@ -165,19 +177,23 @@ fun AppBottomBar(navController: NavHostController) {
                         }
                     }
                 },
-                label = { Text(text = pantalla.etiqueta) },
+                label = { Text(text = pantalla.etiqueta, color = AppColors.RosaZazil) },
                 icon = {
                     Icon(
                         imageVector = pantalla.icono,
-                        contentDescription = pantalla.etiqueta
+                        contentDescription = pantalla.etiqueta,
                     )
                 },
-                alwaysShowLabel = true
+                alwaysShowLabel = true,
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = AppColors.White,
+                    unselectedIconColor = AppColors.RosaZazil,
+                    indicatorColor = AppColors.RosaZazil
+                )
             )
         }
     }
 }
-
 
 @Composable
 fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
@@ -230,5 +246,3 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
         }
     }
 }
-
-
