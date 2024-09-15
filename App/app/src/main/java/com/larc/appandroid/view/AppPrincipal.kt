@@ -121,6 +121,13 @@ fun AppTopBar(
                         navigateTo(navController, Pantallas.RUTA_SERVICIO_CLIENTE)
                     }
                 )
+                DropdownMenuItem(
+                    text = { Text("Cerrar sesión") },
+                    onClick = {
+                        expanded = false
+                        // navigateTo(navController, Pantallas.RUTA_SERVICIO_CLIENTE)
+                    }
+                )
             }
         },
         modifier = Modifier.padding(top = 16.dp)
