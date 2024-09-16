@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.larc.appandroid.R
 import com.larc.appandroid.viewmodel.ProductoVM
 
@@ -68,20 +69,67 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
         ) {
             estadoListaTodosProductos.value.forEach { producto ->
                 item {
-                    TarjetaProducto(text = producto.name, price = producto.price, painterResource(id = R.drawable.sampletoalla1), onClick = {})
+                    TarjetaProducto(text = producto.name, price = producto.price, imgurl = producto.image[0].url, onClick = {})
                 }
             }
-            /*item {
-                TarjetaProducto(text = "Producto 1", price = 19.99, painterResource(id = R.drawable.sampletoalla1), onClick = {})
-                TarjetaProducto(text = "Producto 2", price = 29.99, painterResource(id = R.drawable.sampletoalla2), onClick = {})
-                TarjetaProducto(text = "Producto 3", price = 9.99, painterResource(id = R.drawable.sampletoalla3), onClick = {})
-            }*/
+            item {
+                TarjetaProducto2(text = "Producto 1", price = 19.99, painterResource(id = R.drawable.sampletoalla1), onClick = {})
+                TarjetaProducto2(text = "Producto 2", price = 29.99, painterResource(id = R.drawable.sampletoalla2), onClick = {})
+                TarjetaProducto2(text = "Producto 3", price = 9.99, painterResource(id = R.drawable.sampletoalla3), onClick = {})
+            }
         }
     }
 }
 
 @Composable
-fun TarjetaProducto(text: String, price: Double, image: Painter, onClick: () -> Unit) {
+fun TarjetaProducto(text: String, price: Double, imgurl: String, onClick: () -> Unit) {
+    Spacer(modifier = Modifier.height(16.dp))
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize(.95f)
+            .clip(RoundedCornerShape(20.dp))
+            .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
+    ) {
+        Row {
+            Box(modifier = Modifier.weight(1f)
+                .padding(10.dp)
+                .height(170.dp)
+                .clip(RoundedCornerShape(13.dp))) {
+                AsyncImage(model = imgurl, contentDescription = null)
+            }
+            Column(modifier = Modifier.weight(1f)
+                .padding(top = 15.dp, start = 15.dp)) {
+                Text(
+                    text = text,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Row {
+                    Text(
+                        text = "Precio: $ ",
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.Light,
+                        modifier = Modifier.weight(4f)
+                    )
+                    Text(
+                        text = price.toString(),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.weight(6f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                BotonDetalle(onClick = {})
+                Spacer(modifier = Modifier.height(8.dp))
+                BotonAgregar(onClick = {})
+            }
+        }
+    }
+}
+
+@Composable
+fun TarjetaProducto2(text: String, price: Double, image: Painter, onClick: () -> Unit) {
     Spacer(modifier = Modifier.height(16.dp))
     Box(
         contentAlignment = Alignment.Center,
