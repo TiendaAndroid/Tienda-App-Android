@@ -3,6 +3,7 @@ package com.larc.appandroid.view
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,14 +38,16 @@ fun TiendaUno(navController: NavHostController, modifier: Modifier = Modifier) {
             text="Explora nuestro catálogo",
             fontWeight = FontWeight.Bold,
             fontSize = 30.sp,
-            modifier = Modifier.padding(start = 16.dp)
+            modifier = Modifier.padding(start = 16.dp),
+            color = AppColors.RosaZazil
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text="Selecciona una categoría:",
             fontWeight = FontWeight.Light,
             fontSize = 20.sp,
-            modifier = Modifier.padding(start = 16.dp)
+            modifier = Modifier.padding(start = 16.dp),
+            color = AppColors.RosaZazil
         )
         Spacer(modifier = Modifier.height(16.dp))
         LazyColumn(modifier = Modifier
@@ -52,61 +55,64 @@ fun TiendaUno(navController: NavHostController, modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                BotonApachurrableDos(
-                    text = "Ejemplo de categoría",
-                    color = Color(0xFFD5507C),
-                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Ejemplo de categoría") })
-                BotonApachurrableDos(
-                    text = "Toallas regulares",
-                    color = Color(0xFFD5507C),
-                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas regulares") })
-                BotonApachurrableDos(
-                    text = "Toallas nocturnas",
-                    color = Color(0xFFD5507C),
-                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas nocturnas") })
-                BotonApachurrableDos(text = "Toallas teen",
-                    color = Color(0xFFD5507C),
-                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas teen") })
-                BotonApachurrableDos(
-                    text = "Pantiprotectores",
-                    color = Color(0xFFD5507C),
-                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Pantiprotectores") })
-                BotonApachurrableDos(text = "Kits",
-                    color = Color(0xFFD5507C),
-                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Kits") })
-                BotonApachurrableDos(
-                    text = "Todos los productos",
-                    color = Color(0xFFD5507C),
-                    onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Todos los productos") })
+                Row {
+                    BotonApachurrableDos(
+                        text = "Todos los productos",
+                        onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Todos los productos") })
+                    Spacer(modifier = Modifier.width(16.dp))
+                    BotonApachurrableDos(
+                        text = "Toallas regulares",
+                        onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas regulares") })
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Row {
+                    BotonApachurrableDos(
+                        text = "Toallas nocturnas",
+                        onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas nocturnas") })
+                    Spacer(modifier = Modifier.width(16.dp))
+                    BotonApachurrableDos(text = "Toallas teen",
+                        onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas teen") })
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Row {
+                    BotonApachurrableDos(
+                        text = "Pantiprotectores",
+                        onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Pantiprotectores") })
+                    Spacer(modifier = Modifier.width(16.dp))
+                    BotonApachurrableDos(text = "Kits",
+                        onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Kits") })
+                }
+                Spacer(modifier = Modifier.height(16.dp))
             }
         }
     }
 }
 
 @Composable
-fun BotonApachurrableDos(text: String, color: Color, onClick: () -> Unit) {
-    Spacer(modifier = Modifier.height(16.dp))
+fun BotonApachurrableDos(text: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
-            .fillMaxWidth(.85f)
-            .height(80.dp)
+            .width(180.dp)
+            .height(180.dp)
             .clip(RoundedCornerShape(16.dp)),
         shape = RectangleShape,
         colors = ButtonDefaults.buttonColors(
-            containerColor = color,
-            contentColor = Color.White
+            containerColor = AppColors.CremaZazil,
+            contentColor = AppColors.RosaZazil
         )
     ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.width(180.dp)
         ) {
             Text(
                 text = text,
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Bold
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
             )
         }
     }
