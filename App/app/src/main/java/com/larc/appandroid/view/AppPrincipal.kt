@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -18,10 +19,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.larc.appandroid.ui.theme.AppAndroidTheme
+import com.larc.appandroid.viewmodel.ProductoVM
 
 @Composable
 fun AppPrincipal() {
     val navController = rememberNavController()
+    val productoVM: ProductoVM = viewModel()
     var searchText by remember { mutableStateOf("") }
 
     val onSearchTextChanged: (String) -> Unit = { text ->
@@ -34,12 +37,12 @@ fun AppPrincipal() {
                 AppTopBar(
                     navController = navController,
                     onSearchTextChanged = onSearchTextChanged,
-                    searchText = searchText
+                    searchText = searchText,
                 )
             },
             bottomBar = { AppBottomBar(navController) },
         ) { innerPadding ->
-            AppNavHost(navController, modifier = Modifier.padding(innerPadding))
+            AppNavHost(navController, productoVM, modifier = Modifier.padding(innerPadding))
         }
     }
 }
@@ -49,7 +52,7 @@ fun AppPrincipal() {
 fun AppTopBar(
     navController: NavHostController,
     onSearchTextChanged: (String) -> Unit,
-    searchText: String
+    searchText: String,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -196,7 +199,7 @@ fun AppBottomBar(navController: NavHostController) {
 }
 
 @Composable
-fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
         startDestination = Pantallas.RUTA_HOME,
@@ -232,7 +235,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             Testimonios()
         }
         composable(Pantallas.RUTA_TIENDA_UNO) {
-            TiendaUno(navController)
+            TiendaUno(navController, productoVM)
         }
         composable(Pantallas.RUTA_MI_INFORMACION) {
             MiInformacion()
@@ -242,7 +245,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
         }
         composable(Pantallas.RUTA_TIENDA_DOS + "/{cat}") {
             val cat = it.arguments?.getString("cat")
-            TiendaDos(cat!!)
+            TiendaDos(cat!!, productoVM)
         }
     }
 }

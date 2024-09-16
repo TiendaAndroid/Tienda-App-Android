@@ -19,7 +19,7 @@ class ServicioRemotoProducto {
     }
 
     // Descarga lista de productos
-    suspend fun GetProductos(): List<Producto> {
-        return servicio.getProductos()
+    suspend fun getProductos(): List<Producto> {
+        return servicio.getProductos().data
     }
 }

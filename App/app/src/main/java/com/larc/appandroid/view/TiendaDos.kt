@@ -24,6 +24,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,9 +37,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.larc.appandroid.R
+import com.larc.appandroid.viewmodel.ProductoVM
 
 @Composable
-fun TiendaDos(cat: String, modifier: Modifier = Modifier) {
+fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
+    val estadoListaTodosProductos = productoVM.estadoListaTodosProductos.collectAsState()
     Column(modifier = Modifier.fillMaxSize()
     ) {
         Spacer(modifier = Modifier.height(16.dp))
@@ -63,11 +66,16 @@ fun TiendaDos(cat: String, modifier: Modifier = Modifier) {
             .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item {
+            estadoListaTodosProductos.value.forEach { producto ->
+                item {
+                    TarjetaProducto(text = producto.name, price = producto.price, painterResource(id = R.drawable.sampletoalla1), onClick = {})
+                }
+            }
+            /*item {
                 TarjetaProducto(text = "Producto 1", price = 19.99, painterResource(id = R.drawable.sampletoalla1), onClick = {})
                 TarjetaProducto(text = "Producto 2", price = 29.99, painterResource(id = R.drawable.sampletoalla2), onClick = {})
                 TarjetaProducto(text = "Producto 3", price = 9.99, painterResource(id = R.drawable.sampletoalla3), onClick = {})
-            }
+            }*/
         }
     }
 }
