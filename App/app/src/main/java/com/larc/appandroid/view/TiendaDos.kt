@@ -13,10 +13,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
@@ -51,14 +54,16 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
                 text="Explorando:",
                 fontWeight = FontWeight.Normal,
                 fontSize = 26.sp,
-                modifier = Modifier.padding(start = 16.dp)
+                modifier = Modifier
+                    .padding(start = 16.dp)
                     .weight(4f)
             )
             Text(
                 text = cat,
                 fontWeight = FontWeight.Normal,
                 fontSize = 20.sp,
-                modifier = Modifier.padding(start = 2.dp, top = 4.dp)
+                modifier = Modifier
+                    .padding(start = 2.dp, top = 4.dp)
                     .weight(6f)
             )
         }
@@ -76,6 +81,12 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
                 TarjetaProducto2(text = "Producto 1", price = 19.99, painterResource(id = R.drawable.sampletoalla1), onClick = {})
                 TarjetaProducto2(text = "Producto 2", price = 29.99, painterResource(id = R.drawable.sampletoalla2), onClick = {})
                 TarjetaProducto2(text = "Producto 3", price = 9.99, painterResource(id = R.drawable.sampletoalla3), onClick = {})
+                Row(modifier = Modifier.fillMaxWidth()
+                    .padding(16.dp)) {
+                    BotonAnterior(modifier = Modifier.weight(8f))
+                    Spacer(modifier = Modifier.weight(1f))
+                    BotonAnterior(modifier = Modifier.weight(8f))
+                }
             }
         }
     }
@@ -86,19 +97,22 @@ fun TarjetaProducto(text: String, price: Double, imgurl: String, onClick: () -> 
     Spacer(modifier = Modifier.height(16.dp))
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize(.95f)
+        modifier = Modifier
+            .fillMaxSize(.95f)
             .clip(RoundedCornerShape(20.dp))
             .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
     ) {
         Row {
             Box(contentAlignment = Alignment.Center,
-                modifier = Modifier.weight(1f)
-                .padding(10.dp)
-                .height(170.dp)
-                .clip(RoundedCornerShape(13.dp))) {
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(10.dp)
+                    .height(170.dp)
+                    .clip(RoundedCornerShape(13.dp))) {
                 AsyncImage(model = imgurl, contentDescription = null)
             }
-            Column(modifier = Modifier.weight(1f)
+            Column(modifier = Modifier
+                .weight(1f)
                 .padding(top = 15.dp, start = 15.dp)) {
                 Text(
                     text = text,
@@ -134,7 +148,8 @@ fun TarjetaProducto2(text: String, price: Double, image: Painter, onClick: () ->
     Spacer(modifier = Modifier.height(16.dp))
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize(.95f)
+        modifier = Modifier
+            .fillMaxSize(.95f)
             .clip(RoundedCornerShape(20.dp))
             .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
     ) {
@@ -147,7 +162,8 @@ fun TarjetaProducto2(text: String, price: Double, image: Painter, onClick: () ->
                     .padding(10.dp)
                     .clip(RoundedCornerShape(13.dp))
             )
-            Column(modifier = Modifier.weight(1f)
+            Column(modifier = Modifier
+                .weight(1f)
                 .padding(top = 15.dp, start = 15.dp)) {
                 Text(
                     text = text,
@@ -252,8 +268,27 @@ fun BotonAgregar(onClick: () -> Unit) {
     }
 }
 
-///*@Preview(showBackground = true)
-//@Composable
-//fun TiendaDosPreview() {
-//    TiendaDos()
-//}*/
+@Composable
+fun BotonAnterior(modifier: Modifier = Modifier) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .clip(RoundedCornerShape(20.dp))
+            .height(80.dp)
+            .widthIn(min = 180.dp, max = 200.dp)
+            .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
+    ) {
+        Row {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                contentDescription = "Anterior",
+            )
+            Text(
+                text = "Anterior",
+                fontSize = 17.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(start = 1.dp, top = 2.dp)
+            )
+        }
+    }
+}
