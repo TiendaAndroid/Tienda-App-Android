@@ -15,9 +15,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Search
@@ -85,7 +87,7 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
                     .padding(16.dp)) {
                     BotonAnterior(modifier = Modifier.weight(8f))
                     Spacer(modifier = Modifier.weight(1f))
-                    BotonAnterior(modifier = Modifier.weight(8f))
+                    BotonSiguiente(modifier = Modifier.weight(8f))
                 }
             }
         }
@@ -270,25 +272,78 @@ fun BotonAgregar(onClick: () -> Unit) {
 
 @Composable
 fun BotonAnterior(modifier: Modifier = Modifier) {
-    Box(
-        contentAlignment = Alignment.Center,
+    Button(
+        onClick = {},
+        contentPadding = PaddingValues(0.dp),
         modifier = Modifier
-            .clip(RoundedCornerShape(20.dp))
-            .height(80.dp)
-            .widthIn(min = 180.dp, max = 200.dp)
             .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
+            .height(80.dp)
+            .clip(RoundedCornerShape(20.dp)),
+        shape = RoundedCornerShape(20),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = AppColors.White,
+            contentColor = AppColors.GrisOscuro,
+        )
     ) {
-        Row {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                contentDescription = "Anterior",
-            )
-            Text(
-                text = "Anterior",
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 1.dp, top = 2.dp)
-            )
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .clip(RoundedCornerShape(20.dp))
+                .height(80.dp)
+                .widthIn(min = 180.dp, max = 200.dp)
+                .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
+        ) {
+            Row {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    contentDescription = "Anterior",
+                )
+                Text(
+                    text = "Anterior",
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 2.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun BotonSiguiente(modifier: Modifier = Modifier) {
+    Button(
+        onClick = {},
+        contentPadding = PaddingValues(0.dp),
+        modifier = Modifier
+            .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
+            .height(80.dp)
+            .clip(RoundedCornerShape(20.dp)),
+        shape = RoundedCornerShape(20),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = AppColors.White,
+            contentColor = AppColors.GrisOscuro,
+        )
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .clip(RoundedCornerShape(20.dp))
+                .height(80.dp)
+                .widthIn(min = 180.dp, max = 200.dp)
+                .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
+        ) {
+            Row {
+                Text(
+                    text = "Siguiente",
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(top = 2.dp)
+                )
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = "Siguiente",
+                )
+            }
         }
     }
 }
