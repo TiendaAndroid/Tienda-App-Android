@@ -91,7 +91,8 @@ fun TarjetaProducto(text: String, price: Double, imgurl: String, onClick: () -> 
             .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
     ) {
         Row {
-            Box(modifier = Modifier.weight(1f)
+            Box(contentAlignment = Alignment.Center,
+                modifier = Modifier.weight(1f)
                 .padding(10.dp)
                 .height(170.dp)
                 .clip(RoundedCornerShape(13.dp))) {
@@ -184,12 +185,13 @@ fun BotonDetalle(onClick: () -> Unit) {
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
             .fillMaxWidth(.75f)
+            .border(2.dp, AppColors.AzulZazil, RoundedCornerShape(20.dp))
             .height(40.dp)
-            .clip(RoundedCornerShape(16.dp)),
-        shape = RectangleShape,
+            .clip(RoundedCornerShape(20.dp)),
+        shape = RoundedCornerShape(20),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFFD5507C),
-            contentColor = Color.White
+            containerColor = AppColors.White,
+            contentColor = AppColors.AzulZazil,
         )
     ) {
         Box(
@@ -220,12 +222,13 @@ fun BotonAgregar(onClick: () -> Unit) {
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
             .fillMaxWidth(.75f)
+            .border(2.dp, AppColors.AzulZazil, RoundedCornerShape(20.dp))
             .height(40.dp)
-            .clip(RoundedCornerShape(16.dp)),
-        shape = RectangleShape,
+            .clip(RoundedCornerShape(20.dp)),
+        shape = RoundedCornerShape(20),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color(0xFFD5507C),
-            contentColor = Color.White
+            containerColor = AppColors.White,
+            contentColor = AppColors.AzulZazil,
         )
     ) {
         Box(
