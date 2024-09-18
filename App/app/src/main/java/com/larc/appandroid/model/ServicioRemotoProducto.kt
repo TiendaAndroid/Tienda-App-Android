@@ -19,7 +19,11 @@ class ServicioRemotoProducto {
     }
 
     // Descarga lista de productos
-    suspend fun getProductos(): List<Producto> {
-        return servicio.getProductos().data
+    suspend fun getProductos(offset: Int): List<Producto> {
+        return servicio.getProductos(offset = offset).data
+    }
+    // Descarga número de páginas
+    suspend fun getHowManyPages(offset: Int): Int {
+        return servicio.getProductos(offset = offset).totalResults
     }
 }

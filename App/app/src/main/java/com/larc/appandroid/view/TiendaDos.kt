@@ -1,7 +1,6 @@
 package com.larc.appandroid.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,39 +14,48 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.larc.appandroid.R
 import com.larc.appandroid.viewmodel.ProductoVM
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     val estadoListaTodosProductos = productoVM.estadoListaTodosProductos.collectAsState()
+    val scrollState = productoVM.estadoScrollTop.collectAsState()
+    val listState = rememberLazyListState()
+    val pagActual = productoVM.estadoPaginaActual.collectAsState()
+    val truePagActual = pagActual.value+1
+    val pagsTotales = productoVM.estadoTotalPaginas.collectAsState()
+    LaunchedEffect(scrollState.value) {
+        if (scrollState.value) {
+            listState.scrollToItem(0)
+            productoVM.resetScrollTop()
+        }
+    }
     Column(modifier = Modifier.fillMaxSize()
     ) {
         Spacer(modifier = Modifier.height(16.dp))
@@ -72,7 +80,8 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
         Spacer(modifier = Modifier.height(6.dp))
         LazyColumn(modifier = Modifier
             .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            state = listState
         ) {
             estadoListaTodosProductos.value.forEach { producto ->
                 item {
@@ -83,14 +92,28 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
                 TarjetaProducto2(text = "Producto 1", price = 19.99, painterResource(id = R.drawable.sampletoalla1), onClick = {})
                 TarjetaProducto2(text = "Producto 2", price = 29.99, painterResource(id = R.drawable.sampletoalla2), onClick = {})
                 TarjetaProducto2(text = "Producto 3", price = 9.99, painterResource(id = R.drawable.sampletoalla3), onClick = {})
-                Row(modifier = Modifier.fillMaxWidth()
+                Row(modifier = Modifier
+                    .fillMaxWidth()
                     .padding(16.dp)) {
-                    BotonAnterior(modifier = Modifier.weight(8f))
+                    BotonAnterior(productoVM, modifier = Modifier.weight(6f))
                     Spacer(modifier = Modifier.weight(1f))
-                    BotonSiguiente(modifier = Modifier.weight(8f))
+                    Numerador(truePagActual, pagsTotales.value, modifier = Modifier.weight(4f))
+                    Spacer(modifier = Modifier.weight(1f))
+                    BotonSiguiente(productoVM, modifier = Modifier.weight(6f))
                 }
             }
         }
+    }
+}
+
+@Composable
+fun Numerador(truePagActual: Int, pagsTotales: Int, modifier: Modifier = Modifier) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .height(60.dp)
+    ) {
+        Text(text = "$truePagActual/$pagsTotales")
     }
 }
 
@@ -271,27 +294,25 @@ fun BotonAgregar(onClick: () -> Unit) {
 }
 
 @Composable
-fun BotonAnterior(modifier: Modifier = Modifier) {
+fun BotonAnterior(productoVM: ProductoVM, modifier: Modifier = Modifier) {
     Button(
-        onClick = {},
+        onClick = { productoVM.previousPage() },
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
             .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
-            .height(80.dp)
+            .height(60.dp)
             .clip(RoundedCornerShape(20.dp)),
         shape = RoundedCornerShape(20),
         colors = ButtonDefaults.buttonColors(
             containerColor = AppColors.White,
             contentColor = AppColors.GrisOscuro,
-        )
+        ),
+        enabled = productoVM.estadoPaginaActual.collectAsState().value > 0
     ) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
-                .clip(RoundedCornerShape(20.dp))
-                .height(80.dp)
-                .widthIn(min = 180.dp, max = 200.dp)
-                .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
+                .widthIn(min = 150.dp, max = 200.dp)
         ) {
             Row {
                 Icon(
@@ -310,27 +331,25 @@ fun BotonAnterior(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun BotonSiguiente(modifier: Modifier = Modifier) {
+fun BotonSiguiente(productoVM: ProductoVM, modifier: Modifier = Modifier) {
     Button(
-        onClick = {},
+        onClick = { productoVM.nextPage() },
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
             .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
-            .height(80.dp)
+            .height(60.dp)
             .clip(RoundedCornerShape(20.dp)),
         shape = RoundedCornerShape(20),
         colors = ButtonDefaults.buttonColors(
             containerColor = AppColors.White,
             contentColor = AppColors.GrisOscuro,
-        )
+        ),
+        enabled = productoVM.estadoPaginaActual.collectAsState().value < productoVM.estadoTotalPaginas.collectAsState().value-1
     ) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
-                .clip(RoundedCornerShape(20.dp))
-                .height(80.dp)
-                .widthIn(min = 180.dp, max = 200.dp)
-                .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
+                .widthIn(min = 150.dp, max = 200.dp)
         ) {
             Row {
                 Text(

@@ -61,7 +61,7 @@ fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, modifier
                 Row {
                     BotonApachurrableDos(
                         text = "Todos los productos",
-                        onClick = { productoVM.getAllProductos(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Todos los productos") })
+                        onClick = { productoVM.getAllProductos(0); productoVM.getHowManyPages(0); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Todos los productos") })
                     Spacer(modifier = Modifier.width(16.dp))
                     BotonApachurrableDos(
                         text = "Toallas regulares",

@@ -14,14 +14,47 @@ class ProductoVM: ViewModel() {
     // Estado
     private val _listaTodosProductos = MutableStateFlow(listOf<Producto>())
     val estadoListaTodosProductos: StateFlow<List<Producto>> = _listaTodosProductos
+    private val _paginaActual = MutableStateFlow(0)
+    val estadoPaginaActual: StateFlow<Int> = _paginaActual
+    private val _totalPaginas = MutableStateFlow(0)
+    val estadoTotalPaginas: StateFlow<Int> = _totalPaginas
 
-    private var beginning = true
-    private var ending = false
+    private val _scrollTop = MutableStateFlow(false)
+    val estadoScrollTop: StateFlow<Boolean> = _scrollTop
+
+    private var paginaActual = 0
+    private var totalPaginas = 0
+
+    private var otherOffset = 0
 
     // Interface para la vista
-    fun getAllProductos() {
+    fun getAllProductos(offset: Int) {
         viewModelScope.launch {
-            _listaTodosProductos.value = servicioRemotoProducto.getProductos()
+            _listaTodosProductos.value = servicioRemotoProducto.getProductos(offset)
         }
+    }
+    fun getHowManyPages(offset: Int) {
+        viewModelScope.launch {
+            _totalPaginas.value = servicioRemotoProducto.getHowManyPages(offset)
+        }
+    }
+    fun nextPage() {
+        if (_paginaActual.value < _totalPaginas.value-1) {
+            _paginaActual.value++
+            otherOffset += 1
+            getAllProductos(otherOffset)
+            _scrollTop.value = true
+        }
+    }
+    fun previousPage() {
+        if (_paginaActual.value > 0) {
+            _paginaActual.value--
+            otherOffset -= 1
+            getAllProductos(otherOffset)
+            _scrollTop.value = true
+        }
+    }
+    fun resetScrollTop() {
+        _scrollTop.value = false
     }
 }
