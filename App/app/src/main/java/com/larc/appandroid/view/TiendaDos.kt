@@ -1,6 +1,7 @@
 package com.larc.appandroid.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -56,11 +57,13 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
         }
     }
     Column(modifier = Modifier.fillMaxSize()
+        .background(Color.White)
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         Row {
             Text(
                 text="Explorando:",
+                color = AppColors.GrisOscuro,
                 fontWeight = FontWeight.Normal,
                 fontSize = 26.sp,
                 modifier = Modifier
@@ -69,6 +72,7 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
             )
             Text(
                 text = cat,
+                color = AppColors.GrisOscuro,
                 fontWeight = FontWeight.Normal,
                 fontSize = 20.sp,
                 modifier = Modifier
@@ -140,6 +144,7 @@ fun TarjetaProducto(text: String, price: Double, imgurl: String, onClick: () -> 
                 .padding(top = 15.dp, start = 15.dp)) {
                 Text(
                     text = text,
+                    color = AppColors.GrisOscuro,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -147,12 +152,14 @@ fun TarjetaProducto(text: String, price: Double, imgurl: String, onClick: () -> 
                 Row {
                     Text(
                         text = "Precio: $ ",
+                        color = AppColors.GrisOscuro,
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Light,
                         modifier = Modifier.weight(4f)
                     )
                     Text(
                         text = price.toString(),
+                        color = AppColors.GrisOscuro,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier.weight(6f)
@@ -191,6 +198,7 @@ fun TarjetaProducto2(text: String, price: Double, image: Painter, onClick: () ->
                 .padding(top = 15.dp, start = 15.dp)) {
                 Text(
                     text = text,
+                    color = AppColors.GrisOscuro,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -198,12 +206,14 @@ fun TarjetaProducto2(text: String, price: Double, image: Painter, onClick: () ->
                 Row {
                     Text(
                         text = "Precio: $ ",
+                        color = AppColors.GrisOscuro,
                         fontSize = 17.sp,
                         fontWeight = FontWeight.Light,
                         modifier = Modifier.weight(4f)
                     )
                     Text(
                         text = price.toString(),
+                        color = AppColors.GrisOscuro,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier.weight(6f)

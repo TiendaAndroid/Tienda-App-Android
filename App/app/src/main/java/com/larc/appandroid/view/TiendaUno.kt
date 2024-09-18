@@ -1,5 +1,6 @@
 package com.larc.appandroid.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -35,6 +36,7 @@ import com.larc.appandroid.viewmodel.ProductoVM
 fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier.fillMaxSize()
+            .background(Color.White)
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
