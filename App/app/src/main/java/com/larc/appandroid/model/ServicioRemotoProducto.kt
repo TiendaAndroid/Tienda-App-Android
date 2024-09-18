@@ -26,4 +26,12 @@ class ServicioRemotoProducto {
     suspend fun getHowManyPages(offset: Int): Int {
         return servicio.getProductos(offset = offset).totalResults
     }
+    // Descarga lista de productos por categoría
+    suspend fun getProductosPorCategoria(categoria: String, offset: Int): List<Producto> {
+        return servicio.getProductosPorCategoria(categoria, offset = offset).data
+    }
+    // Descarga número de páginas por categoría
+    suspend fun getHowManyPagesPorCategoria(categoria: String, offset: Int): Int {
+        return servicio.getProductosPorCategoria(categoria, offset = offset).totalResults
+    }
 }

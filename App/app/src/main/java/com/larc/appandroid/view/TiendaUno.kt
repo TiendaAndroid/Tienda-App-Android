@@ -61,17 +61,17 @@ fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, modifier
                 Row {
                     BotonApachurrableDos(
                         text = "Todos los productos",
-                        onClick = { productoVM.getAllProductos(0); productoVM.getHowManyPages(0); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Todos los productos") })
+                        onClick = { productoVM.getAllProductos(0); productoVM.filterOff(); productoVM.resetPagActual(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Todos los productos") })
                     Spacer(modifier = Modifier.width(16.dp))
                     BotonApachurrableDos(
                         text = "Toallas regulares",
-                        onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas regulares") })
+                        onClick = { productoVM.getProductosByCategory("Regular", 0); productoVM.filterOn(); productoVM.resetPagActual(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas regulares") })
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Row {
                     BotonApachurrableDos(
                         text = "Toallas nocturnas",
-                        onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas nocturnas") })
+                        onClick = { productoVM.getProductosByCategory("Nocturna", 0); productoVM.filterOn(); productoVM.resetPagActual(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas nocturnas") })
                     Spacer(modifier = Modifier.width(16.dp))
                     BotonApachurrableDos(text = "Toallas teen",
                         onClick = { navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas teen") })

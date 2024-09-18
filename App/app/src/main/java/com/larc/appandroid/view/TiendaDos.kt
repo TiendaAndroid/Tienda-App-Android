@@ -48,7 +48,6 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
     val scrollState = productoVM.estadoScrollTop.collectAsState()
     val listState = rememberLazyListState()
     val pagActual = productoVM.estadoPaginaActual.collectAsState()
-    val truePagActual = pagActual.value+1
     val pagsTotales = productoVM.estadoTotalPaginas.collectAsState()
     LaunchedEffect(scrollState.value) {
         if (scrollState.value) {
@@ -97,7 +96,7 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
                     .padding(16.dp)) {
                     BotonAnterior(productoVM, modifier = Modifier.weight(6f))
                     Spacer(modifier = Modifier.weight(1f))
-                    Numerador(truePagActual, pagsTotales.value, modifier = Modifier.weight(4f))
+                    Numerador(pagActual.value+1, pagsTotales.value, modifier = Modifier.weight(4f))
                     Spacer(modifier = Modifier.weight(1f))
                     BotonSiguiente(productoVM, modifier = Modifier.weight(6f))
                 }
@@ -107,13 +106,13 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
 }
 
 @Composable
-fun Numerador(truePagActual: Int, pagsTotales: Int, modifier: Modifier = Modifier) {
+fun Numerador(pagActual: Int, pagsTotales: Int, modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .height(60.dp)
     ) {
-        Text(text = "$truePagActual/$pagsTotales")
+        Text(text = "$pagActual/$pagsTotales")
     }
 }
 
