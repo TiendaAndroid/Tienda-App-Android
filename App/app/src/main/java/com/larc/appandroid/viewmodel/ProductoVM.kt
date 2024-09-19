@@ -1,5 +1,6 @@
 package com.larc.appandroid.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.larc.appandroid.model.Producto
@@ -27,32 +28,44 @@ class ProductoVM: ViewModel() {
 
     private var otherOffset = 0
 
+    private val _sinResultados = MutableStateFlow(false)
+    val estadoSinResultados: StateFlow<Boolean> = _sinResultados
+
     // Interface para la vista
     // Todos
     fun getAllProductos(offset: Int) {
         viewModelScope.launch {
-            _listaTodosProductos.value = servicioRemotoProducto.getProductos(offset)
-            getHowManyPages(offset)
+            val result = servicioRemotoProducto.getProductos(offset)
+            if (result != null) {
+                val products = result.data
+                Log.d("ProductoVM", "Products fetched: ${products.size}")
+                _listaTodosProductos.value = products
+                _totalPaginas.value = result.totalResults
+                _sinResultados.value = false
+            } else {
+                Log.d("ProductoVM", "Error fetching products")
+                _sinResultados.value = true
+            }
         }
     }
-    private fun getHowManyPages(offset: Int) {
-        viewModelScope.launch {
-            _totalPaginas.value = servicioRemotoProducto.getHowManyPages(offset)
-        }
-    }
-    // Por categoría
+
     fun getProductosByCategory(cat: String, offset: Int) {
         viewModelScope.launch {
-            _listaTodosProductos.value = servicioRemotoProducto.getProductosPorCategoria(cat, offset)
-            getHowManyPagesPorCategoria(cat, offset)
-            setCategory(cat)
+            val result = servicioRemotoProducto.getProductosPorCategoria(cat, offset)
+            if (result != null) {
+                val products = result.data
+                Log.d("ProductoVM", "Products fetched: ${products.size}")
+                _listaTodosProductos.value = products
+                _totalPaginas.value = result.totalResults
+                setCategory(cat)
+                _sinResultados.value = false
+            } else {
+                Log.d("ProductoVM", "Error fetching products")
+                _sinResultados.value = true
+            }
         }
     }
-    private fun getHowManyPagesPorCategoria(cat: String, offset: Int) {
-        viewModelScope.launch {
-            _totalPaginas.value = servicioRemotoProducto.getHowManyPagesPorCategoria(cat, offset)
-        }
-    }
+
     private fun setCategory(cat: String) {
         currentCat = cat
     }

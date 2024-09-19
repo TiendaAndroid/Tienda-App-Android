@@ -1,5 +1,6 @@
 package com.larc.appandroid.model
 
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -19,19 +20,30 @@ class ServicioRemotoProducto {
     }
 
     // Descarga lista de productos
-    suspend fun getProductos(offset: Int): List<Producto> {
-        return servicio.getProductos(offset = offset).data
+    suspend fun getProductos(offset: Int): ProductoResponse? {
+        return try {
+            val response: Response<ProductoResponse> = servicio.getProductos(offset = offset)
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
     }
-    // Descarga número de páginas
-    suspend fun getHowManyPages(offset: Int): Int {
-        return servicio.getProductos(offset = offset).totalResults
-    }
+
     // Descarga lista de productos por categoría
-    suspend fun getProductosPorCategoria(categoria: String, offset: Int): List<Producto> {
-        return servicio.getProductosPorCategoria(categoria, offset = offset).data
-    }
-    // Descarga número de páginas por categoría
-    suspend fun getHowManyPagesPorCategoria(categoria: String, offset: Int): Int {
-        return servicio.getProductosPorCategoria(categoria, offset = offset).totalResults
+    suspend fun getProductosPorCategoria(categoria: String, offset: Int): ProductoResponse? {
+        return try {
+            val response: Response<ProductoResponse> = servicio.getProductosPorCategoria(categoria, offset = offset)
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
     }
 }
