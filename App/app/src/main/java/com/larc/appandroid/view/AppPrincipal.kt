@@ -62,7 +62,7 @@ fun AppTopBar(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 20.dp) // Adjust padding here
+                    .padding(top = 20.dp)
             ) {
                 TextField(
                     value = searchText,
