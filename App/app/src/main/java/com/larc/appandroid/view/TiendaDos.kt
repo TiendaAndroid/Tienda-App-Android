@@ -1,7 +1,6 @@
 package com.larc.appandroid.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,73 +37,101 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.larc.appandroid.R
 import com.larc.appandroid.viewmodel.ProductoVM
-<<<<<<< HEAD
-import androidx.lifecycle.viewmodel.compose.viewModel
-
-=======
-import kotlinx.coroutines.flow.StateFlow
->>>>>>> parent of d6fcd22 (MALDITACORRECCIONDEMIERDA)
 
 @Composable
-fun TiendaDos(cat: String, modifier: Modifier = Modifier) {
-    val productoVM: ProductoVM = viewModel()
+fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     val estadoListaTodosProductos = productoVM.estadoListaTodosProductos.collectAsState()
     val scrollState = productoVM.estadoScrollTop.collectAsState()
     val listState = rememberLazyListState()
     val pagActual = productoVM.estadoPaginaActual.collectAsState()
     val pagsTotales = productoVM.estadoTotalPaginas.collectAsState()
-    LaunchedEffect(scrollState.value) {
-        if (scrollState.value) {
-            listState.scrollToItem(0)
-            productoVM.resetScrollTop()
+    val estadoSinResultados = productoVM.estadoSinResultados.collectAsState()
+    if (estadoSinResultados.value) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(text = "No se han encontrado productos.")
         }
-    }
-    Column(modifier = Modifier.fillMaxSize()
-        .background(Color.White)
-    ) {
-        Spacer(modifier = Modifier.height(16.dp))
-        Row {
-            Text(
-                text="Explorando:",
-                color = AppColors.GrisOscuro,
-                fontWeight = FontWeight.Normal,
-                fontSize = 26.sp,
-                modifier = Modifier
-                    .padding(start = 16.dp)
-                    .weight(4f)
-            )
-            Text(
-                text = cat,
-                color = AppColors.GrisOscuro,
-                fontWeight = FontWeight.Normal,
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .padding(start = 2.dp, top = 4.dp)
-                    .weight(6f)
-            )
+    } else {
+        LaunchedEffect(scrollState.value) {
+            if (scrollState.value) {
+                listState.scrollToItem(0)
+                productoVM.resetScrollTop()
+            }
         }
-        Spacer(modifier = Modifier.height(6.dp))
         LazyColumn(modifier = Modifier
             .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
             state = listState
         ) {
+            item {
+                Spacer(modifier = Modifier.height(16.dp))
+                Row {
+                    Text(
+                        text="Explorando:",
+                        color = AppColors.GrisOscuro,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 22.sp,
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .weight(4f)
+                    )
+                    Text(
+                        text = cat,
+                        color = AppColors.GrisOscuro,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 18.sp,
+                        modifier = Modifier
+                            .padding(start = 2.dp, top = 2.dp)
+                            .weight(6f)
+                    )
+                }
+                Spacer(modifier = Modifier.height(6.dp))
+            }
             estadoListaTodosProductos.value.forEach { producto ->
                 item {
-                    TarjetaProducto(text = producto.name, price = producto.price, imgurl = producto.image[0].url, onClick = {})
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
+                    ) {
+                        TarjetaProducto(text = producto.name, price = producto.price, imgurl = producto.image[0].url, onClick = {})
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
             item {
-                TarjetaProducto2(text = "Producto 1", price = 19.99, painterResource(id = R.drawable.sampletoalla1), onClick = {})
-                TarjetaProducto2(text = "Producto 2", price = 29.99, painterResource(id = R.drawable.sampletoalla2), onClick = {})
-                TarjetaProducto2(text = "Producto 3", price = 9.99, painterResource(id = R.drawable.sampletoalla3), onClick = {})
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
+                ) {
+                    TarjetaProducto2(text = "Producto 1", price = 19.99, painterResource(id = R.drawable.sampletoalla1), onClick = {})
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
+                ) {
+                    TarjetaProducto2(text = "Producto 2", price = 29.99, painterResource(id = R.drawable.sampletoalla2), onClick = {})
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
+                ) {
+                    TarjetaProducto2(text = "Producto 3", price = 9.99, painterResource(id = R.drawable.sampletoalla3), onClick = {})
+                }
+                Spacer(modifier = Modifier.height(16.dp))
                 Row(modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)) {
+                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)) {
                     BotonAnterior(productoVM, modifier = Modifier.weight(6f))
                     Spacer(modifier = Modifier.weight(1f))
                     Numerador(pagActual.value+1, pagsTotales.value, modifier = Modifier.weight(4f))
@@ -140,34 +167,34 @@ fun TarjetaProducto(text: String, price: Double, imgurl: String, onClick: () -> 
         Row {
             Box(contentAlignment = Alignment.Center,
                 modifier = Modifier
-                    .weight(1f)
+                    .weight(5f)
                     .padding(10.dp)
-                    .height(170.dp)
+                    .height(140.dp)
                     .clip(RoundedCornerShape(13.dp))) {
                 AsyncImage(model = imgurl, contentDescription = null)
             }
             Column(modifier = Modifier
-                .weight(1f)
+                .weight(6f)
                 .padding(top = 15.dp, start = 15.dp)) {
                 Text(
                     text = text,
                     color = AppColors.GrisOscuro,
-                    fontSize = 20.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(6.dp))
                 Row {
                     Text(
                         text = "Precio: $ ",
                         color = AppColors.GrisOscuro,
-                        fontSize = 17.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.Light,
                         modifier = Modifier.weight(4f)
                     )
                     Text(
                         text = price.toString(),
                         color = AppColors.GrisOscuro,
-                        fontSize = 18.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier.weight(6f)
                     )
@@ -176,6 +203,7 @@ fun TarjetaProducto(text: String, price: Double, imgurl: String, onClick: () -> 
                 BotonDetalle(onClick = {})
                 Spacer(modifier = Modifier.height(8.dp))
                 BotonAgregar(onClick = {})
+                Spacer(modifier = Modifier.height(10.dp))
             }
         }
     }
@@ -196,32 +224,32 @@ fun TarjetaProducto2(text: String, price: Double, image: Painter, onClick: () ->
                 painter = image,
                 contentDescription = "Logo de Todas Brillamos",
                 modifier = Modifier
-                    .weight(1f)
+                    .weight(5f)
                     .padding(10.dp)
                     .clip(RoundedCornerShape(13.dp))
             )
             Column(modifier = Modifier
-                .weight(1f)
+                .weight(6f)
                 .padding(top = 15.dp, start = 15.dp)) {
                 Text(
                     text = text,
                     color = AppColors.GrisOscuro,
-                    fontSize = 20.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.height(10.dp))
+                Spacer(modifier = Modifier.height(6.dp))
                 Row {
                     Text(
                         text = "Precio: $ ",
                         color = AppColors.GrisOscuro,
-                        fontSize = 17.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.Light,
                         modifier = Modifier.weight(4f)
                     )
                     Text(
                         text = price.toString(),
                         color = AppColors.GrisOscuro,
-                        fontSize = 18.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier.weight(6f)
                     )
@@ -230,6 +258,7 @@ fun TarjetaProducto2(text: String, price: Double, image: Painter, onClick: () ->
                 BotonDetalle(onClick = {})
                 Spacer(modifier = Modifier.height(8.dp))
                 BotonAgregar(onClick = {})
+                Spacer(modifier = Modifier.height(10.dp))
             }
         }
     }
@@ -241,9 +270,9 @@ fun BotonDetalle(onClick: () -> Unit) {
         onClick = onClick,
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
-            .fillMaxWidth(.75f)
+            .fillMaxWidth(.80f)
             .border(2.dp, AppColors.AzulZazil, RoundedCornerShape(20.dp))
-            .height(40.dp)
+            .height(30.dp)
             .clip(RoundedCornerShape(20.dp)),
         shape = RoundedCornerShape(20),
         colors = ButtonDefaults.buttonColors(
@@ -258,7 +287,7 @@ fun BotonDetalle(onClick: () -> Unit) {
             Row {
                 Text(
                     text = "Ver detalle",
-                    fontSize = 17.sp,
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(start = 1.dp, top = 2.dp)
                 )
@@ -278,9 +307,9 @@ fun BotonAgregar(onClick: () -> Unit) {
         onClick = onClick,
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
-            .fillMaxWidth(.75f)
+            .fillMaxWidth(.80f)
             .border(2.dp, AppColors.AzulZazil, RoundedCornerShape(20.dp))
-            .height(40.dp)
+            .height(30.dp)
             .clip(RoundedCornerShape(20.dp)),
         shape = RoundedCornerShape(20),
         colors = ButtonDefaults.buttonColors(
@@ -295,7 +324,7 @@ fun BotonAgregar(onClick: () -> Unit) {
             Row {
                 Text(
                     text = "Añadir",
-                    fontSize = 17.sp,
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(start = 1.dp, top = 2.dp)
                 )
@@ -316,7 +345,7 @@ fun BotonAnterior(productoVM: ProductoVM, modifier: Modifier = Modifier) {
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
             .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
-            .height(60.dp)
+            .height(50.dp)
             .clip(RoundedCornerShape(20.dp)),
         shape = RoundedCornerShape(20),
         colors = ButtonDefaults.buttonColors(
@@ -328,7 +357,7 @@ fun BotonAnterior(productoVM: ProductoVM, modifier: Modifier = Modifier) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
-                .widthIn(min = 150.dp, max = 200.dp)
+                .widthIn(min = 130.dp, max = 150.dp)
         ) {
             Row {
                 Icon(
@@ -353,7 +382,7 @@ fun BotonSiguiente(productoVM: ProductoVM, modifier: Modifier = Modifier) {
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
             .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
-            .height(60.dp)
+            .height(50.dp)
             .clip(RoundedCornerShape(20.dp)),
         shape = RoundedCornerShape(20),
         colors = ButtonDefaults.buttonColors(
@@ -365,7 +394,7 @@ fun BotonSiguiente(productoVM: ProductoVM, modifier: Modifier = Modifier) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier
-                .widthIn(min = 150.dp, max = 200.dp)
+                .widthIn(min = 130.dp, max = 150.dp)
         ) {
             Row {
                 Text(

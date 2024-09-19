@@ -1,9 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-
-    id("kotlin-kapt")
-    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -75,17 +72,4 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.gson)
     implementation("io.coil-kt:coil-compose:2.7.0")
-
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-
-    // Required for ViewModels in Jetpack Compose
-    implementation("androidx.activity:activity-compose:1.7.2")
-    // Lifecycle dependencies
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
-}
-
-kapt {
-    correctErrorTypes = true
 }

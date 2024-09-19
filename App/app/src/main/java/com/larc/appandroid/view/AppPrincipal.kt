@@ -24,7 +24,7 @@ import com.larc.appandroid.viewmodel.ProductoVM
 @Composable
 fun AppPrincipal() {
     val navController = rememberNavController()
-    //val productoVM: ProductoVM = viewModel()
+    val productoVM: ProductoVM = viewModel()
     var searchText by remember { mutableStateOf("") }
 
     val onSearchTextChanged: (String) -> Unit = { text ->
@@ -42,7 +42,7 @@ fun AppPrincipal() {
             },
             bottomBar = { AppBottomBar(navController) },
         ) { innerPadding ->
-            AppNavHost(navController, modifier = Modifier.padding(innerPadding))
+            AppNavHost(navController, productoVM, modifier = Modifier.padding(innerPadding))
         }
     }
 }
@@ -62,7 +62,7 @@ fun AppTopBar(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 20.dp)
+                    .padding(top = 20.dp) // Adjust padding here
             ) {
                 TextField(
                     value = searchText,
@@ -199,7 +199,7 @@ fun AppBottomBar(navController: NavHostController) {
 }
 
 @Composable
-fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
         startDestination = Pantallas.RUTA_HOME,
@@ -235,7 +235,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
             Testimonios()
         }
         composable(Pantallas.RUTA_TIENDA_UNO) {
-            TiendaUno(navController)
+            TiendaUno(navController, productoVM)
         }
         composable(Pantallas.RUTA_MI_INFORMACION) {
             MiInformacion()
@@ -245,7 +245,7 @@ fun AppNavHost(navController: NavHostController, modifier: Modifier = Modifier) 
         }
         composable(Pantallas.RUTA_TIENDA_DOS + "/{cat}") {
             val cat = it.arguments?.getString("cat")
-            TiendaDos(cat!!)
+            TiendaDos(cat!!, productoVM)
         }
     }
 }
