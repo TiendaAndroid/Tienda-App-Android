@@ -102,7 +102,7 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
                 }
             }
             item {
-                Row(
+                /*Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
@@ -128,7 +128,7 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
                 ) {
                     TarjetaProducto2(text = "Producto 3", price = 9.99, painterResource(id = R.drawable.sampletoalla3), onClick = {})
                 }
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))*/
                 Row(modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)) {
