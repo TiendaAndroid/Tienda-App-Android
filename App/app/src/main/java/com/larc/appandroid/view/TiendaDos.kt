@@ -43,12 +43,8 @@ import coil.compose.AsyncImage
 import com.larc.appandroid.R
 import com.larc.appandroid.viewmodel.ProductoVM
 <<<<<<< HEAD
-<<<<<<< HEAD
 import androidx.lifecycle.viewmodel.compose.viewModel
 
-=======
-import kotlinx.coroutines.flow.StateFlow
->>>>>>> parent of d6fcd22 (MALDITACORRECCIONDEMIERDA)
 =======
 import kotlinx.coroutines.flow.StateFlow
 >>>>>>> parent of d6fcd22 (MALDITACORRECCIONDEMIERDA)

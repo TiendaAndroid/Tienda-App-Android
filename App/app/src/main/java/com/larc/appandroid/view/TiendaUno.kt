@@ -37,21 +37,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 <<<<<<< HEAD
-<<<<<<< HEAD
 fun TiendaUno(navController: NavHostController, modifier: Modifier = Modifier) {
     val productoVM: ProductoVM = viewModel()
     LazyColumn(modifier = Modifier
         .fillMaxWidth(),
 =======
-=======
->>>>>>> parent of d6fcd22 (MALDITACORRECCIONDEMIERDA)
 fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier.fillMaxSize()
             .background(Color.White)
-<<<<<<< HEAD
->>>>>>> parent of d6fcd22 (MALDITACORRECCIONDEMIERDA)
-=======
 >>>>>>> parent of d6fcd22 (MALDITACORRECCIONDEMIERDA)
     ) {
         Spacer(modifier = Modifier.height(16.dp))
