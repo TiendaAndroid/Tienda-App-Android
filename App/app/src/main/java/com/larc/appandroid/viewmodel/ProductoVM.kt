@@ -93,6 +93,9 @@ class ProductoVM @Inject constructor(
     private fun getHowManyPagesPorCategoria(cat: String, offset: Int) {
         viewModelScope.launch {
             _totalPaginas.value = servicioRemotoProducto.getHowManyPagesPorCategoria(cat, offset)
+<<<<<<< HEAD
+>>>>>>> parent of d6fcd22 (MALDITACORRECCIONDEMIERDA)
+=======
 >>>>>>> parent of d6fcd22 (MALDITACORRECCIONDEMIERDA)
         }
     }
