@@ -31,6 +31,9 @@ class ProductoVM: ViewModel() {
     private val _sinResultados = MutableStateFlow(false)
     val estadoSinResultados: StateFlow<Boolean> = _sinResultados
 
+    private val _listaProductosNombres = MutableStateFlow(listOf<Pair<String, String>>())
+    val estadoListaProductosNombres: StateFlow<List<Pair<String, String>>> = _listaProductosNombres
+
     // Interface para la vista
     // Todos
     fun getAllProductos(offset: Int) {
@@ -106,5 +109,13 @@ class ProductoVM: ViewModel() {
     }
     fun resetScrollTop() {
         _scrollTop.value = false
+    }
+
+    fun updateListaProductosNombres(productos: List<Producto>) {
+        _listaProductosNombres.value = productos.map { it.name.lowercase() to it.id }
+    }
+    fun buscarProductos(query: String): List<Pair<String, String>> {
+        query.lowercase()
+        return _listaProductosNombres.value.filter { it.first.contains(query, ignoreCase = true) }
     }
 }

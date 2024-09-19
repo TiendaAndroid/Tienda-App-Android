@@ -3,6 +3,8 @@ package com.larc.appandroid.view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
@@ -10,6 +12,8 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -55,6 +59,7 @@ fun AppTopBar(
     searchText: String,
 ) {
     var expanded by remember { mutableStateOf(false) }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     TopAppBar(
         modifier = Modifier.height(116.dp),
@@ -78,7 +83,17 @@ fun AppTopBar(
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(40.dp))
+                        .clip(RoundedCornerShape(40.dp)),
+                    keyboardActions = KeyboardActions(
+                        onSearch = {
+                            if(searchText.isNotEmpty()) {
+                                keyboardController?.hide()
+                                navController.navigate(Pantallas.RUTA_TIENDA_DOS + "/${searchText.lowercase()}")
+                                onSearchTextChanged("")
+                            }
+                        }
+                    ),
+                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search)
                 )
             }
         },
