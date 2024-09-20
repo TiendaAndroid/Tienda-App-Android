@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.larc.appandroid.model.Producto
 import com.larc.appandroid.model.ServicioRemotoProducto
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -28,14 +29,34 @@ class ProductoVM: ViewModel() {
 
     private var otherOffset = 0
 
+    private var searched = 0
+
+    private val _searchComplete = MutableStateFlow(false)
+    val searchComplete: StateFlow<Boolean> = _searchComplete
+
     private val _sinResultados = MutableStateFlow(false)
     val estadoSinResultados: StateFlow<Boolean> = _sinResultados
 
-    private val _listaProductosNombres = MutableStateFlow(listOf<Pair<String, String>>())
-    val estadoListaProductosNombres: StateFlow<List<Pair<String, String>>> = _listaProductosNombres
+    private val _listaBusqueda = MutableStateFlow(listOf<Producto>())
+    val estadoListaBusqueda: StateFlow<List<Producto>> = _listaBusqueda
 
     // Interface para la vista
     // Todos
+    private fun getAllALLProducts() {
+        viewModelScope.launch {
+            val result = servicioRemotoProducto.getAllProducts()
+            if (result != null) {
+                val products = result.data
+                Log.d("ProductoVM", "Products fetched: ${products.size}")
+                _listaTodosProductos.value = products
+                _sinResultados.value = false
+            } else {
+                Log.d("ProductoVM", "Error fetching products")
+                _sinResultados.value = true
+            }
+        }
+    }
+
     fun getAllProductos(offset: Int) {
         viewModelScope.launch {
             val result = servicioRemotoProducto.getProductos(offset)
@@ -111,11 +132,24 @@ class ProductoVM: ViewModel() {
         _scrollTop.value = false
     }
 
-    fun updateListaProductosNombres(productos: List<Producto>) {
-        _listaProductosNombres.value = productos.map { it.name.lowercase() to it.id }
+    fun busquedaProducto(entrada: String) {
+        if(searched<5) {
+            viewModelScope.launch {
+                _searchComplete.value = false
+                getAllALLProducts()
+                _listaBusqueda.value = _listaTodosProductos.value.filter { it.name.contains(entrada, ignoreCase = true) }
+                delay(2000)
+                if (_listaBusqueda.value.isEmpty()) {
+                    _sinResultados.value = true
+                } else {
+                    _sinResultados.value = false
+                }
+                _searchComplete.value = true
+            }
+        }
+        searched++
     }
-    fun buscarProductos(query: String): List<Pair<String, String>> {
-        query.lowercase()
-        return _listaProductosNombres.value.filter { it.first.contains(query, ignoreCase = true) }
+    fun resetSearched() {
+        searched = 0
     }
 }

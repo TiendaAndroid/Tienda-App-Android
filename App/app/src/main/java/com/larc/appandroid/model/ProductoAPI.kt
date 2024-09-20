@@ -19,4 +19,7 @@ interface ProductoAPI {
         @Query("limit") limit: Int = 1,
         @Query("offset") offset: Int
     ): Response<ProductoResponse>
+
+    @GET("products")
+    suspend fun getAllProducts(): Response<ProductoResponse>
 }

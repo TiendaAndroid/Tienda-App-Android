@@ -1,5 +1,6 @@
 package com.larc.appandroid.view
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +25,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.larc.appandroid.ui.theme.AppAndroidTheme
 import com.larc.appandroid.viewmodel.ProductoVM
+import kotlinx.coroutines.delay
 
 @Composable
 fun AppPrincipal() {
@@ -42,6 +44,7 @@ fun AppPrincipal() {
                     navController = navController,
                     onSearchTextChanged = onSearchTextChanged,
                     searchText = searchText,
+                    productoVM = productoVM
                 )
             },
             bottomBar = { AppBottomBar(navController) },
@@ -57,17 +60,18 @@ fun AppTopBar(
     navController: NavHostController,
     onSearchTextChanged: (String) -> Unit,
     searchText: String,
+    productoVM: ProductoVM
 ) {
     var expanded by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
     TopAppBar(
-        modifier = Modifier.height(116.dp),
+        modifier = Modifier.height(120.dp),
         title = {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 20.dp)
+                    .padding(top = 12.dp)
             ) {
                 TextField(
                     value = searchText,
@@ -87,8 +91,9 @@ fun AppTopBar(
                     keyboardActions = KeyboardActions(
                         onSearch = {
                             if(searchText.isNotEmpty()) {
+                                productoVM.resetSearched()
+                                navController.navigate(Pantallas.RUTA_TIENDA_TRES + "/${searchText}")
                                 keyboardController?.hide()
-                                navController.navigate(Pantallas.RUTA_TIENDA_DOS + "/${searchText.lowercase()}")
                                 onSearchTextChanged("")
                             }
                         }
@@ -261,6 +266,10 @@ fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, modifie
         composable(Pantallas.RUTA_TIENDA_DOS + "/{cat}") {
             val cat = it.arguments?.getString("cat")
             TiendaDos(cat!!, productoVM)
+        }
+        composable(Pantallas.RUTA_TIENDA_TRES + "/{cat}") {
+            val cat = it.arguments?.getString("cat")
+            TiendaTres(cat!!, productoVM)
         }
     }
 }

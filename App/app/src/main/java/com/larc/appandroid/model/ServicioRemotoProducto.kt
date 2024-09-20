@@ -19,6 +19,20 @@ class ServicioRemotoProducto {
         retrofit.create(ProductoAPI::class.java)
     }
 
+    // Descarga lista completa
+    suspend fun getAllProducts(): ProductoResponse? {
+        return try {
+            val response: Response<ProductoResponse> = servicio.getAllProducts()
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
+
     // Descarga lista de productos
     suspend fun getProductos(offset: Int): ProductoResponse? {
         return try {
