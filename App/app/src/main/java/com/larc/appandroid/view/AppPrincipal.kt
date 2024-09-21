@@ -265,11 +265,14 @@ fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, modifie
         }
         composable(Pantallas.RUTA_TIENDA_DOS + "/{cat}") {
             val cat = it.arguments?.getString("cat")
-            TiendaDos(cat!!, productoVM)
+            TiendaDos(navController, cat!!, productoVM)
         }
         composable(Pantallas.RUTA_TIENDA_TRES + "/{cat}") {
             val cat = it.arguments?.getString("cat")
-            TiendaTres(cat!!, productoVM)
+            TiendaTres(navController, cat!!, productoVM)
+        }
+        composable(Pantallas.RUTA_DETALLE_PRODUCTO) {
+            DetalleProducto()
         }
     }
 }

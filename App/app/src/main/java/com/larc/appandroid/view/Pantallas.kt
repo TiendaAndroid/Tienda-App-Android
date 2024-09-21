@@ -22,6 +22,7 @@ object Pantallas {
     const val RUTA_TIENDA_UNO = "tienda_uno"
     const val RUTA_TIENDA_DOS = "tienda_dos"
     const val RUTA_TIENDA_TRES = "tienda_tres"
+    const val RUTA_DETALLE_PRODUCTO = "detalle_producto"
     const val RUTA_MI_INFORMACION = "mi_informacion"
     const val RUTA_DIRECCIONES = "direcciones"
 

@@ -16,10 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.larc.appandroid.viewmodel.ProductoVM
 
 @Composable
-fun TiendaTres(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
+fun TiendaTres(navController: NavHostController, cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     productoVM.busquedaProducto(cat)
     val estadoListaBusqueda = productoVM.estadoListaBusqueda.collectAsState()
     val estadoSinResultados = productoVM.estadoSinResultados.collectAsState()
@@ -69,7 +70,7 @@ fun TiendaTres(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifie
                                 .padding(horizontal = 16.dp),
                             horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
                         ) {
-                            TarjetaProducto(text = producto.name, price = producto.price, imgurl = producto.image[0].url, onClick = {})
+                            TarjetaProducto(navController, text = producto.name, price = producto.price, imgurl = producto.image[0].url)
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                     }

@@ -27,10 +27,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 
 @Composable
-fun TarjetaProducto(text: String, price: Double, imgurl: String, onClick: () -> Unit) {
+fun TarjetaProducto(navController: NavHostController, text: String, price: Double, imgurl: String) {
     Spacer(modifier = Modifier.height(16.dp))
     Box(
         contentAlignment = Alignment.Center,
@@ -75,7 +76,7 @@ fun TarjetaProducto(text: String, price: Double, imgurl: String, onClick: () -> 
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
-                BotonDetalle(onClick = {})
+                BotonDetalle(onClick = { navController.navigate(Pantallas.RUTA_DETALLE_PRODUCTO) })
                 Spacer(modifier = Modifier.height(8.dp))
                 BotonAgregar(onClick = {})
                 Spacer(modifier = Modifier.height(10.dp))

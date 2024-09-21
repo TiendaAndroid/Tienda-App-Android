@@ -37,12 +37,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.larc.appandroid.R
 import com.larc.appandroid.viewmodel.ProductoVM
 
 @Composable
-fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
+fun TiendaDos(navController: NavHostController, cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     val estadoListaTodosProductos = productoVM.estadoListaTodosProductos.collectAsState()
     val scrollState = productoVM.estadoScrollTop.collectAsState()
     val listState = rememberLazyListState()
@@ -96,7 +97,7 @@ fun TiendaDos(cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier
                             .padding(horizontal = 16.dp),
                         horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
                     ) {
-                        TarjetaProducto(text = producto.name, price = producto.price, imgurl = producto.image[0].url, onClick = {})
+                        TarjetaProducto(navController, text = producto.name, price = producto.price, imgurl = producto.image[0].url)
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                 }

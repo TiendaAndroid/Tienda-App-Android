@@ -59,7 +59,7 @@ fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, modifier
                 Spacer(modifier = Modifier.width(16.dp))
                 BotonApachurrableDos(
                     text = "Toallas regulares",
-                    onClick = { productoVM.getProductosByCategory("Regular", 0); productoVM.filterOn(); productoVM.resetPagActual(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas regulares") })
+                    onClick = { productoVM.getProductosByCategory("Toalla Regular", 0); productoVM.filterOn(); productoVM.resetPagActual(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas regulares") })
             }
             Spacer(modifier = Modifier.height(16.dp))
             Row(
@@ -70,10 +70,10 @@ fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, modifier
             ) {
                 BotonApachurrableDos(
                     text = "Toallas nocturnas",
-                    onClick = { productoVM.getProductosByCategory("Nocturna", 0); productoVM.filterOn(); productoVM.resetPagActual(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas nocturnas") })
+                    onClick = { productoVM.getProductosByCategory("Toalla Nocturna", 0); productoVM.filterOn(); productoVM.resetPagActual(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas nocturnas") })
                 Spacer(modifier = Modifier.width(16.dp))
                 BotonApachurrableDos(text = "Toallas teen",
-                    onClick = { productoVM.getProductosByCategory("Teen", 0); productoVM.filterOn(); productoVM.resetPagActual(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas teen") })
+                    onClick = { productoVM.getProductosByCategory("Toalla Teen", 0); productoVM.filterOn(); productoVM.resetPagActual(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Toallas teen") })
             }
             Spacer(modifier = Modifier.height(16.dp))
             Row(
@@ -84,10 +84,10 @@ fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, modifier
             ) {
                 BotonApachurrableDos(
                     text = "Pantiprotectores",
-                    onClick = { productoVM.getProductosByCategory("Pantoprotector", 0); productoVM.filterOn(); productoVM.resetPagActual(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Pantiprotectores") })
+                    onClick = { productoVM.getProductosByCategory("Pantiprotectores Diarios", 0); productoVM.filterOn(); productoVM.resetPagActual(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Pantiprotectores") })
                 Spacer(modifier = Modifier.width(16.dp))
                 BotonApachurrableDos(text = "Kits",
-                    onClick = { productoVM.getProductosByCategory("Kit", 0); productoVM.filterOn(); productoVM.resetPagActual(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Kits") })
+                    onClick = { productoVM.getProductosByCategory("Kits", 0); productoVM.filterOn(); productoVM.resetPagActual(); navController.navigate(Pantallas.RUTA_TIENDA_DOS+"/Kits") })
             }
             Spacer(modifier = Modifier.height(16.dp))
         }
