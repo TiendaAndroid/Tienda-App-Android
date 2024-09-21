@@ -64,13 +64,14 @@ fun TiendaTres(navController: NavHostController, cat: String, productoVM: Produc
                 }
                 estadoListaBusqueda.value.forEach { producto ->
                     item {
+                        val thisId = producto.id
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp),
                             horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
                         ) {
-                            TarjetaProducto(navController, text = producto.name, price = producto.price, imgurl = producto.image[0].url)
+                            TarjetaProducto(thisId, productoVM, navController, text = producto.name, price = producto.price, imgurl = producto.image[0].url)
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                     }

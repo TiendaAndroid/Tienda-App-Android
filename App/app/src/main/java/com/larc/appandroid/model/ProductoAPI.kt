@@ -20,6 +20,11 @@ interface ProductoAPI {
         @Query("offset") offset: Int
     ): Response<ProductoResponse>
 
+    @GET("products/{id}")
+    suspend fun getProductoPorId(
+        @Path("id") id: String
+    ): Response<Producto>
+
     @GET("products")
     suspend fun getAllProducts(): Response<ProductoResponse>
 }

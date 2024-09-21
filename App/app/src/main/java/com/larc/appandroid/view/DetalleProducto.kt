@@ -18,26 +18,75 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import com.larc.appandroid.R
+import com.larc.appandroid.viewmodel.ProductoVM
 
 @Composable
-fun DetalleProducto(modifier: Modifier = Modifier) {
+fun DetalleProducto(id: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
+    val prodActual = productoVM.estadoProductoActual.collectAsState()
+    productoVM.getProductoPorId(id)
+
+    //val listaDeUno = productoVM.estadoListaDeUno.collectAsState()
     LazyColumn(
         modifier = modifier
             .fillMaxWidth()
     ) {
+
+        /*
+        listaDeUno.value.forEach { producto ->
+            item {Spacer(modifier = Modifier.height(16.dp))
+                Text(text = producto.prodName,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 25.sp,
+                    modifier = Modifier.padding(start = 20.dp, end = 20.dp),
+                    color = AppColors.RosaZazil)
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center) {
+                    Box(contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .padding(10.dp)
+                            .height(300.dp)
+                            .clip(RoundedCornerShape(13.dp))) {
+                        Image(painter = painterResource(id = R.drawable.sampletoalla1), contentDescription = null)
+                    }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(modifier = Modifier.padding(start = 20.dp, end = 20.dp)) {
+                    Text(text = "$",
+                        fontSize = 20.sp,
+                        color = AppColors.RosaZazil,
+                        fontWeight = FontWeight.Bold)
+                    Text(text = producto.price.toString(),
+                        fontSize = 20.sp,
+                        color = AppColors.RosaZazil,
+                        fontWeight = FontWeight.Bold)
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Características:",
+                    modifier = Modifier.padding(start = 20.dp, end = 20.dp))
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = producto.description,
+                    modifier = Modifier.padding(start = 20.dp, end = 20.dp))
+                Row(modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center) {
+                    BotonAgregarCarrito()
+                }}
+        }
+
+         */
+
         item {
             Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Toalla femenina reutilizable regular Clara",
+            Text(text = prodActual.value?.name ?: "Producto no encontrado",
                 fontWeight = FontWeight.Bold,
                 fontSize = 25.sp,
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp),
@@ -59,7 +108,7 @@ fun DetalleProducto(modifier: Modifier = Modifier) {
                     fontSize = 20.sp,
                     color = AppColors.RosaZazil,
                     fontWeight = FontWeight.Bold)
-                Text(text = "19.99",
+                Text(text = prodActual.value?.price.toString(),
                     fontSize = 20.sp,
                     color = AppColors.RosaZazil,
                     fontWeight = FontWeight.Bold)
@@ -68,13 +117,14 @@ fun DetalleProducto(modifier: Modifier = Modifier) {
             Text(text = "Características:",
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp))
             Spacer(modifier = Modifier.height(8.dp))
-            Text(text = "Fácil de limpiar y secar. Es hipoalergénica. Medida: 27x7 cm. Hecha a mano con telas de algodón.",
+            Text(text = prodActual.value?.description ?: "Producto no encontrado",
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp))
             Row(modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center) {
                 BotonAgregarCarrito()
             }
         }
+
     }
 }
 
@@ -114,10 +164,4 @@ fun BotonAgregarCarrito() {
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewDetalleProducto() {
-    DetalleProducto()
 }

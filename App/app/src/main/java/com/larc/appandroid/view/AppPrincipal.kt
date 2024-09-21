@@ -271,8 +271,9 @@ fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, modifie
             val cat = it.arguments?.getString("cat")
             TiendaTres(navController, cat!!, productoVM)
         }
-        composable(Pantallas.RUTA_DETALLE_PRODUCTO) {
-            DetalleProducto()
+        composable(Pantallas.RUTA_DETALLE_PRODUCTO + "/{id}") {
+            val id = it.arguments?.getString("id")
+            DetalleProducto(id!!, productoVM)
         }
     }
 }

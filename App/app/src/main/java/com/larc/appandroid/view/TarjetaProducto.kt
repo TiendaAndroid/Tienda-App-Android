@@ -29,9 +29,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.larc.appandroid.viewmodel.ProductoVM
 
 @Composable
-fun TarjetaProducto(navController: NavHostController, text: String, price: Double, imgurl: String) {
+fun TarjetaProducto(thisId: String, productoVM: ProductoVM, navController: NavHostController, text: String, price: Double, imgurl: String) {
     Spacer(modifier = Modifier.height(16.dp))
     Box(
         contentAlignment = Alignment.Center,
@@ -76,7 +77,7 @@ fun TarjetaProducto(navController: NavHostController, text: String, price: Doubl
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
-                BotonDetalle(onClick = { navController.navigate(Pantallas.RUTA_DETALLE_PRODUCTO) })
+                BotonDetalle(onClick = { /*productoVM.getProductoPorId(thisId);*/ navController.navigate(Pantallas.RUTA_DETALLE_PRODUCTO+"/${thisId}") })
                 Spacer(modifier = Modifier.height(8.dp))
                 BotonAgregar(onClick = {})
                 Spacer(modifier = Modifier.height(10.dp))

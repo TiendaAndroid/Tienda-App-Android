@@ -60,4 +60,18 @@ class ServicioRemotoProducto {
             null
         }
     }
+
+    // Descarga producto por id
+    suspend fun getProductoPorId(id: String): Producto? {
+        return try {
+            val response: Response<Producto> = servicio.getProductoPorId(id)
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
 }

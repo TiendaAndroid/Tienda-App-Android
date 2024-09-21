@@ -3,6 +3,7 @@ package com.larc.appandroid.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.larc.appandroid.model.Imagenes
 import com.larc.appandroid.model.Producto
 import com.larc.appandroid.model.ServicioRemotoProducto
 import kotlinx.coroutines.delay
@@ -37,8 +38,17 @@ class ProductoVM: ViewModel() {
     private val _sinResultados = MutableStateFlow(false)
     val estadoSinResultados: StateFlow<Boolean> = _sinResultados
 
+    private val _sinResultIndiv = MutableStateFlow(false)
+    val estadoSinResultIndiv: StateFlow<Boolean> = _sinResultIndiv
+
     private val _listaBusqueda = MutableStateFlow(listOf<Producto>())
     val estadoListaBusqueda: StateFlow<List<Producto>> = _listaBusqueda
+
+    // Estado del producto actual
+    private val _estadoProductoActual = MutableStateFlow<Producto?>(null)
+    val estadoProductoActual: StateFlow<Producto?> = _estadoProductoActual
+    //private val _listaDeUno = MutableStateFlow( listOf<ProductoActual>() )
+    //val estadoListaDeUno: StateFlow<List<ProductoActual>> = _listaDeUno
 
     // Interface para la vista
     // Todos
@@ -151,5 +161,28 @@ class ProductoVM: ViewModel() {
     }
     fun resetSearched() {
         searched = 0
+    }
+
+    // Para un producto por ID
+    fun getProductoPorId(id: String) {
+        viewModelScope.launch {
+            val result = servicioRemotoProducto.getProductoPorId(id)
+            if (result != null) {
+                Log.d("ProductoVM", "Product fetched: ${result.name}")
+                _estadoProductoActual.value = result
+                /*
+                _estadoProductoActual.value.id = result.id
+                _estadoProductoActual.value.price = result.price
+                _estadoProductoActual.value.prodName = result.name
+                _estadoProductoActual.value.description = result.description
+                _estadoProductoActual.value.image = result.image
+                _sinResultIndiv.value = false
+                _listaDeUno.value = listOf(_estadoProductoActual.value)
+                 */
+            } else {
+                Log.d("ProductoVM", "Error fetching product")
+                _sinResultIndiv.value = true
+            }
+        }
     }
 }
