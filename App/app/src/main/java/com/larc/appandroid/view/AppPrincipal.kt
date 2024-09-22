@@ -43,8 +43,7 @@ fun AppPrincipal() {
                 AppTopBar(
                     navController = navController,
                     onSearchTextChanged = onSearchTextChanged,
-                    searchText = searchText,
-                    productoVM = productoVM
+                    searchText = searchText
                 )
             },
             bottomBar = { AppBottomBar(navController) },
@@ -60,7 +59,6 @@ fun AppTopBar(
     navController: NavHostController,
     onSearchTextChanged: (String) -> Unit,
     searchText: String,
-    productoVM: ProductoVM
 ) {
     var expanded by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -91,7 +89,6 @@ fun AppTopBar(
                     keyboardActions = KeyboardActions(
                         onSearch = {
                             if(searchText.isNotEmpty()) {
-                                productoVM.resetSearched()
                                 navController.navigate(Pantallas.RUTA_TIENDA_TRES + "/${searchText}")
                                 keyboardController?.hide()
                                 onSearchTextChanged("")

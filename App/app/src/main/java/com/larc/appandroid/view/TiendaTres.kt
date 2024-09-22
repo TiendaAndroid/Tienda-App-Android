@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,41 +25,45 @@ import com.larc.appandroid.viewmodel.ProductoVM
 fun TiendaTres(navController: NavHostController, cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     val estadoListaBusqueda = productoVM.estadoListaBusqueda.collectAsState()
     val estadoSinResultados = productoVM.estadoSinResultados.collectAsState()
-    val searchComplete = productoVM.searchComplete.collectAsState()
-    productoVM.busquedaProducto(cat)
-    if (!searchComplete.value) {
+    val estadoTotalResultados = productoVM.estadoTotalResultados.collectAsState()
+    val isLoading = productoVM.isLoading.collectAsState().value
+    LaunchedEffect(cat) {
+        productoVM.searchProducto(cat)
+    }
+    val res = if (estadoTotalResultados.value == 1) {
+        "resultado"
+    } else {
+        "resultados"
+    }
+    if (isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = "Buscando...")
+            CircularProgressIndicator()
         }
     } else {
         if (estadoSinResultados.value) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = "Sin resultados para '${cat}'")
+                Text(text = "Sin resultados para '$cat'")
             }
         } else {
-            LazyColumn(modifier = Modifier
-                .fillMaxWidth(),
-            ) {
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
                 item {
                     Spacer(modifier = Modifier.height(16.dp))
                     Row {
                         Text(
-                            text="Resultados para:",
+                            text = "${estadoTotalResultados.value} $res para:",
                             color = AppColors.GrisOscuro,
                             fontWeight = FontWeight.Normal,
                             fontSize = 16.sp,
                             modifier = Modifier
-                                .padding(start = 16.dp)
-                                .weight(4f)
+                                .padding(start = 22.dp)
+                                .weight(6f)
                         )
                         Text(
                             text = cat,
                             color = AppColors.GrisOscuro,
                             fontWeight = FontWeight.Normal,
                             fontSize = 16.sp,
-                            modifier = Modifier
-                                .padding(start = 6.dp)
-                                .weight(6f)
+                            modifier = Modifier.weight(6f)
                         )
                     }
                     Spacer(modifier = Modifier.height(6.dp))
@@ -71,7 +77,13 @@ fun TiendaTres(navController: NavHostController, cat: String, productoVM: Produc
                                 .padding(horizontal = 16.dp),
                             horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
                         ) {
-                            TarjetaProducto(thisId, navController, text = producto.name, price = producto.price, imgurl = producto.image[0].url)
+                            TarjetaProducto(
+                                thisId,
+                                navController,
+                                text = producto.name,
+                                price = producto.price,
+                                imgurl = producto.image[0].url
+                            )
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                     }
@@ -80,3 +92,4 @@ fun TiendaTres(navController: NavHostController, cat: String, productoVM: Produc
         }
     }
 }
+

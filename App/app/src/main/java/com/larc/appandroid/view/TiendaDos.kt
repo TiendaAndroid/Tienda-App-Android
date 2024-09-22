@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,68 +51,88 @@ fun TiendaDos(navController: NavHostController, cat: String, productoVM: Product
     val pagActual = productoVM.estadoPaginaActual.collectAsState()
     val pagsTotales = productoVM.estadoTotalPaginas.collectAsState()
     val estadoSinResultados = productoVM.estadoSinResultados.collectAsState()
-    if (estadoSinResultados.value) {
+    val isLoading = productoVM.isLoading.collectAsState().value
+    if (isLoading) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = "No se han encontrado productos.")
+            CircularProgressIndicator()
         }
     } else {
-        LaunchedEffect(scrollState.value) {
-            if (scrollState.value) {
-                listState.scrollToItem(0)
-                productoVM.resetScrollTop()
+        if (estadoSinResultados.value) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(text = "No se han encontrado productos.")
             }
-        }
-        LazyColumn(modifier = Modifier
-            .fillMaxWidth(),
-            state = listState
-        ) {
-            item {
-                Spacer(modifier = Modifier.height(16.dp))
-                Row {
-                    Text(
-                        text="Explorando:",
-                        color = AppColors.GrisOscuro,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 22.sp,
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .weight(4f)
-                    )
-                    Text(
-                        text = cat,
-                        color = AppColors.GrisOscuro,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .padding(start = 2.dp, top = 2.dp)
-                            .weight(6f)
-                    )
+        } else {
+            LaunchedEffect(scrollState.value) {
+                if (scrollState.value) {
+                    listState.scrollToItem(0)
+                    productoVM.resetScrollTop()
                 }
-                Spacer(modifier = Modifier.height(6.dp))
             }
-            estadoListaTodosProductos.value.forEach { producto ->
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                state = listState
+            ) {
                 item {
-                    val thisId = producto.id
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Row {
+                        Text(
+                            text = "Explorando:",
+                            color = AppColors.GrisOscuro,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 22.sp,
+                            modifier = Modifier
+                                .padding(start = 16.dp)
+                                .weight(4f)
+                        )
+                        Text(
+                            text = cat,
+                            color = AppColors.GrisOscuro,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 18.sp,
+                            modifier = Modifier
+                                .padding(start = 2.dp, top = 2.dp)
+                                .weight(6f)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(6.dp))
+                }
+                estadoListaTodosProductos.value.forEach { producto ->
+                    item {
+                        val thisId = producto.id
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
+                        ) {
+                            TarjetaProducto(
+                                thisId,
+                                navController,
+                                text = producto.name,
+                                price = producto.price,
+                                imgurl = producto.image[0].url
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
+                }
+                item {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
-                        horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
+                            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
                     ) {
-                        TarjetaProducto(thisId, navController, text = producto.name, price = producto.price, imgurl = producto.image[0].url)
+                        BotonAnterior(productoVM, modifier = Modifier.weight(6f))
+                        Spacer(modifier = Modifier.weight(1f))
+                        Numerador(
+                            pagActual.value + 1,
+                            pagsTotales.value,
+                            modifier = Modifier.weight(4f)
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                        BotonSiguiente(productoVM, modifier = Modifier.weight(6f))
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
-                }
-            }
-            item {
-                Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)) {
-                    BotonAnterior(productoVM, modifier = Modifier.weight(6f))
-                    Spacer(modifier = Modifier.weight(1f))
-                    Numerador(pagActual.value+1, pagsTotales.value, modifier = Modifier.weight(4f))
-                    Spacer(modifier = Modifier.weight(1f))
-                    BotonSiguiente(productoVM, modifier = Modifier.weight(6f))
                 }
             }
         }

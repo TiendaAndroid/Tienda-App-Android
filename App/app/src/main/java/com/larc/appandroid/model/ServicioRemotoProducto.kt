@@ -20,9 +20,9 @@ class ServicioRemotoProducto {
     }
 
     // Descarga lista completa
-    suspend fun getAllProducts(): ProductoResponse? {
+    suspend fun searchProducts(palabra: String): ProductoResponse? {
         return try {
-            val response: Response<ProductoResponse> = servicio.getAllProducts()
+            val response: Response<ProductoResponse> = servicio.searchProducts(palabra = palabra)
             if (response.isSuccessful) {
                 response.body()
             } else {

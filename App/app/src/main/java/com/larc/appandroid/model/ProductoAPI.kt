@@ -25,6 +25,8 @@ interface ProductoAPI {
         @Path("id") id: String
     ): Response<Producto>
 
-    @GET("products")
-    suspend fun getAllProducts(): Response<ProductoResponse>
+    @GET("products/search/{palabra}")
+    suspend fun searchProducts(
+        @Path("palabra") palabra: String
+    ): Response<ProductoResponse>
 }
