@@ -3,7 +3,6 @@ package com.larc.appandroid.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.larc.appandroid.model.Imagenes
 import com.larc.appandroid.model.Producto
 import com.larc.appandroid.model.ServicioRemotoProducto
 import kotlinx.coroutines.delay
@@ -168,6 +167,7 @@ class ProductoVM: ViewModel() {
             if (result != null) {
                 Log.d("ProductoVM", "Product fetched: ${result.name}")
                 _estadoProductoActual.value = result
+                _sinResultIndiv.value = false
             } else {
                 Log.d("ProductoVM", "Error fetching product")
                 _sinResultIndiv.value = true

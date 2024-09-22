@@ -21,10 +21,10 @@ import com.larc.appandroid.viewmodel.ProductoVM
 
 @Composable
 fun TiendaTres(navController: NavHostController, cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
-    productoVM.busquedaProducto(cat)
     val estadoListaBusqueda = productoVM.estadoListaBusqueda.collectAsState()
     val estadoSinResultados = productoVM.estadoSinResultados.collectAsState()
     val searchComplete = productoVM.searchComplete.collectAsState()
+    productoVM.busquedaProducto(cat)
     if (!searchComplete.value) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(text = "Buscando...")
