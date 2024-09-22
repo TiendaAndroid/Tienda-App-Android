@@ -32,7 +32,7 @@ import coil.compose.AsyncImage
 import com.larc.appandroid.viewmodel.ProductoVM
 
 @Composable
-fun TarjetaProducto(thisId: String, productoVM: ProductoVM, navController: NavHostController, text: String, price: Double, imgurl: String) {
+fun TarjetaProducto(thisId: String, navController: NavHostController, text: String, price: Double, imgurl: String) {
     Spacer(modifier = Modifier.height(16.dp))
     Box(
         contentAlignment = Alignment.Center,
@@ -77,7 +77,7 @@ fun TarjetaProducto(thisId: String, productoVM: ProductoVM, navController: NavHo
                     )
                 }
                 Spacer(modifier = Modifier.height(10.dp))
-                BotonDetalle(onClick = { /*productoVM.getProductoPorId(thisId);*/ navController.navigate(Pantallas.RUTA_DETALLE_PRODUCTO+"/${thisId}") })
+                BotonDetalle(onClick = { navController.navigate(Pantallas.RUTA_DETALLE_PRODUCTO+"/${thisId}") })
                 Spacer(modifier = Modifier.height(8.dp))
                 BotonAgregar(onClick = {})
                 Spacer(modifier = Modifier.height(10.dp))

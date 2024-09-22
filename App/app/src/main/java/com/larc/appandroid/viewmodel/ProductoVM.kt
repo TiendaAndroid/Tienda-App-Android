@@ -47,8 +47,6 @@ class ProductoVM: ViewModel() {
     // Estado del producto actual
     private val _estadoProductoActual = MutableStateFlow<Producto?>(null)
     val estadoProductoActual: StateFlow<Producto?> = _estadoProductoActual
-    //private val _listaDeUno = MutableStateFlow( listOf<ProductoActual>() )
-    //val estadoListaDeUno: StateFlow<List<ProductoActual>> = _listaDeUno
 
     // Interface para la vista
     // Todos
@@ -74,7 +72,7 @@ class ProductoVM: ViewModel() {
                 val products = result.data
                 Log.d("ProductoVM", "Products fetched: ${products.size}")
                 _listaTodosProductos.value = products
-                _totalPaginas.value = result.totalResults
+                _totalPaginas.value = result.totalResults/5
                 _sinResultados.value = false
             } else {
                 Log.d("ProductoVM", "Error fetching products")
@@ -90,7 +88,7 @@ class ProductoVM: ViewModel() {
                 val products = result.data
                 Log.d("ProductoVM", "Products fetched: ${products.size}")
                 _listaTodosProductos.value = products
-                _totalPaginas.value = result.totalResults
+                _totalPaginas.value = result.totalResults/5
                 setCategory(cat)
                 _sinResultados.value = false
             } else {
@@ -170,15 +168,6 @@ class ProductoVM: ViewModel() {
             if (result != null) {
                 Log.d("ProductoVM", "Product fetched: ${result.name}")
                 _estadoProductoActual.value = result
-                /*
-                _estadoProductoActual.value.id = result.id
-                _estadoProductoActual.value.price = result.price
-                _estadoProductoActual.value.prodName = result.name
-                _estadoProductoActual.value.description = result.description
-                _estadoProductoActual.value.image = result.image
-                _sinResultIndiv.value = false
-                _listaDeUno.value = listOf(_estadoProductoActual.value)
-                 */
             } else {
                 Log.d("ProductoVM", "Error fetching product")
                 _sinResultIndiv.value = true

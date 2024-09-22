@@ -9,14 +9,14 @@ interface ProductoAPI {
 
     @GET("products")
     suspend fun getProductos(
-        @Query("limit") limit: Int = 1,
+        @Query("limit") limit: Int = 5,
         @Query("offset") offset: Int
     ): Response<ProductoResponse>
 
     @GET("products/tipo/{categoria}")
     suspend fun getProductosPorCategoria(
         @Path("categoria") categoria: String,
-        @Query("limit") limit: Int = 1,
+        @Query("limit") limit: Int = 5,
         @Query("offset") offset: Int
     ): Response<ProductoResponse>
 

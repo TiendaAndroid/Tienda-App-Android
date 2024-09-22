@@ -33,57 +33,10 @@ import com.larc.appandroid.viewmodel.ProductoVM
 fun DetalleProducto(id: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     val prodActual = productoVM.estadoProductoActual.collectAsState()
     productoVM.getProductoPorId(id)
-
-    //val listaDeUno = productoVM.estadoListaDeUno.collectAsState()
     LazyColumn(
         modifier = modifier
             .fillMaxWidth()
     ) {
-
-        /*
-        listaDeUno.value.forEach { producto ->
-            item {Spacer(modifier = Modifier.height(16.dp))
-                Text(text = producto.prodName,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 25.sp,
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp),
-                    color = AppColors.RosaZazil)
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center) {
-                    Box(contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .padding(10.dp)
-                            .height(300.dp)
-                            .clip(RoundedCornerShape(13.dp))) {
-                        Image(painter = painterResource(id = R.drawable.sampletoalla1), contentDescription = null)
-                    }
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(modifier = Modifier.padding(start = 20.dp, end = 20.dp)) {
-                    Text(text = "$",
-                        fontSize = 20.sp,
-                        color = AppColors.RosaZazil,
-                        fontWeight = FontWeight.Bold)
-                    Text(text = producto.price.toString(),
-                        fontSize = 20.sp,
-                        color = AppColors.RosaZazil,
-                        fontWeight = FontWeight.Bold)
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-                Text(text = "Características:",
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp))
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = producto.description,
-                    modifier = Modifier.padding(start = 20.dp, end = 20.dp))
-                Row(modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center) {
-                    BotonAgregarCarrito()
-                }}
-        }
-
-         */
-
         item {
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = prodActual.value?.name ?: "Producto no encontrado",

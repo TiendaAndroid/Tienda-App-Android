@@ -71,7 +71,7 @@ fun TiendaTres(navController: NavHostController, cat: String, productoVM: Produc
                                 .padding(horizontal = 16.dp),
                             horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
                         ) {
-                            TarjetaProducto(thisId, productoVM, navController, text = producto.name, price = producto.price, imgurl = producto.image[0].url)
+                            TarjetaProducto(thisId, navController, text = producto.name, price = producto.price, imgurl = producto.image[0].url)
                         }
                         Spacer(modifier = Modifier.height(16.dp))
                     }
