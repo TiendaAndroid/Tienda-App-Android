@@ -9,6 +9,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlin.math.ceil
 
 class ProductoVM: ViewModel() {
     // Modelo
@@ -64,6 +65,11 @@ class ProductoVM: ViewModel() {
         }
     }
 
+    private fun calcularPaginas(total: Int): Int {
+        val num = ceil(total.toDouble() / 5.0)
+        return num.toInt()
+    }
+
     fun getAllProductos(offset: Int) {
         viewModelScope.launch {
             val result = servicioRemotoProducto.getProductos(offset)
@@ -71,7 +77,7 @@ class ProductoVM: ViewModel() {
                 val products = result.data
                 Log.d("ProductoVM", "Products fetched: ${products.size}")
                 _listaTodosProductos.value = products
-                _totalPaginas.value = result.totalResults/5
+                _totalPaginas.value = calcularPaginas(result.totalResults)
                 _sinResultados.value = false
             } else {
                 Log.d("ProductoVM", "Error fetching products")
@@ -87,7 +93,7 @@ class ProductoVM: ViewModel() {
                 val products = result.data
                 Log.d("ProductoVM", "Products fetched: ${products.size}")
                 _listaTodosProductos.value = products
-                _totalPaginas.value = result.totalResults/5
+                _totalPaginas.value = calcularPaginas(result.totalResults)
                 setCategory(cat)
                 _sinResultados.value = false
             } else {
