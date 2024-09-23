@@ -10,14 +10,14 @@ import java.util.concurrent.TimeUnit
 
 class ServicioRemotoProducto {
 
-    /*
+
     // Define the certificate pinning
     private val certificatePinner by lazy {
         CertificatePinner.Builder()
-            .add("backend-tienda-production.up.railway.app", "sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
+            .add("backend-tienda-production.up.railway.app", "sha256/FyVOgNsQG1rWPMMd3OLpZYcPsDlc5JxBQs59jmk8Vx4=")
             .build()
     }
-     */
+
 
     // Function to create an OkHttpClient
     private val okHttpClient by lazy {
@@ -30,7 +30,7 @@ class ServicioRemotoProducto {
 
         OkHttpClient.Builder()
             //.addInterceptor(logging) // Add the logging interceptor
-            //.certificatePinner(certificatePinner) // Add certificate pinning
+            .certificatePinner(certificatePinner) // Add certificate pinning
             .connectTimeout(15, TimeUnit.SECONDS) // Customize the timeouts
             .readTimeout(30, TimeUnit.SECONDS)
             .build()
