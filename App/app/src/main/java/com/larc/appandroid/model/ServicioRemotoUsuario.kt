@@ -18,7 +18,6 @@ class ServicioRemotoUsuario {
 
     private val okHttpClient by lazy {
         OkHttpClient.Builder()
-            //.addInterceptor(logging)
             .certificatePinner(certificatePinner)
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
@@ -39,6 +38,7 @@ class ServicioRemotoUsuario {
         retrofit.create(UsuarioAPI::class.java)
     }
 
+    // Método para iniciar sesión
     suspend fun loginUser(loginRequest: LoginRequest): UsuarioResponse? {
         return try {
             val response: Response<UsuarioResponse> = servicio.loginUser(loginRequest)

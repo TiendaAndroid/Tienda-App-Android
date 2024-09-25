@@ -25,6 +25,7 @@ object Pantallas {
     const val RUTA_DETALLE_PRODUCTO = "detalle_producto"
     const val RUTA_MI_INFORMACION = "mi_informacion"
     const val RUTA_DIRECCIONES = "direcciones"
+    const val RUTA_SIGN_UP = "sign_up"
 
     val listaPantallas = listOf(
         Pantalla("Home", RUTA_HOME, Icons.Filled.Home),

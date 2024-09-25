@@ -1,6 +1,5 @@
 package com.larc.appandroid.view
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,12 +24,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.larc.appandroid.ui.theme.AppAndroidTheme
 import com.larc.appandroid.viewmodel.ProductoVM
+import com.larc.appandroid.viewmodel.UsuarioVM
 import kotlinx.coroutines.delay
 
 @Composable
 fun AppPrincipal() {
     val navController = rememberNavController()
     val productoVM: ProductoVM = viewModel()
+    val usuarioVM: UsuarioVM = viewModel()
     var searchText by remember { mutableStateOf("") }
 
     val onSearchTextChanged: (String) -> Unit = { text ->
@@ -43,12 +44,13 @@ fun AppPrincipal() {
                 AppTopBar(
                     navController = navController,
                     onSearchTextChanged = onSearchTextChanged,
-                    searchText = searchText
+                    searchText = searchText,
+                    usuarioVM
                 )
             },
             bottomBar = { AppBottomBar(navController) },
         ) { innerPadding ->
-            AppNavHost(navController, productoVM, modifier = Modifier.padding(innerPadding))
+            AppNavHost(navController, productoVM, usuarioVM, modifier = Modifier.padding(innerPadding))
         }
     }
 }
@@ -59,9 +61,11 @@ fun AppTopBar(
     navController: NavHostController,
     onSearchTextChanged: (String) -> Unit,
     searchText: String,
+    usuarioVM: UsuarioVM
 ) {
     var expanded by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
+    val loggedUsuario = usuarioVM.loggedUsuario.collectAsState()
 
     TopAppBar(
         modifier = Modifier.height(120.dp),
@@ -123,7 +127,7 @@ fun AppTopBar(
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Tienda", color = AppColors.GrisOscuro) },
+                    text = { Text("Catálogo", color = AppColors.GrisOscuro) },
                     onClick = {
                         expanded = false
                         navigateTo(navController, Pantallas.RUTA_TIENDA_UNO)
@@ -150,12 +154,23 @@ fun AppTopBar(
                         navigateTo(navController, Pantallas.RUTA_SERVICIO_CLIENTE)
                     }
                 )
-                DropdownMenuItem(
-                    text = { Text("Cerrar sesión", color = AppColors.GrisOscuro) },
-                    onClick = {
-                        expanded = false
-                    }
-                )
+                if (!loggedUsuario.value) {
+                    DropdownMenuItem(
+                        text = { Text("Iniciar sesión", color = AppColors.GrisOscuro) },
+                        onClick = {
+                            expanded = false
+                            navigateTo(navController, Pantallas.RUTA_SIGN_UP)
+                        }
+                    )
+                }
+                if (loggedUsuario.value) {
+                    DropdownMenuItem(
+                        text = { Text("Cerrar sesión", color = AppColors.GrisOscuro) },
+                        onClick = {
+                            expanded = false
+                        }
+                    )
+                }
             }
         },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
@@ -216,7 +231,7 @@ fun AppBottomBar(navController: NavHostController) {
 }
 
 @Composable
-fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, modifier: Modifier = Modifier) {
+fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
         startDestination = Pantallas.RUTA_HOME,
@@ -271,6 +286,9 @@ fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, modifie
         composable(Pantallas.RUTA_DETALLE_PRODUCTO + "/{id}") {
             val id = it.arguments?.getString("id")
             DetalleProducto(id!!, productoVM)
+        }
+        composable(Pantallas.RUTA_SIGN_UP) {
+            SignUp(usuarioVM)
         }
     }
 }
