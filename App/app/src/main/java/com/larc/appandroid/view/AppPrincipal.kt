@@ -241,7 +241,7 @@ fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, usuario
             Home()
         }
         composable(Pantallas.RUTA_CUENTA) {
-            Cuenta(navigateTo = { route ->
+            Cuenta(usuarioVM, navigateTo = { route ->
                 navController.navigate(route) {
                     launchSingleTop = true
                     restoreState = true
