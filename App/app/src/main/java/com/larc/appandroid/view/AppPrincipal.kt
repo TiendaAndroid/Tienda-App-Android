@@ -38,6 +38,8 @@ fun AppPrincipal() {
         searchText = text
     }
 
+    usuarioVM.checkIfLoggedIn()
+
     AppAndroidTheme {
         Scaffold(
             topBar = {
@@ -168,6 +170,8 @@ fun AppTopBar(
                         text = { Text("Cerrar sesión", color = AppColors.GrisOscuro) },
                         onClick = {
                             expanded = false
+                            usuarioVM.logoutUser()
+                            navigateTo(navController, Pantallas.RUTA_HOME)
                         }
                     )
                 }
