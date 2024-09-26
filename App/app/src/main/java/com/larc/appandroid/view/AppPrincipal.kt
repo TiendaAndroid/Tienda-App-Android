@@ -245,7 +245,7 @@ fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, usuario
             Home()
         }
         composable(Pantallas.RUTA_CUENTA) {
-            Cuenta(usuarioVM, navigateTo = { route ->
+            Cuenta(navController, usuarioVM, navigateTo = { route ->
                 navController.navigate(route) {
                     launchSingleTop = true
                     restoreState = true
@@ -292,7 +292,10 @@ fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, usuario
             DetalleProducto(id!!, productoVM)
         }
         composable(Pantallas.RUTA_SIGN_UP) {
-            SignUp(usuarioVM)
+            SignUp(navController, usuarioVM)
+        }
+        composable(Pantallas.RUTA_REGISTRAR) {
+            Registrar(navController, usuarioVM)
         }
     }
 }

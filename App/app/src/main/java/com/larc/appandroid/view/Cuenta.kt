@@ -20,12 +20,12 @@ import androidx.navigation.NavHostController
 import com.larc.appandroid.viewmodel.UsuarioVM
 
 @Composable
-fun Cuenta(usuarioVM: UsuarioVM, modifier: Modifier = Modifier, navigateTo: (String) -> Unit
+fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier, navigateTo: (String) -> Unit
 ) {
     val loggedUsuario = usuarioVM.loggedUsuario.collectAsState()
 
     if (!loggedUsuario.value) {
-        SignUp(usuarioVM)
+        SignUp(navController, usuarioVM)
     } else {
 
         LazyColumn(
