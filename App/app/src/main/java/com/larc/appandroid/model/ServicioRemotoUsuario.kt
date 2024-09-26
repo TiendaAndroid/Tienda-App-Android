@@ -1,5 +1,6 @@
 package com.larc.appandroid.model
 
+import android.util.Log
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -48,6 +49,24 @@ class ServicioRemotoUsuario {
                 null
             }
         } catch (e: Exception) {
+            null
+        }
+    }
+
+    // Método para registrarse (recibir token por correo)
+    suspend fun signupEmail(signupRequest: SignupRequest): List<String>? {
+        return try {
+            val response: Response<List<String>> = servicio.signupEmail(signupRequest)
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                Log.d("SignupResponse", "Response body: $responseBody")
+                responseBody
+            } else {
+                Log.d("SignupResponse", "Error: ${response.errorBody()?.string()}")
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("SignupResponse", "Exception: ${e.message}")
             null
         }
     }

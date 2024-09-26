@@ -10,4 +10,10 @@ interface UsuarioAPI {
     suspend fun loginUser(
         @Body loginRequest: LoginRequest
     ): Response<UsuarioResponse>
+
+    @POST("auth/email")
+    suspend fun signupEmail(
+        @Body signupRequest: SignupRequest
+    ): Response<List<String>>
+
 }
