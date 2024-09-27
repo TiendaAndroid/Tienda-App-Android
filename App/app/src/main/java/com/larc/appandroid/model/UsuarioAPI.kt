@@ -16,4 +16,9 @@ interface UsuarioAPI {
         @Body signupRequest: SignupRequest
     ): Response<List<String>>
 
+    @POST("auth/register")
+    suspend fun registerUser(
+        @Body registerRequest: RegisterRequest
+    ): Response<UsuarioResponseRegister>
+
 }

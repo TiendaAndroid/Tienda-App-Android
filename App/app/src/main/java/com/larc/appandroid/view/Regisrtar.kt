@@ -3,7 +3,6 @@ package com.larc.appandroid.view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
@@ -30,59 +29,103 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
         var codigo by remember { mutableStateOf("") }
         val estadoCorreoEnviado = usuarioVM.mailEnviado.collectAsState()
         val errorSendMail = usuarioVM.errorSendMail.collectAsState()
+        val errorRegistro = usuarioVM.errorRegister.collectAsState()
+        val registroExitoso = usuarioVM.registroExitoso.collectAsState()
 
         if (estadoCorreoEnviado.value) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Center
-            ) {
-                item {
-                    Text(
-                        text = "Ingrese el token enviado a su correo",
-                        fontSize = 32.sp,
-                        color = Color.Black,
-                        modifier = Modifier.padding(
-                            start = 16.dp,
-                            end = 16.dp,
-                            top = 26.dp,
-                            bottom = 30.dp
-                        )
-                    )
-                }
-                item {
-                    TextField(
-                        value = codigo,
-                        onValueChange = { codigo = it },
-                        label = { Text("Código") },
-                        placeholder = { Text("Ingresa tu código") },
-                        keyboardOptions = KeyboardOptions.Default.copy(
-                            imeAction = ImeAction.Next,
-                            keyboardType = KeyboardType.Text
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onNext = { }
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-                    )
-                }
-                item {
-                    Button(
-                        onClick = {  },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp)
-                            .height(50.dp)
-                            .background(Color(0xFFD5507C)),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD5507C))
-                    ) {
+            if (registroExitoso.value) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    item {
                         Text(
-                            text = "Terminar registro",
-                            color = Color.White,
-                            fontSize = 16.sp
+                            text = "¡Registro exitoso!",
+                            fontSize = 32.sp,
+                            color = AppColors.AzulZazil,
+                            modifier = Modifier.padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                                top = 26.dp,
+                                bottom = 30.dp
+                            )
                         )
+                    }
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    item {
+                        Text(
+                            text = "Ingrese el token enviado a su correo",
+                            fontSize = 32.sp,
+                            color = Color.Black,
+                            modifier = Modifier.padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                                top = 26.dp,
+                                bottom = 30.dp
+                            )
+                        )
+                    }
+                    if (errorRegistro.value) {
+                        item {
+                            Text(
+                                text = "Hubo un problema. Por favor verifique que su código sea correcto.",
+                                color = Color.Red,
+                                fontSize = 14.sp,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                            )
+                        }
+                    }
+                    item {
+                        TextField(
+                            value = codigo,
+                            onValueChange = { codigo = it },
+                            label = { Text("Código") },
+                            placeholder = { Text("Ingresa tu código") },
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Next,
+                                keyboardType = KeyboardType.Text
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onNext = { }
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                        )
+                    }
+                    item {
+                        Button(
+                            onClick = {
+                                usuarioVM.registerUSer(
+                                    email,
+                                    nombre,
+                                    apellidos,
+                                    password,
+                                    codigo
+                                )
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 16.dp, end = 16.dp)
+                                .height(50.dp)
+                                .background(Color(0xFFD5507C)),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD5507C))
+                        ) {
+                            Text(
+                                text = "Terminar registro",
+                                color = Color.White,
+                                fontSize = 16.sp
+                            )
+                        }
                     }
                 }
             }

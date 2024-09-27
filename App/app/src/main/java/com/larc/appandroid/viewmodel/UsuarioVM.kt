@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.larc.appandroid.MyApp
 import com.larc.appandroid.model.LoginRequest
+import com.larc.appandroid.model.RegisterRequest
 import com.larc.appandroid.model.ServicioRemotoUsuario
 import com.larc.appandroid.model.SignupRequest
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +31,10 @@ class UsuarioVM: ViewModel() {
     val mailEnviado: StateFlow<Boolean> = _mailEnviado
     private val _errorSendMail = MutableStateFlow(false)
     val errorSendMail: StateFlow<Boolean> = _errorSendMail
+    private val _errorRegister = MutableStateFlow(false)
+    val errorRegister: StateFlow<Boolean> = _errorRegister
+    private val _registroExitoso = MutableStateFlow(false)
+    val registroExitoso: StateFlow<Boolean> = _registroExitoso
 
     //-------------------------------------------------------------------------------------
     // Interface para la vista
@@ -61,6 +66,25 @@ class UsuarioVM: ViewModel() {
             } else {
                 _mailEnviado.value = false
                 _errorSendMail.value = true
+            }
+        }
+    }
+    fun registerUSer(email: String, name: String, lastName: String, password: String, token: String) {
+        _errorRegister.value = false
+        val registerRequest = RegisterRequest(email, name, lastName, password, token)
+        viewModelScope.launch {
+            val result = servicioRemotoUsuario.registerUser(registerRequest)
+            if (result != null) {
+                _estadoToken.value = result.token
+                _loggedUsuario.value = true
+                saveToken(result.token)
+                _errorRegister.value = false
+                _registroExitoso.value = true
+            } else {
+                _estadoToken.value = ""
+                _loggedUsuario.value = false
+                _errorRegister.value = true
+                _registroExitoso.value = false
             }
         }
     }

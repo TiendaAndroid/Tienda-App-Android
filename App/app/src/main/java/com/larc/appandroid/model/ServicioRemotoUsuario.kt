@@ -70,4 +70,18 @@ class ServicioRemotoUsuario {
             null
         }
     }
+
+    // Método para registrarse (ya con token)
+    suspend fun registerUser(registerRequest: RegisterRequest): UsuarioResponseRegister? {
+        return try {
+            val response: Response<UsuarioResponseRegister> = servicio.registerUser(registerRequest)
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
 }
