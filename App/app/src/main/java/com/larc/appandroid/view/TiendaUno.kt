@@ -17,6 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -33,17 +35,24 @@ fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, modifier
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text="Explora nuestro catálogo",
-                fontWeight = FontWeight.Bold,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                fontWeight = FontWeight.Normal,
+                //fontWeight = FontWeight.Bold,
                 fontSize = 25.sp,
-                modifier = Modifier.padding(start = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                //modifier = Modifier.padding(start = 16.dp),
                 color = AppColors.RosaZazil
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text="Selecciona una categoría:",
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                 fontWeight = FontWeight.Light,
                 fontSize = 18.sp,
-                modifier = Modifier.padding(start = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                //modifier = Modifier.padding(start = 16.dp),
                 color = AppColors.RosaZazil
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -102,11 +111,14 @@ fun BotonApachurrableDos(text: String, onClick: () -> Unit) {
         modifier = Modifier
             .width(150.dp)
             .height(150.dp)
+            .shadow(8.dp, shape = RoundedCornerShape(16.dp))
             .clip(RoundedCornerShape(16.dp)),
         shape = RectangleShape,
         colors = ButtonDefaults.buttonColors(
-            containerColor = AppColors.CremaZazil,
-            contentColor = AppColors.RosaZazil
+            containerColor =  Color(0xFFFAF8FF),
+            contentColor = AppColors.GrisOscuro
+            //containerColor = AppColors.CremaZazil,
+            //contentColor = AppColors.RosaZazil
         )
     ) {
         Box(
@@ -116,7 +128,8 @@ fun BotonApachurrableDos(text: String, onClick: () -> Unit) {
             Text(
                 text = text,
                 fontSize = 17.sp,
-                fontWeight = FontWeight.Bold,
+                //fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Normal,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp)
             )

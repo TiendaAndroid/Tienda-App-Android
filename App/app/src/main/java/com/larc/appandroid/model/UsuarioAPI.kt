@@ -2,6 +2,8 @@ package com.larc.appandroid.model
 
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface UsuarioAPI {
@@ -20,5 +22,10 @@ interface UsuarioAPI {
     suspend fun registerUser(
         @Body registerRequest: RegisterRequest
     ): Response<UsuarioResponseRegister>
+
+    @GET("auth/profile")
+    suspend fun getProfile(
+        @Header("Authorization") token: String
+    ): Response<ProfileResponse>
 
 }

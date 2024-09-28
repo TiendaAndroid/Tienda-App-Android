@@ -1,5 +1,6 @@
 package com.larc.appandroid.view
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
@@ -28,33 +30,27 @@ fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
         SignUp(navController, usuarioVM)
     } else {
 
+        usuarioVM.getProfile()
+        val estadoMiUsuario = usuarioVM.estadoMiUsuario.collectAsState()
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                Row {
-                    Text(
-                        text = "Hola, ",
-                        color = AppColors.GrisOscuro,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 22.sp,
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .weight(4f)
-                    )
-                    Text(
-                        text = "Lucio",
-                        color = AppColors.GrisOscuro,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 18.sp,
-                        modifier = Modifier
-                            .padding(start = 2.dp, top = 2.dp)
-                            .weight(6f)
-                    )
-                }
-                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = "Hola, ${estadoMiUsuario.value.name}",
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    //color = AppColors.GrisOscuro,
+                    color = AppColors.RosaZazil,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 22.sp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        //.padding(start = 20.dp)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -63,12 +59,10 @@ fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
                 ) {
                     BotonApachurrable(
                         text = "Mis pedidos",
-                        color = Color(0xFFD5507C),
                         onClick = { navigateTo(Pantallas.RUTA_MIS_PEDIDOS) })
                     Spacer(modifier = Modifier.width(16.dp))
                     BotonApachurrable(
                         text = "Mi información",
-                        color = Color(0xFFD5507C),
                         onClick = { navigateTo(Pantallas.RUTA_MI_INFORMACION) })
                 }
 
@@ -80,12 +74,10 @@ fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
                 ) {
                     BotonApachurrable(
                         text = "Direcciones",
-                        color = Color(0xFFD5507C),
                         onClick = { navigateTo(Pantallas.RUTA_DIRECCIONES) })
                     Spacer(modifier = Modifier.width(16.dp))
                     BotonApachurrable(
                         text = "Servicio al cliente",
-                        color = Color(0xFFD5507C),
                         onClick = { navigateTo(Pantallas.RUTA_SERVICIO_CLIENTE) })
                 }
 
@@ -97,9 +89,10 @@ fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
                 ) {
                     BotonApachurrable(
                         text = "Pagos",
-                        color = Color(0xFFD5507C),
                         onClick = { /* Navegar a Configuración */ })
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
             }
         }
 
@@ -107,18 +100,21 @@ fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
 }
 
 @Composable
-fun BotonApachurrable(text: String, color: Color, onClick: () -> Unit) {
+fun BotonApachurrable(text: String, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
             .width(150.dp)
             .height(150.dp)
+            .shadow(8.dp, shape = RoundedCornerShape(16.dp))
             .clip(RoundedCornerShape(16.dp)),
         shape = RectangleShape,
         colors = ButtonDefaults.buttonColors(
-            containerColor = AppColors.CremaZazil,
-            contentColor = AppColors.RosaZazil
+            containerColor =  Color(0xFFFAF8FF),
+            contentColor = AppColors.GrisOscuro
+            //containerColor = AppColors.CremaZazil,
+            //contentColor = AppColors.RosaZazil
         )
     ) {
         Box(
@@ -128,7 +124,8 @@ fun BotonApachurrable(text: String, color: Color, onClick: () -> Unit) {
             Text(
                 text = text,
                 fontSize = 17.sp,
-                fontWeight = FontWeight.Bold,
+                fontWeight = FontWeight.Normal,
+                //fontWeight = FontWeight.Bold,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                 modifier = Modifier.padding(start = 8.dp, end = 8.dp)
             )

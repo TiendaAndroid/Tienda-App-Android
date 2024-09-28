@@ -35,6 +35,8 @@ class UsuarioVM: ViewModel() {
     val errorRegister: StateFlow<Boolean> = _errorRegister
     private val _registroExitoso = MutableStateFlow(false)
     val registroExitoso: StateFlow<Boolean> = _registroExitoso
+    private val _estadoMiUsuario = MutableStateFlow( EstadoUsuario() )
+    val estadoMiUsuario: StateFlow<EstadoUsuario> = _estadoMiUsuario
 
     //-------------------------------------------------------------------------------------
     // Interface para la vista
@@ -117,5 +119,26 @@ class UsuarioVM: ViewModel() {
     private fun getToken(): String? {
         val sharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
         return sharedPreferences.getString("auth_token", null)
+    }
+    fun getProfile() {
+        if (getToken() != null) {
+            viewModelScope.launch {
+                val result = servicioRemotoUsuario.getProfile(getToken()!!)
+                if (result != null) {
+                    _estadoMiUsuario.value = _estadoMiUsuario.value.copy(
+                        id = result.id,
+                        email = result.email,
+                        name = result.name,
+                        lastName = result.lastName,
+                        googleId = result.googleId,
+                        isActive = result.isActive,
+                        role = result.role,
+                        direction = result.direction,
+                        cart = result.cart,
+                        orders = result.orders
+                    )
+                }
+            }
+        }
     }
 }

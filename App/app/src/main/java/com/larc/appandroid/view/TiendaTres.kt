@@ -42,30 +42,21 @@ fun TiendaTres(navController: NavHostController, cat: String, productoVM: Produc
     } else {
         if (estadoSinResultados.value) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = "Sin resultados para '$cat'")
+                Text(text = "Sin resultados para '$cat'",
+                    color = AppColors.RosaZazil,)
             }
         } else {
             LazyColumn(modifier = Modifier.fillMaxWidth()) {
                 item {
                     Spacer(modifier = Modifier.height(16.dp))
-                    Row {
-                        Text(
-                            text = "${estadoTotalResultados.value} $res para:",
-                            color = AppColors.GrisOscuro,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 16.sp,
-                            modifier = Modifier
-                                .padding(start = 22.dp)
-                                .weight(6f)
-                        )
-                        Text(
-                            text = cat,
-                            color = AppColors.GrisOscuro,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 16.sp,
-                            modifier = Modifier.weight(6f)
-                        )
-                    }
+                    Text(
+                        text = "${estadoTotalResultados.value} $res para: '$cat'",
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                        color = AppColors.RosaZazil,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 16.sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                     Spacer(modifier = Modifier.height(6.dp))
                 }
                 estadoListaBusqueda.value.forEach { producto ->

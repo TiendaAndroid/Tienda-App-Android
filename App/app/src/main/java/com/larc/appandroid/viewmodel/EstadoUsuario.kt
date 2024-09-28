@@ -1,18 +1,22 @@
 package com.larc.appandroid.viewmodel
 
+import com.larc.appandroid.model.Cart
+import com.larc.appandroid.model.Direction
+import com.larc.appandroid.model.Order
+
 // CORREGIR CART_ITEM, ORDER_ITEM, ADDED_AT
 
 data class EstadoUsuario(
-    val id: String,
-    val email: String,
-    val name: String,
-    val lastName: String,
-    val googleId: String?,
-    val isActive: Boolean,
-    val role: List<String>,
-    val direction: List<EstadoDirection>?,
-    val cart: EstadoCart,
-    val orders: List<String>?,
+    val id: String = "",
+    val email: String = "",
+    val name: String = "",
+    val lastName: String = "",
+    val googleId: String? = null,
+    val isActive: Boolean = false,
+    val role: List<String> = emptyList(),
+    val direction: List<Direction>? = null, //List<EstadoDirection>? = null,
+    val cart: Cart? = null, //EstadoCart = EstadoCart("", "", emptyList()),
+    val orders: List<Order>? = null //List<EstadoOrder>? = null,
 )
 
 data class EstadoDirection(
@@ -76,8 +80,8 @@ data class EstadoProduct(
     val type: List<String>,
     val stock: Int,
     val isActive: Boolean,
-    val createdAt: String,
-    val updatedAt: String,
+    //val createdAt: String,
+    //val updatedAt: String,
     val image: List<EstadoImage>?
 )
 

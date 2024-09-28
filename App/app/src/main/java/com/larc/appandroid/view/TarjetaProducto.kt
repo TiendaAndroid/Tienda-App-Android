@@ -55,27 +55,21 @@ fun TarjetaProducto(thisId: String, navController: NavHostController, text: Stri
                 .padding(top = 15.dp, start = 15.dp)) {
                 Text(
                     text = text,
+                    //textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                     color = AppColors.GrisOscuro,
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(6.dp))
-                Row {
-                    Text(
-                        text = "Precio: $ ",
-                        color = AppColors.GrisOscuro,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Light,
-                        modifier = Modifier.weight(4f)
-                    )
-                    Text(
-                        text = price.toString(),
-                        color = AppColors.GrisOscuro,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier.weight(6f)
-                    )
-                }
+                Text(
+                    text = "Precio: $ $price",
+                    //textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    color = AppColors.GrisOscuro,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    modifier = Modifier.fillMaxWidth()
+                )
                 Spacer(modifier = Modifier.height(10.dp))
                 BotonDetalle(onClick = { navController.navigate(Pantallas.RUTA_DETALLE_PRODUCTO+"/${thisId}") })
                 Spacer(modifier = Modifier.height(8.dp))

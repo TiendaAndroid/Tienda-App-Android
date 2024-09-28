@@ -75,26 +75,14 @@ fun TiendaDos(navController: NavHostController, cat: String, productoVM: Product
             ) {
                 item {
                     Spacer(modifier = Modifier.height(16.dp))
-                    Row {
-                        Text(
-                            text = "Explorando:",
-                            color = AppColors.GrisOscuro,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 22.sp,
-                            modifier = Modifier
-                                .padding(start = 16.dp)
-                                .weight(4f)
-                        )
-                        Text(
-                            text = cat,
-                            color = AppColors.GrisOscuro,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 18.sp,
-                            modifier = Modifier
-                                .padding(start = 2.dp, top = 2.dp)
-                                .weight(6f)
-                        )
-                    }
+                    Text(
+                        text = "Explorando: $cat",
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                        color = AppColors.RosaZazil,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 22.sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
                     Spacer(modifier = Modifier.height(6.dp))
                 }
                 estadoListaTodosProductos.value.forEach { producto ->

@@ -84,4 +84,19 @@ class ServicioRemotoUsuario {
             null
         }
     }
+
+    // Método para obtener el perfil
+    suspend fun getProfile(token: String): ProfileResponse? {
+        val bearerToken = "Bearer $token"
+        return try {
+            val response: Response<ProfileResponse> = servicio.getProfile(bearerToken)
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
 }

@@ -56,9 +56,11 @@ fun DetalleProducto(id: String, productoVM: ProductoVM, modifier: Modifier = Mod
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = prodActual.value?.name ?: "Producto no encontrado",
-                        fontWeight = FontWeight.Bold,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                        fontWeight = FontWeight.Normal,
                         fontSize = 25.sp,
-                        modifier = Modifier.padding(start = 20.dp, end = 20.dp),
+                        //modifier = Modifier.padding(start = 20.dp, end = 20.dp),
+                        modifier = Modifier.fillMaxWidth(),
                         color = AppColors.RosaZazil
                     )
                     Spacer(modifier = Modifier.height(16.dp))
@@ -80,29 +82,30 @@ fun DetalleProducto(id: String, productoVM: ProductoVM, modifier: Modifier = Mod
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
-                    Row(modifier = Modifier.padding(start = 20.dp, end = 20.dp)) {
+                    Row(modifier = Modifier.padding(start = 30.dp, end = 30.dp)) {
                         Text(
                             text = "$",
                             fontSize = 20.sp,
                             color = AppColors.RosaZazil,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Normal
                         )
                         Text(
                             text = prodActual.value?.price.toString(),
                             fontSize = 20.sp,
                             color = AppColors.RosaZazil,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Normal
                         )
                     }
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = "Características:",
-                        modifier = Modifier.padding(start = 20.dp, end = 20.dp)
+                        modifier = Modifier.padding(start = 30.dp, end = 30.dp)
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = prodActual.value?.description ?: "Producto no encontrado",
-                        modifier = Modifier.padding(start = 20.dp, end = 20.dp)
+                        fontSize = 14.sp,
+                        modifier = Modifier.padding(start = 30.dp, end = 30.dp)
                     )
                     Row(
                         modifier = Modifier.fillMaxWidth(),
