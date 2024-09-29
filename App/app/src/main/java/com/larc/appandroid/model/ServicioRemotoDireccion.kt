@@ -52,4 +52,19 @@ class ServicioRemotoDireccion {
             null
         }
     }
+
+    // Eliminar una dirección
+    suspend fun deleteAddress(token: String, id: String): DeleteAddressResponse? {
+        val bearerToken = "Bearer $token"
+        return try {
+            val response: Response<DeleteAddressResponse> = servicio.deleteAddress(bearerToken, id)
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
 }

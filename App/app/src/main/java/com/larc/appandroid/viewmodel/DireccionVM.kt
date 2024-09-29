@@ -18,6 +18,10 @@ class DireccionVM: ViewModel() {
     val errorNuevaDireccion: MutableStateFlow<Boolean> = _errorNuevaDireccion
     private val _direccionCreada = MutableStateFlow(false)
     val direccionCreada: MutableStateFlow<Boolean> = _direccionCreada
+    private val _errorEliminarDireccion = MutableStateFlow(false)
+    val errorEliminarDireccion: MutableStateFlow<Boolean> = _errorEliminarDireccion
+    private val _direccionEliminada = MutableStateFlow(false)
+    val direccionEliminada: MutableStateFlow<Boolean> = _direccionEliminada
 
     //-------------------------------------------------------------------------------------
     // Interface para la vista
@@ -55,5 +59,17 @@ class DireccionVM: ViewModel() {
     fun resetErrores() {
         _errorNuevaDireccion.value = false
         _direccionCreada.value = false
+    }
+    fun deleteAddress(token: String, id: String) {
+        viewModelScope.launch {
+            val result = servicioRemotoDireccion.deleteAddress(token, id)
+            if (result != null) {
+                _errorEliminarDireccion.value = false
+                _direccionEliminada.value = true
+            } else {
+                _errorEliminarDireccion.value = true
+                _direccionEliminada.value = false
+            }
+        }
     }
 }

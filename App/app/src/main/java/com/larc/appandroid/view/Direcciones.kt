@@ -55,7 +55,7 @@ fun Direcciones(navController: NavHostController, usuarioVM: UsuarioVM, modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    TarjetaDireccion(thisAddressId, thisAddress)
+                    TarjetaDireccion(navController, thisAddressId, thisAddress)
                 }
                 Spacer(modifier = Modifier.height(6.dp))
             }

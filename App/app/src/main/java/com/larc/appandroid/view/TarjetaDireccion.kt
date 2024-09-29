@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,9 +25,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 @Composable
-fun TarjetaDireccion(thisAddressId: String, thisAdress: String, modifier: Modifier = Modifier) {
+fun TarjetaDireccion(navController: NavHostController, thisAddressId: String, thisAdress: String, modifier: Modifier = Modifier) {
     Spacer(modifier = Modifier.height(16.dp))
     Box(
         contentAlignment = Alignment.Center,
@@ -57,6 +59,19 @@ fun TarjetaDireccion(thisAddressId: String, thisAdress: String, modifier: Modifi
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Editar dirección",
+                    tint = AppColors.RosaZazil
+                )
+            }
+            IconButton(
+                onClick = { navController.navigate(Pantallas.RUTA_ELIMINAR_DIRECCION) /*+ "/${thisAddressId}")*/ },
+                modifier = Modifier
+                    .width(30.dp)
+                    .height(30.dp)
+                    .clip(CircleShape)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Borrar dirección",
                     tint = AppColors.RosaZazil
                 )
             }

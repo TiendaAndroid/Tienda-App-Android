@@ -307,5 +307,8 @@ fun AppNavHost(navController: NavHostController,
             val token = it.arguments?.getString("token")
             NuevaDireccion(navController, token!!, direccionVM)
         }
+        composable(Pantallas.RUTA_ELIMINAR_DIRECCION /*+ "/{token}/{id}"*/) {
+            EliminarDireccion()
+        }
     }
 }

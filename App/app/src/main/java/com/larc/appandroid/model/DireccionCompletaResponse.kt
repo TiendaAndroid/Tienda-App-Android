@@ -27,3 +27,7 @@ data class UserAddressResponse(
     val cart: Cart,
     val orders: List<Order>?
 )
+
+data class DeleteAddressResponse(
+    val message: String
+)

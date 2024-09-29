@@ -28,6 +28,7 @@ object Pantallas {
     const val RUTA_SIGN_UP = "sign_up"
     const val RUTA_REGISTRAR = "registrar"
     const val RUTA_NUEVA_DIRECCION = "nueva_direccion"
+    const val RUTA_ELIMINAR_DIRECCION = "eliminar_direccion"
 
     val listaPantallas = listOf(
         Pantalla("Home", RUTA_HOME, Icons.Filled.Home),
