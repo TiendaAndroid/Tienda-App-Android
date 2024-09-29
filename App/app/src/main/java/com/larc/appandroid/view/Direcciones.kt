@@ -17,11 +17,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.larc.appandroid.viewmodel.UsuarioVM
 
 @Composable
-fun Direcciones(usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
+fun Direcciones(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
 
+    usuarioVM.getProfile()
     val estadoUsuario = usuarioVM.estadoMiUsuario.collectAsState()
 
     LazyColumn(
@@ -61,7 +63,8 @@ fun Direcciones(usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
             ) {
-                BotonAgregarDireccion()
+                BotonAgregarDireccion(
+                    onClick = { navController.navigate(Pantallas.RUTA_NUEVA_DIRECCION+"/${usuarioVM.getToken().toString()}") })
             }
             Spacer(modifier = Modifier.height(6.dp))
         }
@@ -69,9 +72,9 @@ fun Direcciones(usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun BotonAgregarDireccion() {
+fun BotonAgregarDireccion(onClick: () -> Unit) {
     Button(
-        onClick = {  },
+        onClick = onClick,
         contentPadding = PaddingValues(0.dp),
         border = BorderStroke(2.dp, Color.LightGray),
         modifier = Modifier

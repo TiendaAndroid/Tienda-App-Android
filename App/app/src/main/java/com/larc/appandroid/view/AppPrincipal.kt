@@ -23,6 +23,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.larc.appandroid.ui.theme.AppAndroidTheme
+import com.larc.appandroid.viewmodel.DireccionVM
 import com.larc.appandroid.viewmodel.ProductoVM
 import com.larc.appandroid.viewmodel.UsuarioVM
 import kotlinx.coroutines.delay
@@ -32,6 +33,7 @@ fun AppPrincipal() {
     val navController = rememberNavController()
     val productoVM: ProductoVM = viewModel()
     val usuarioVM: UsuarioVM = viewModel()
+    val direccionVM: DireccionVM = viewModel()
     var searchText by remember { mutableStateOf("") }
 
     val onSearchTextChanged: (String) -> Unit = { text ->
@@ -52,7 +54,7 @@ fun AppPrincipal() {
             },
             bottomBar = { AppBottomBar(navController) },
         ) { innerPadding ->
-            AppNavHost(navController, productoVM, usuarioVM, modifier = Modifier.padding(innerPadding))
+            AppNavHost(navController, productoVM, usuarioVM, direccionVM, modifier = Modifier.padding(innerPadding))
         }
     }
 }
@@ -235,7 +237,11 @@ fun AppBottomBar(navController: NavHostController) {
 }
 
 @Composable
-fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
+fun AppNavHost(navController: NavHostController,
+               productoVM: ProductoVM,
+               usuarioVM: UsuarioVM,
+               direccionVM: DireccionVM,
+               modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
         startDestination = Pantallas.RUTA_HOME,
@@ -277,7 +283,7 @@ fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, usuario
             MiInformacion()
         }
         composable(Pantallas.RUTA_DIRECCIONES) {
-            Direcciones(usuarioVM)
+            Direcciones(navController, usuarioVM)
         }
         composable(Pantallas.RUTA_TIENDA_DOS + "/{cat}") {
             val cat = it.arguments?.getString("cat")
@@ -296,6 +302,10 @@ fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, usuario
         }
         composable(Pantallas.RUTA_REGISTRAR) {
             Registrar(navController, usuarioVM)
+        }
+        composable(Pantallas.RUTA_NUEVA_DIRECCION + "/{token}") {
+            val token = it.arguments?.getString("token")
+            NuevaDireccion(navController, token!!, direccionVM)
         }
     }
 }

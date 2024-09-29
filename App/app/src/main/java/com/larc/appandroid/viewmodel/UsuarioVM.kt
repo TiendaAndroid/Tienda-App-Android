@@ -116,7 +116,7 @@ class UsuarioVM: ViewModel() {
             _loggedUsuario.value = true
         }
     }
-    private fun getToken(): String? {
+    fun getToken(): String? {
         val sharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
         return sharedPreferences.getString("auth_token", null)
     }
