@@ -12,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -121,7 +122,7 @@ fun AppTopBar(
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
-                modifier = Modifier.background(AppColors.GrisClaro)
+                modifier = Modifier.background(Color(0xFFFAF8FF))
             ) {
                 DropdownMenuItem(
                     text = { Text("Acerca de", color = AppColors.GrisOscuro) },
@@ -180,7 +181,7 @@ fun AppTopBar(
             }
         },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = AppColors.GrisClaro
+            containerColor = Color(0xFFFAF8FF)
         )
     )
 }
@@ -200,7 +201,7 @@ fun navigateTo(navController: NavHostController, ruta: String) {
 @Composable
 fun AppBottomBar(navController: NavHostController) {
     BottomAppBar(
-        containerColor = AppColors.GrisClaro,
+        containerColor = Color(0xFFFAF8FF),
     ) {
         val pilaNavegacion by navController.currentBackStackEntryAsState()
         val pantallaActual = pilaNavegacion?.destination
@@ -307,8 +308,10 @@ fun AppNavHost(navController: NavHostController,
             val token = it.arguments?.getString("token")
             NuevaDireccion(navController, token!!, direccionVM)
         }
-        composable(Pantallas.RUTA_ELIMINAR_DIRECCION /*+ "/{token}/{id}"*/) {
-            EliminarDireccion()
+        composable(Pantallas.RUTA_ELIMINAR_DIRECCION + "/{token}/{addressId}") {
+            val token = it.arguments?.getString("token")
+            val addressId = it.arguments?.getString("addressId")
+            EliminarDireccion(navController, token!!, addressId!!, direccionVM)
         }
     }
 }

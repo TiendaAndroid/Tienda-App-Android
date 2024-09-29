@@ -28,7 +28,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 
 @Composable
-fun TarjetaDireccion(navController: NavHostController, thisAddressId: String, thisAdress: String, modifier: Modifier = Modifier) {
+fun TarjetaDireccion(navController: NavHostController,
+                     thisAddressId: String,
+                     thisAdress: String,
+                     token: String,
+                     modifier: Modifier = Modifier) {
     Spacer(modifier = Modifier.height(16.dp))
     Box(
         contentAlignment = Alignment.Center,
@@ -63,7 +67,7 @@ fun TarjetaDireccion(navController: NavHostController, thisAddressId: String, th
                 )
             }
             IconButton(
-                onClick = { navController.navigate(Pantallas.RUTA_ELIMINAR_DIRECCION) /*+ "/${thisAddressId}")*/ },
+                onClick = { navController.navigate(Pantallas.RUTA_ELIMINAR_DIRECCION + "/${token}" + "/${thisAddressId}") },
                 modifier = Modifier
                     .width(30.dp)
                     .height(30.dp)

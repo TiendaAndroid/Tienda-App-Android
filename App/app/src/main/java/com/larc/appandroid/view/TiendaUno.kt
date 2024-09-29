@@ -1,5 +1,6 @@
 package com.larc.appandroid.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -29,7 +30,8 @@ import com.larc.appandroid.viewmodel.ProductoVM
 @Composable
 fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     LazyColumn(modifier = Modifier
-        .fillMaxWidth(),
+        .fillMaxWidth()
+        .background(Color(0xFFFAF8FF)),
     ) {
         item {
             Spacer(modifier = Modifier.height(16.dp))

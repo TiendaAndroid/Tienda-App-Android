@@ -1,5 +1,6 @@
 package com.larc.appandroid.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,18 +41,18 @@ fun DetalleProducto(id: String, productoVM: ProductoVM, modifier: Modifier = Mod
         productoVM.getProductoPorId(id)
     }
     if (isLoading) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier.fillMaxSize().background(Color(0xFFFAF8FF)), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
     } else {
         if (estadoSinResultIndiv.value) {
-            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            Box(modifier = Modifier.fillMaxWidth().background(Color(0xFFFAF8FF)), contentAlignment = Alignment.Center) {
                 Text(text = "Ha habido un error al cargar el producto.")
             }
         } else {
             LazyColumn(
                 modifier = modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth().background(Color(0xFFFAF8FF))
             ) {
                 item {
                     Spacer(modifier = Modifier.height(16.dp))

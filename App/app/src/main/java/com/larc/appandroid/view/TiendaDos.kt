@@ -1,6 +1,7 @@
 package com.larc.appandroid.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,12 +54,12 @@ fun TiendaDos(navController: NavHostController, cat: String, productoVM: Product
     val estadoSinResultados = productoVM.estadoSinResultados.collectAsState()
     val isLoading = productoVM.isLoading.collectAsState().value
     if (isLoading) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier.fillMaxSize().background(Color(0xFFFAF8FF)), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
     } else {
         if (estadoSinResultados.value) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Box(modifier = Modifier.fillMaxSize().background(Color(0xFFFAF8FF)), contentAlignment = Alignment.Center) {
                 Text(text = "No se han encontrado productos.")
             }
         } else {
@@ -70,7 +71,8 @@ fun TiendaDos(navController: NavHostController, cat: String, productoVM: Product
             }
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .background(Color(0xFFFAF8FF)),
                 state = listState
             ) {
                 item {

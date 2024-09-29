@@ -22,6 +22,8 @@ class DireccionVM: ViewModel() {
     val errorEliminarDireccion: MutableStateFlow<Boolean> = _errorEliminarDireccion
     private val _direccionEliminada = MutableStateFlow(false)
     val direccionEliminada: MutableStateFlow<Boolean> = _direccionEliminada
+    private val _estadoMiDirecIndiv = MutableStateFlow( EstadoDirecIndiv() )
+    val estadoMiDirecIndiv: MutableStateFlow<EstadoDirecIndiv> = _estadoMiDirecIndiv
 
     //-------------------------------------------------------------------------------------
     // Interface para la vista
@@ -71,5 +73,28 @@ class DireccionVM: ViewModel() {
                 _direccionEliminada.value = false
             }
         }
+    }
+    fun getDirecIndiv(token: String, id: String) {
+        viewModelScope.launch {
+            val result = servicioRemotoDireccion.getAddress(token, id)
+            if (result != null) {
+                _estadoMiDirecIndiv.value = _estadoMiDirecIndiv.value.copy(
+                    id = result.id,
+                    tipo = result.tipo,
+                    pais = result.pais,
+                    municipio = result.municipio,
+                    estado = result.estado,
+                    calle = result.calle,
+                    noExterior = result.noExterior,
+                    noInterior = result.noInterior,
+                    colonia = result.colonia,
+                    cp = result.cp
+                )
+            }
+        }
+    }
+    fun resetErroresEliminar() {
+        _errorEliminarDireccion.value = false
+        _direccionEliminada.value = false
     }
 }

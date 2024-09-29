@@ -67,4 +67,19 @@ class ServicioRemotoDireccion {
             null
         }
     }
+
+    // Obtener una dirección
+    suspend fun getAddress(token: String, id: String): GetAddressResponse? {
+        val bearerToken = "Bearer $token"
+        return try {
+            val response: Response<GetAddressResponse> = servicio.getAddress(bearerToken, id)
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
 }

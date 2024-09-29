@@ -253,7 +253,7 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
             item {
                 if (errorGuardar.value) {
                     Text(
-                        text = "Hubo un error al guardar la dirección. Por favor intenta de nuevo",
+                        text = "Hubo un error al guardar la dirección. Por favor intenta de nuevo.",
                         color = Color.Red,
                         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)
                     )
