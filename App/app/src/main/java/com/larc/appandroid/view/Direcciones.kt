@@ -1,101 +1,109 @@
 package com.larc.appandroid.view
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.larc.appandroid.viewmodel.UsuarioVM
 
 @Composable
-fun Direcciones(modifier: Modifier = Modifier) {
-    var direccion by remember { mutableStateOf("") }
-    var ciudad by remember { mutableStateOf("") }
-    var estado by remember { mutableStateOf("") }
-    var codigoPostal by remember { mutableStateOf("") }
-    var colonia by remember { mutableStateOf("") }
+fun Direcciones(usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    val estadoUsuario = usuarioVM.estadoMiUsuario.collectAsState()
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth(),
     ) {
-        Text(
-            text = "Ingresar Dirección",
-            fontSize = 32.sp,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
-        TextField(
-            value = direccion,
-            onValueChange = { direccion = it },
-            label = { Text("Calle y número") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        )
-
-        TextField(
-            value = colonia,
-            onValueChange = { colonia = it }, // Cambiado a "colonia"
-            label = { Text("Colonia") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        )
-
-        TextField(
-            value = ciudad,
-            onValueChange = { ciudad = it },
-            label = { Text("Ciudad") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        )
-
-        TextField(
-            value = estado,
-            onValueChange = { estado = it },
-            label = { Text("Estado") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        )
-
-        TextField(
-            value = codigoPostal,
-            onValueChange = { codigoPostal = it },
-            label = { Text("Código Postal") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
-        )
-
-        Button(
-            onClick = { },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(50.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFD5507C)
-            )
-        ) {
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Guardar",
-                color = Color.White,
-                fontSize = 16.sp
+                text = "Mis direcciones",
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                color = AppColors.RosaZazil,
+                fontWeight = FontWeight.Normal,
+                fontSize = 22.sp,
+                modifier = Modifier.fillMaxWidth()
             )
+            Spacer(modifier = Modifier.height(6.dp))
+        }
+        estadoUsuario.value.direction?.forEach { direction ->
+            item {
+                val thisAddressId = direction.id
+                val thisCalle = direction.calle
+                val thisNoExt = direction.noExterior
+                val thisAddress = "$thisCalle, #$thisNoExt..."
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    TarjetaDireccion(thisAddressId, thisAddress)
+                }
+                Spacer(modifier = Modifier.height(6.dp))
+            }
+        }
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                BotonAgregarDireccion()
+            }
+            Spacer(modifier = Modifier.height(6.dp))
         }
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun DireccionesPreview() {
-    Direcciones()
+fun BotonAgregarDireccion() {
+    Button(
+        onClick = {  },
+        contentPadding = PaddingValues(0.dp),
+        border = BorderStroke(2.dp, Color.LightGray),
+        modifier = Modifier
+            .height(80.dp)
+            .fillMaxWidth(.9f)
+            .clip(RoundedCornerShape(20.dp))
+            .padding(16.dp),
+        shape = RoundedCornerShape(20),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = AppColors.White,
+            contentColor = AppColors.GrisOscuro,
+        ),
+    ) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .fillMaxWidth(.8f)
+        ) {
+            Row {
+                Text(
+                    text = "Agregar nueva dirección",
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Normal,
+                    modifier = Modifier.padding(top = 2.dp)
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Añadir dirección",
+                    tint = AppColors.RosaZazil
+                )
+            }
+        }
+    }
 }

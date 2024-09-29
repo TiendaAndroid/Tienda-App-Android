@@ -277,7 +277,7 @@ fun AppNavHost(navController: NavHostController, productoVM: ProductoVM, usuario
             MiInformacion()
         }
         composable(Pantallas.RUTA_DIRECCIONES) {
-            Direcciones()
+            Direcciones(usuarioVM)
         }
         composable(Pantallas.RUTA_TIENDA_DOS + "/{cat}") {
             val cat = it.arguments?.getString("cat")
