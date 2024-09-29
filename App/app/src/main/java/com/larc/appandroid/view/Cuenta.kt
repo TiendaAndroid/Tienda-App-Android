@@ -1,5 +1,6 @@
 package com.larc.appandroid.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -38,6 +39,7 @@ fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
+                .background(Color(0xFFFAF8FF))
         ) {
             item {
                 Spacer(modifier = Modifier.height(16.dp))

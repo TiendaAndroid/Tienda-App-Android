@@ -1,6 +1,7 @@
 package com.larc.appandroid.view
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -59,7 +60,8 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
     if (direccionCreada.value) {
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .background(Color(0xFFFAF8FF)),
             verticalArrangement = Arrangement.Center
         ) {
             item {
@@ -103,7 +105,8 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
     } else {
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .background(Color(0xFFFAF8FF)),
             verticalArrangement = Arrangement.Center
         ) {
             item {

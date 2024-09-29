@@ -1,6 +1,7 @@
 package com.larc.appandroid.view
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,7 +29,8 @@ fun Direcciones(navController: NavHostController, usuarioVM: UsuarioVM, modifier
 
     LazyColumn(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .background(Color(0xFFFAF8FF)),
     ) {
         item {
             Spacer(modifier = Modifier.height(16.dp))
