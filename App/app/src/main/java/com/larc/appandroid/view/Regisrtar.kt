@@ -1,15 +1,20 @@
 package com.larc.appandroid.view
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -31,46 +36,45 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
         val errorSendMail = usuarioVM.errorSendMail.collectAsState()
         val errorRegistro = usuarioVM.errorRegister.collectAsState()
         val registroExitoso = usuarioVM.registroExitoso.collectAsState()
+        val keyboardController = LocalSoftwareKeyboardController.current
 
         if (estadoCorreoEnviado.value) {
             if (registroExitoso.value) {
                 LazyColumn(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .background(Color(0xFFFAF8FF)),
                     verticalArrangement = Arrangement.Center
                 ) {
                     item {
                         Text(
                             text = "¡Registro exitoso!",
-                            fontSize = 32.sp,
-                            color = AppColors.AzulZazil,
-                            modifier = Modifier.padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                top = 26.dp,
-                                bottom = 30.dp
-                            )
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                            color = AppColors.RosaZazil,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 22.sp,
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
                 }
             } else {
                 LazyColumn(
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxSize()
+                        .background(Color(0xFFFAF8FF)),
                     verticalArrangement = Arrangement.Center
                 ) {
                     item {
+                        Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = "Ingrese el token enviado a su correo",
-                            fontSize = 32.sp,
-                            color = Color.Black,
-                            modifier = Modifier.padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                top = 26.dp,
-                                bottom = 30.dp
-                            )
+                            text = "Ingrese el token enviado\na su correo",
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                            color = AppColors.RosaZazil,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 22.sp,
+                            modifier = Modifier.fillMaxWidth()
                         )
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
                     if (errorRegistro.value) {
                         item {
@@ -103,28 +107,38 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                         )
                     }
                     item {
-                        Button(
-                            onClick = {
-                                usuarioVM.registerUSer(
-                                    email,
-                                    nombre,
-                                    apellidos,
-                                    password,
-                                    codigo
-                                )
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 16.dp, end = 16.dp)
-                                .height(50.dp)
-                                .background(Color(0xFFD5507C)),
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD5507C))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center
                         ) {
-                            Text(
-                                text = "Terminar registro",
-                                color = Color.White,
-                                fontSize = 16.sp
-                            )
+                            Button(
+                                onClick = {
+                                    usuarioVM.registerUSer(
+                                        email,
+                                        nombre,
+                                        apellidos,
+                                        password,
+                                        codigo
+                                    )
+                                },
+                                border = BorderStroke(2.dp, Color.LightGray),
+                                modifier = Modifier
+                                    .height(80.dp)
+                                    .fillMaxWidth(.9f)
+                                    .clip(RoundedCornerShape(20.dp))
+                                    .padding(16.dp),
+                                shape = RoundedCornerShape(20),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = AppColors.White,
+                                    contentColor = AppColors.GrisOscuro
+                                )
+                            ) {
+                                Text(
+                                    text = "Terminar registro",
+                                    fontSize = 17.sp,
+                                    fontWeight = FontWeight.Normal
+                                )
+                            }
                         }
                     }
                 }
@@ -132,21 +146,21 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
         } else {
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .background(Color(0xFFFAF8FF)),
                 verticalArrangement = Arrangement.Center
             ) {
                 item {
+                    Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = "Registro",
-                        fontSize = 32.sp,
-                        color = Color.Black,
-                        modifier = Modifier.padding(
-                            start = 16.dp,
-                            end = 16.dp,
-                            top = 26.dp,
-                            bottom = 30.dp
-                        )
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                        color = AppColors.RosaZazil,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 22.sp,
+                        modifier = Modifier.fillMaxWidth()
                     )
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
                 if (errorSendMail.value) {
                     item {
@@ -187,7 +201,7 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                         placeholder = { Text("Ingresa tus apellidos") },
                         keyboardOptions = KeyboardOptions.Default.copy(
                             imeAction = ImeAction.Next,
-                            keyboardType = KeyboardType.Phone
+                            keyboardType = KeyboardType.Text
                         ),
                         keyboardActions = KeyboardActions(
                             onNext = { }
@@ -222,11 +236,19 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                         label = { Text("Contraseña") },
                         placeholder = { Text("Ingresa tu contraseña") },
                         keyboardOptions = KeyboardOptions.Default.copy(
-                            imeAction = ImeAction.Next,
+                            imeAction = ImeAction.Done,
                             keyboardType = KeyboardType.Password
                         ),
                         keyboardActions = KeyboardActions(
-                            onNext = { }
+                            onDone = {
+                                usuarioVM.registerSendMail(
+                                    email,
+                                    nombre,
+                                    apellidos,
+                                    password
+                                )
+                                keyboardController?.hide()
+                            }
                         ),
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier
@@ -235,31 +257,41 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                     )
                 }
                 item {
-                    Button(
-                        onClick = {
-                            usuarioVM.registerSendMail(
-                                email,
-                                nombre,
-                                apellidos,
-                                password
-                            )
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp)
-                            .height(50.dp)
-                            .background(Color(0xFFD5507C)),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD5507C))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
                     ) {
-                        Text(
-                            text = "Registrarse",
-                            color = Color.White,
-                            fontSize = 16.sp
-                        )
+                        Button(
+                            onClick = {
+                                usuarioVM.registerSendMail(
+                                    email,
+                                    nombre,
+                                    apellidos,
+                                    password
+                                )
+                            },
+                            border = BorderStroke(2.dp, Color.LightGray),
+                            modifier = Modifier
+                                .height(80.dp)
+                                .fillMaxWidth(.9f)
+                                .clip(RoundedCornerShape(20.dp))
+                                .padding(16.dp),
+                            shape = RoundedCornerShape(20),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = AppColors.White,
+                                contentColor = AppColors.GrisOscuro
+                            )
+                        ) {
+                            Text(
+                                text = "Registrarse",
+                                fontSize = 17.sp,
+                                fontWeight = FontWeight.Normal
+                            )
+                        }
                     }
                 }
                 item {
-                    Spacer(modifier = Modifier.height(30.dp))
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
                 item {
                     Row(
@@ -274,15 +306,20 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                         )
                         Button(
                             onClick = { navigateTo(navController, Pantallas.RUTA_SIGN_UP) },
+                            border = BorderStroke(2.dp, Color.LightGray),
                             modifier = Modifier
-                                .padding(start = 8.dp)
-                                .height(40.dp)
-                                .background(Color(0xFFD5507C)),
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD5507C))
+                                .fillMaxWidth(.9f)
+                                .clip(RoundedCornerShape(20.dp))
+                                .padding(8.dp),
+                            shape = RoundedCornerShape(20),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = AppColors.White,
+                                contentColor = AppColors.GrisOscuro
+                            )
                         ) {
                             Text(
                                 text = "Iniciar sesión",
-                                color = Color.White,
+                                fontWeight = FontWeight.Normal,
                                 fontSize = 14.sp
                             )
                         }
