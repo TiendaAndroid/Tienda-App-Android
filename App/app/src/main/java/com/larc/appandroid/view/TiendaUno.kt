@@ -139,6 +139,7 @@ fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, modifier
     }
 }
 
+// Botón con imagen y texto
 @Composable
 fun BotonApachurrableDos(text: String, onClick: () -> Unit, imagen: String) {
     Button(

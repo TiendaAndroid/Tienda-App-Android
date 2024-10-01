@@ -49,16 +49,22 @@ fun TiendaDos(navController: NavHostController, cat: String, productoVM: Product
     val pagsTotales = productoVM.estadoTotalPaginas.collectAsState()
     val estadoSinResultados = productoVM.estadoSinResultados.collectAsState()
     val isLoading = productoVM.isLoading.collectAsState().value
+
+    // Se meustra cuando se cargan los productos
     if (isLoading) {
         Box(modifier = Modifier.fillMaxSize().background(Color(0xFFFAF8FF)), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
     } else {
+
+        // Si no se han encontrado productos se muestra un mensaje
         if (estadoSinResultados.value) {
             Box(modifier = Modifier.fillMaxSize().background(Color(0xFFFAF8FF)), contentAlignment = Alignment.Center) {
                 Text(text = "No se han encontrado productos.")
             }
         } else {
+
+            // Si se han encontrado productos se muestran en una lista
             LaunchedEffect(scrollState.value) {
                 if (scrollState.value) {
                     listState.scrollToItem(0)
@@ -125,6 +131,7 @@ fun TiendaDos(navController: NavHostController, cat: String, productoVM: Product
     }
 }
 
+// Numerador de páginas
 @Composable
 fun Numerador(pagActual: Int, pagsTotales: Int, modifier: Modifier = Modifier) {
     Box(
@@ -136,6 +143,7 @@ fun Numerador(pagActual: Int, pagsTotales: Int, modifier: Modifier = Modifier) {
     }
 }
 
+// Ir a la página anterior
 @Composable
 fun BotonAnterior(productoVM: ProductoVM, modifier: Modifier = Modifier) {
     Button(
@@ -173,6 +181,7 @@ fun BotonAnterior(productoVM: ProductoVM, modifier: Modifier = Modifier) {
     }
 }
 
+// Ir a la página siguiente
 @Composable
 fun BotonSiguiente(productoVM: ProductoVM, modifier: Modifier = Modifier) {
     Button(

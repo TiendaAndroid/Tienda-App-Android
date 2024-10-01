@@ -34,18 +34,25 @@ fun TiendaTres(navController: NavHostController, cat: String, productoVM: Produc
     val estadoSinResultados = productoVM.estadoSinResultados.collectAsState()
     val estadoTotalResultados = productoVM.estadoTotalResultados.collectAsState()
     val isLoading = productoVM.isLoading.collectAsState().value
+
     LaunchedEffect(cat) {
         productoVM.searchProducto(cat)
     }
+
+    // Cambia el mensaje dependiendo de la cantidad de resultados
     val res = if (estadoTotalResultados.value == 1) {
         "resultado"
     } else {
         "resultados"
     }
+
+    // Muestra el disco de carga
     if (isLoading) {
         Box(modifier = Modifier.fillMaxSize().background(Color(0xFFFAF8FF)), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
+
+        // Si no se han encontrado productos se muestra un mensaje
     } else {
         if (estadoSinResultados.value) {
             Box(modifier = Modifier.fillMaxSize().background(Color(0xFFFAF8FF)), contentAlignment = Alignment.Center) {
@@ -53,6 +60,8 @@ fun TiendaTres(navController: NavHostController, cat: String, productoVM: Produc
                     color = AppColors.RosaZazil,)
             }
         } else {
+
+            // Si se han encontrado productos se muestran en una lista
             LazyColumn(modifier = Modifier.fillMaxWidth().background(Color(0xFFFAF8FF))) {
                 item {
                     Spacer(modifier = Modifier.height(16.dp))
