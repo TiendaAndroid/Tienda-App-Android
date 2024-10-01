@@ -1,16 +1,14 @@
 package com.larc.appandroid.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,10 +16,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.larc.appandroid.R
 import com.larc.appandroid.viewmodel.UsuarioVM
 
 @Composable
@@ -63,11 +63,13 @@ fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
                 ) {
                     BotonApachurrable(
                         text = "Mis pedidos",
-                        onClick = { navigateTo(Pantallas.RUTA_MIS_PEDIDOS) })
+                        onClick = { navigateTo(Pantallas.RUTA_MIS_PEDIDOS) },
+                        imagen = R.drawable.applbag.toString())
                     Spacer(modifier = Modifier.width(16.dp))
                     BotonApachurrable(
                         text = "Mi información",
-                        onClick = { navigateTo(Pantallas.RUTA_MI_INFORMACION) })
+                        onClick = { navigateTo(Pantallas.RUTA_MI_INFORMACION) },
+                        imagen = R.drawable.applperson.toString())
                 }
 
                 Row(
@@ -78,11 +80,13 @@ fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
                 ) {
                     BotonApachurrable(
                         text = "Direcciones",
-                        onClick = { navigateTo(Pantallas.RUTA_DIRECCIONES) })
+                        onClick = { navigateTo(Pantallas.RUTA_DIRECCIONES) },
+                        imagen = R.drawable.appllocation.toString())
                     Spacer(modifier = Modifier.width(16.dp))
                     BotonApachurrable(
                         text = "Servicio al cliente",
-                        onClick = { navigateTo(Pantallas.RUTA_SERVICIO_CLIENTE) })
+                        onClick = { navigateTo(Pantallas.RUTA_SERVICIO_CLIENTE) },
+                        imagen = R.drawable.applhead.toString())
                 }
 
                 Row(
@@ -93,7 +97,8 @@ fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
                 ) {
                     BotonApachurrable(
                         text = "Pagos",
-                        onClick = { /* Navegar a Configuración */ })
+                        onClick = { /* Navegar a Configuración */ },
+                        imagen = R.drawable.applpay.toString())
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -104,7 +109,7 @@ fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
 }
 
 @Composable
-fun BotonApachurrable(text: String, onClick: () -> Unit) {
+fun BotonApachurrable(text: String, onClick: () -> Unit, imagen: String) {
     Button(
         onClick = onClick,
         contentPadding = PaddingValues(0.dp),
@@ -121,18 +126,31 @@ fun BotonApachurrable(text: String, onClick: () -> Unit) {
             //contentColor = AppColors.RosaZazil
         )
     ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.width(180.dp)
-        ) {
-            Text(
-                text = text,
-                fontSize = 17.sp,
-                fontWeight = FontWeight.Normal,
-                //fontWeight = FontWeight.Bold,
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
-            )
+        Column {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(80.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(painter = painterResource(id = imagen.toInt()),
+                    contentDescription = "Imagen del recurso",
+                    modifier = Modifier.fillMaxHeight())
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.width(180.dp)
+            ) {
+                Text(
+                    text = text,
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Normal,
+                    //fontWeight = FontWeight.Bold,
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    modifier = Modifier.padding(start = 8.dp, end = 8.dp)
+                )
+            }
         }
     }
 }

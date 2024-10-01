@@ -201,7 +201,7 @@ fun navigateTo(navController: NavHostController, ruta: String) {
 @Composable
 fun AppBottomBar(navController: NavHostController) {
     BottomAppBar(
-        containerColor = Color(0xFFFAF8FF),
+        containerColor = Color(0xFFFAF8FF)
     ) {
         val pilaNavegacion by navController.currentBackStackEntryAsState()
         val pantallaActual = pilaNavegacion?.destination
