@@ -23,6 +23,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.larc.appandroid.viewmodel.ProductoVM
 
+/**
+ * Representa el listado de productos con un criterio de búsqueda (nombre).
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun TiendaTres(navController: NavHostController, cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     val estadoListaBusqueda = productoVM.estadoListaBusqueda.collectAsState()

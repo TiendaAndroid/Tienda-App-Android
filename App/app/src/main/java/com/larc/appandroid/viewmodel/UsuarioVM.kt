@@ -12,6 +12,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * Representa el viewmodel relacionado con el usuario.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 class UsuarioVM: ViewModel() {
 
     private val context = MyApp.instance.applicationContext

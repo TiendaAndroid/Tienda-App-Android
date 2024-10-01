@@ -32,6 +32,11 @@ import androidx.navigation.NavHostController
 import com.larc.appandroid.R
 import com.larc.appandroid.viewmodel.ProductoVM
 
+/**
+ * Representa la vista de las diferentes categorías de productos.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     LazyColumn(modifier = Modifier

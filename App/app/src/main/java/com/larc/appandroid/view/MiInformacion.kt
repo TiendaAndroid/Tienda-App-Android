@@ -11,6 +11,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Representa la vista que muestra la información personal del usuario.
+ * PENDIENTE: CAMBIAR COLORES, ESTILOS Y QUE JALE LA INFORMACIÓN
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun MiInformacion(modifier: Modifier = Modifier) {
     Column(

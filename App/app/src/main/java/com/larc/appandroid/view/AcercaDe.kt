@@ -22,6 +22,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.larc.appandroid.R
 
+/**
+ * Representa la vista para conocer más sobre el proyecto (Zazil).
+ * PENDIENTE: CAMBIAR COLORES, FORMATO, AGREGAR INFO SOBRE ZAZIL, NO SOBRE TODAS BRILLAMOS
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun AcercaDe(modifier: Modifier = Modifier) {
     LazyColumn(

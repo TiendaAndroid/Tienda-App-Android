@@ -4,7 +4,10 @@ import com.larc.appandroid.model.Cart
 import com.larc.appandroid.model.Direction
 import com.larc.appandroid.model.Order
 
-// CORREGIR CART_ITEM, ORDER_ITEM, ADDED_AT
+/**
+ * Representa algunas estructuras para los estados. Todos parten del usuario.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 
 data class EstadoUsuario(
     val id: String = "",
@@ -14,9 +17,9 @@ data class EstadoUsuario(
     val googleId: String? = null,
     val isActive: Boolean = false,
     val role: List<String> = emptyList(),
-    val direction: List<Direction>? = null, //List<EstadoDirection>? = null,
-    val cart: Cart? = null, //EstadoCart = EstadoCart("", "", emptyList()),
-    val orders: List<Order>? = null //List<EstadoOrder>? = null,
+    val direction: List<Direction>? = null,
+    val cart: Cart? = null,
+    val orders: List<Order>? = null
 )
 
 data class EstadoDirection(

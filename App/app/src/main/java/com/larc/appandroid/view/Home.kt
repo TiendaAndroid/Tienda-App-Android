@@ -9,6 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
+/**
+ * Representa la vista de inicio de la aplicación.
+ * PENDIENTE: HACER TODDO LO QUE LLEVA
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun Home(modifier: Modifier = Modifier) {
     Box(

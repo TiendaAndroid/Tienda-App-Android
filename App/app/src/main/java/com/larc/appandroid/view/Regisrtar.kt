@@ -24,6 +24,11 @@ import androidx.navigation.NavHostController
 import com.larc.appandroid.ui.theme.AppAndroidTheme
 import com.larc.appandroid.viewmodel.UsuarioVM
 
+/**
+ * Representa la vista para el registro de un usuario.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
     AppAndroidTheme {
@@ -39,6 +44,8 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
         val keyboardController = LocalSoftwareKeyboardController.current
 
         if (estadoCorreoEnviado.value) {
+
+            // Mensaje de registro exitoso
             if (registroExitoso.value) {
                 LazyColumn(
                     modifier = Modifier
@@ -58,6 +65,8 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                     }
                 }
             } else {
+
+                // Solicita el código enviaro al correo
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
@@ -67,7 +76,7 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                     item {
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = "Ingrese el token enviado\na su correo",
+                            text = "Ingrese el código enviado\na su correo",
                             textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                             color = AppColors.RosaZazil,
                             fontWeight = FontWeight.Normal,
@@ -76,6 +85,8 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                     }
+
+                    // Mensaje de error si el código no es correcto
                     if (errorRegistro.value) {
                         item {
                             Text(
@@ -106,6 +117,8 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                                 .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
                         )
                     }
+
+                    // Botón para terminar el registro
                     item {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -144,6 +157,8 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                 }
             }
         } else {
+
+            // Solicita el registro
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -162,6 +177,8 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                 }
+
+                // Mensaje de error si la primera parte del registro no es exitosa
                 if (errorSendMail.value) {
                     item {
                         Text(
@@ -256,6 +273,8 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
                     )
                 }
+
+                // Primer botón para registrarse
                 item {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -293,6 +312,8 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                 item {
                     Spacer(modifier = Modifier.height(10.dp))
                 }
+
+                // Opción para iniciar sesión si ya tiene una cuenta
                 item {
                     Row(
                         modifier = Modifier.fillMaxWidth(),

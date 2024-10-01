@@ -15,6 +15,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Representa la vista de las preguntas frecuentes.
+ * PENDIENTE CAMBIAR EL COLOR Y ESTILOS
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun Faqs(modifier: Modifier = Modifier) {
     // Lista de preguntas frecuentes con respuestas

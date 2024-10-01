@@ -7,7 +7,8 @@ import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
- * Información de las pantallas de la aplicación
+ * Representa las pantallas de la aplicación.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
 
 object Pantallas {

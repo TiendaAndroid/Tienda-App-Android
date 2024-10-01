@@ -12,6 +12,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Representa la vista que presenta los pedidos realizados.
+ * PENDIENTE: CAMBIAR ESTILOS Y COLORES Y QUE MUESTRE LA INFORMACIÓN
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun MisPedidos() {
     Column(

@@ -7,6 +7,11 @@ import com.larc.appandroid.model.ServicioRemotoDireccion
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * Representa el viewmodel relacionado con las direcciones.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 class DireccionVM: ViewModel() {
 
     // Modelo

@@ -10,6 +10,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlin.math.ceil
 
+/**
+ * Representa el viewmodel relacionado con los productos.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 class ProductoVM: ViewModel() {
     // Modelo
     private val servicioRemotoProducto = ServicioRemotoProducto()

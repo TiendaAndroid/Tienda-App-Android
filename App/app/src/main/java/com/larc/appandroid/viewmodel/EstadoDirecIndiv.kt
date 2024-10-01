@@ -1,5 +1,10 @@
 package com.larc.appandroid.viewmodel
 
+/**
+ * Representa el estado de una dirección.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 data class EstadoDirecIndiv(
     val id: String = "",
     val tipo: String = "",

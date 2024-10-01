@@ -8,6 +8,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+/**
+ * Representa la estructura para el servicio remoto de usuarios.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 class ServicioRemotoUsuario {
 
     // Define the certificate pinning
@@ -17,6 +22,7 @@ class ServicioRemotoUsuario {
             .build()
     }
 
+    // Define the OkHttpClient with the certificate pinning
     private val okHttpClient by lazy {
         OkHttpClient.Builder()
             .certificatePinner(certificatePinner)

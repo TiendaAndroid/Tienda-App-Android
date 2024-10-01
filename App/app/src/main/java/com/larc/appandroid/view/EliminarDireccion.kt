@@ -30,6 +30,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.larc.appandroid.viewmodel.DireccionVM
 
+/**
+ * Representa la vista para eliminar una dirección.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun EliminarDireccion(navController: NavHostController,
                       token: String,
@@ -42,6 +47,7 @@ fun EliminarDireccion(navController: NavHostController,
     val direccionEliminada = direccionVM.direccionEliminada.collectAsState()
     direccionVM.getDirecIndiv(token, addressId)
 
+    // Si la dirección se eliminó correctamente, mostrar un mensaje de éxito
     if (direccionEliminada.value) {
         LazyColumn(
             modifier = Modifier
@@ -90,6 +96,8 @@ fun EliminarDireccion(navController: NavHostController,
             }
         }
     } else {
+
+        // Se muestra la dirección para confirmar la eliminación
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -131,6 +139,8 @@ fun EliminarDireccion(navController: NavHostController,
                     )
                 }
             }
+
+            // Mensaje de error si hubo un error al eliminar la dirección
             item {
                 if (errorEliminarDireccion.value) {
                     Text(
@@ -140,6 +150,8 @@ fun EliminarDireccion(navController: NavHostController,
                     )
                 }
             }
+
+            // Botón para eliminar la dirección
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -177,6 +189,8 @@ fun EliminarDireccion(navController: NavHostController,
                     }
                 }
             }
+
+            // Botón para cancelar la acción
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),

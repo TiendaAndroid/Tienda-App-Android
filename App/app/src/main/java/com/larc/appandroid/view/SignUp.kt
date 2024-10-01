@@ -24,6 +24,11 @@ import androidx.navigation.NavHostController
 import com.larc.appandroid.ui.theme.AppAndroidTheme
 import com.larc.appandroid.viewmodel.UsuarioVM
 
+/**
+ * Representa la vista de inicio de sesión.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun SignUp(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
     var email by remember { mutableStateOf("") }
@@ -118,6 +123,8 @@ fun SignUp(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
                 }
             }
         }
+
+        // Mensaje de error al iniciar sesión
         item {
             if (loggedUsuario.value) {
                 Text(
@@ -136,6 +143,8 @@ fun SignUp(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
         item {
             Spacer(modifier = Modifier.height(10.dp))
         }
+
+        // Opción para registrarse
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),

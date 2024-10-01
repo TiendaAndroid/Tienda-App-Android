@@ -39,6 +39,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.larc.appandroid.viewmodel.DireccionVM
 
+/**
+ * Representa la vista para agregar una nueva dirección.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun NuevaDireccion(navController: NavHostController, token: String, direccionVM: DireccionVM, modifier: Modifier = Modifier) {
 
@@ -57,6 +62,7 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
+    // Si la dirección se creó correctamente, mostrar un mensaje de éxito
     if (direccionCreada.value) {
         LazyColumn(
             modifier = Modifier
@@ -103,6 +109,8 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
             }
         }
     } else {
+
+        // Formulario para agregar una nueva dirección
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -250,6 +258,8 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
                         .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
                 )
             }
+
+            // Letrero de error si hubo un error al guardar la dirección
             item {
                 if (errorGuardar.value) {
                     Text(
@@ -259,6 +269,8 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
                     )
                 }
             }
+
+            // Botón para guardar la dirección
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),

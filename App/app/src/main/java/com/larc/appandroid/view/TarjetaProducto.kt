@@ -31,6 +31,11 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.larc.appandroid.viewmodel.ProductoVM
 
+/**
+ * Representa un elemento para mostrar cada producto.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun TarjetaProducto(thisId: String, navController: NavHostController, text: String, price: Double, imgurl: String) {
     Spacer(modifier = Modifier.height(16.dp))
@@ -80,6 +85,7 @@ fun TarjetaProducto(thisId: String, navController: NavHostController, text: Stri
     }
 }
 
+// Botón para mostrar más información
 @Composable
 fun BotonDetalle(onClick: () -> Unit) {
     Button(
@@ -117,6 +123,7 @@ fun BotonDetalle(onClick: () -> Unit) {
     }
 }
 
+// Botón para agregar al carrito
 @Composable
 fun BotonAgregar(onClick: () -> Unit) {
     Button(

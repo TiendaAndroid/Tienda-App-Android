@@ -29,6 +29,11 @@ import com.larc.appandroid.viewmodel.ProductoVM
 import com.larc.appandroid.viewmodel.UsuarioVM
 import kotlinx.coroutines.delay
 
+/**
+ * Representa la vista principal de la aplicación, con sus barras superior e inferior.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun AppPrincipal() {
     val navController = rememberNavController()
@@ -60,6 +65,7 @@ fun AppPrincipal() {
     }
 }
 
+// Barra superior (de búsqueda)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppTopBar(
@@ -186,6 +192,7 @@ fun AppTopBar(
     )
 }
 
+// Función para navegar
 fun navigateTo(navController: NavHostController, ruta: String) {
     navController.navigate(ruta) {
         if (ruta == Pantallas.RUTA_HOME) {
@@ -198,6 +205,7 @@ fun navigateTo(navController: NavHostController, ruta: String) {
     }
 }
 
+// Barra inferior (para navegar)
 @Composable
 fun AppBottomBar(navController: NavHostController) {
     BottomAppBar(
@@ -237,6 +245,7 @@ fun AppBottomBar(navController: NavHostController) {
     }
 }
 
+// Navegación entre pantallas
 @Composable
 fun AppNavHost(navController: NavHostController,
                productoVM: ProductoVM,

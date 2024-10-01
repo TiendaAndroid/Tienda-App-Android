@@ -21,6 +21,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.larc.appandroid.viewmodel.UsuarioVM
 
+/**
+ * Representa la vista con el listado de direcciones del usuario.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun Direcciones(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
 
@@ -73,6 +78,7 @@ fun Direcciones(navController: NavHostController, usuarioVM: UsuarioVM, modifier
     }
 }
 
+// Botón para agregar una nueva dirección
 @Composable
 fun BotonAgregarDireccion(onClick: () -> Unit) {
     Button(

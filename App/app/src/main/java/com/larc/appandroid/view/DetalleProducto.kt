@@ -32,11 +32,18 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.larc.appandroid.viewmodel.ProductoVM
 
+/**
+ * Representa la vista con la información de un producto seleccionado.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun DetalleProducto(id: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     val prodActual = productoVM.estadoProductoActual.collectAsState()
     val estadoSinResultIndiv = productoVM.estadoSinResultIndiv.collectAsState()
     val isLoading = productoVM.isLoading.collectAsState().value
+
+    // Cargar el producto cuando cambia el ID
     LaunchedEffect(id) {
         productoVM.getProductoPorId(id)
     }
@@ -122,6 +129,8 @@ fun DetalleProducto(id: String, productoVM: ProductoVM, modifier: Modifier = Mod
     }
 }
 
+
+// Botón para agregar un producto al carrito de compras
 @Composable
 fun BotonAgregarCarrito() {
     Button(

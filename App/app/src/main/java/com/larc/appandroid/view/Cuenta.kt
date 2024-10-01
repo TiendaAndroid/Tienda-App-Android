@@ -24,15 +24,22 @@ import androidx.navigation.NavHostController
 import com.larc.appandroid.R
 import com.larc.appandroid.viewmodel.UsuarioVM
 
+/**
+ * Representa la vista de la cuenta del usuario. Cambia dependiendo de si está o no logueado.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier, navigateTo: (String) -> Unit
 ) {
     val loggedUsuario = usuarioVM.loggedUsuario.collectAsState()
 
+    // Si no está logueado, muestra el formulario de registro
     if (!loggedUsuario.value) {
         SignUp(navController, usuarioVM)
     } else {
 
+        // Si está logueado, muestra la cuenta del usuario
         usuarioVM.getProfile()
         val estadoMiUsuario = usuarioVM.estadoMiUsuario.collectAsState()
 
@@ -108,6 +115,7 @@ fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
     }
 }
 
+// Botón con imagen y texto para cada servicio en cuenta
 @Composable
 fun BotonApachurrable(text: String, onClick: () -> Unit, imagen: String) {
     Button(
@@ -122,8 +130,6 @@ fun BotonApachurrable(text: String, onClick: () -> Unit, imagen: String) {
         colors = ButtonDefaults.buttonColors(
             containerColor =  Color(0xFFFAF8FF),
             contentColor = AppColors.GrisOscuro
-            //containerColor = AppColors.CremaZazil,
-            //contentColor = AppColors.RosaZazil
         )
     ) {
         Column {

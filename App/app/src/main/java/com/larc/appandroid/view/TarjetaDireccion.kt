@@ -27,6 +27,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 
+/**
+ * Representa un elemento para mostrar cada dirección del usuario.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun TarjetaDireccion(navController: NavHostController,
                      thisAddressId: String,

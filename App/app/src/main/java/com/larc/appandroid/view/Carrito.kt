@@ -16,6 +16,11 @@ import androidx.compose.ui.unit.sp
 import com.larc.appandroid.ui.theme.AppAndroidTheme
 import com.larc.appandroid.R // Asegúrate de tener el ícono en el recurso drawable
 
+/**
+ * Representa la vista del carrito del usuario.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
+
 @Composable
 fun Carrito() {
     AppAndroidTheme {
