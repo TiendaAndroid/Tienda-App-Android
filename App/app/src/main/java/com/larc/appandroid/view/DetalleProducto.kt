@@ -22,6 +22,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.larc.appandroid.viewmodel.CarritoVM
 import com.larc.appandroid.viewmodel.ProductoVM
 
 /**
@@ -38,10 +41,13 @@ import com.larc.appandroid.viewmodel.ProductoVM
  */
 
 @Composable
-fun DetalleProducto(id: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
+fun DetalleProducto(id: String, cartId: String, productoVM: ProductoVM, carritoVM: CarritoVM, modifier: Modifier = Modifier) {
     val prodActual = productoVM.estadoProductoActual.collectAsState()
     val estadoSinResultIndiv = productoVM.estadoSinResultIndiv.collectAsState()
     val isLoading = productoVM.isLoading.collectAsState().value
+    val errorAgregar = carritoVM.errorAgregarProducto.collectAsState()
+    val productoAgregado = carritoVM.productoAgregado.collectAsState()
+    val messageShowed = carritoVM.messageShowed.collectAsState()
 
     // Cargar el producto cuando cambia el ID
     LaunchedEffect(id) {
@@ -120,21 +126,45 @@ fun DetalleProducto(id: String, productoVM: ProductoVM, modifier: Modifier = Mod
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
                     ) {
-                        BotonAgregarCarrito()
+                        BotonAgregarCarrito(onClick = { carritoVM.addToCart(cartId, id) })
                     }
                 }
 
             }
         }
     }
+    if (!messageShowed.value) {
+        val showDialog = remember { mutableStateOf(false) }
+        val message = remember { mutableStateOf("") }
+
+        if (productoAgregado.value && !errorAgregar.value) {
+            message.value = "Producto agregado al carrito"
+            showDialog.value = true
+            carritoVM.resetErrores()
+        } else if (errorAgregar.value) {
+            message.value = "Error al agregar el producto"
+            showDialog.value = true
+            carritoVM.resetErrores()
+        }
+
+        ShowProductDialog(
+            showDialog = showDialog.value,
+            onDismiss = { showDialog.value = false },
+            message = message.value,
+            onButtonClick = {
+                carritoVM.setMessageShowed()
+                carritoVM.resetErrores()
+            }
+        )
+    }
 }
 
 
 // Botón para agregar un producto al carrito de compras
 @Composable
-fun BotonAgregarCarrito() {
+fun BotonAgregarCarrito(onClick: () -> Unit) {
     Button(
-        onClick = {  },
+        onClick = onClick,
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
             .height(80.dp)

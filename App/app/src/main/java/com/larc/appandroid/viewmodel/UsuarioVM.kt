@@ -146,4 +146,8 @@ class UsuarioVM: ViewModel() {
             }
         }
     }
+    fun getCartId(): String {
+        getProfile()
+        return _estadoMiUsuario.value.cart?.id ?: ""
+    }
 }

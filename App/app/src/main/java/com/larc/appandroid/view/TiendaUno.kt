@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.larc.appandroid.R
 import com.larc.appandroid.viewmodel.ProductoVM
+import com.larc.appandroid.viewmodel.UsuarioVM
 
 /**
  * Representa la vista de las diferentes categorías de productos.
@@ -38,7 +39,7 @@ import com.larc.appandroid.viewmodel.ProductoVM
  */
 
 @Composable
-fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, modifier: Modifier = Modifier) {
+fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
     LazyColumn(modifier = Modifier
         .fillMaxWidth()
         .background(Color(0xFFFAF8FF)),

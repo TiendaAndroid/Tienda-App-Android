@@ -21,7 +21,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.larc.appandroid.viewmodel.CarritoVM
 import com.larc.appandroid.viewmodel.ProductoVM
+import com.larc.appandroid.viewmodel.UsuarioVM
 
 /**
  * Representa el listado de productos con un criterio de búsqueda (nombre).
@@ -29,11 +31,12 @@ import com.larc.appandroid.viewmodel.ProductoVM
  */
 
 @Composable
-fun TiendaTres(navController: NavHostController, cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
+fun TiendaTres(navController: NavHostController, cat: String, productoVM: ProductoVM, usuarioVM: UsuarioVM, carritoVM: CarritoVM, modifier: Modifier = Modifier) {
     val estadoListaBusqueda = productoVM.estadoListaBusqueda.collectAsState()
     val estadoSinResultados = productoVM.estadoSinResultados.collectAsState()
     val estadoTotalResultados = productoVM.estadoTotalResultados.collectAsState()
     val isLoading = productoVM.isLoading.collectAsState().value
+    val cartId = usuarioVM.getCartId()
 
     LaunchedEffect(cat) {
         productoVM.searchProducto(cat)
@@ -89,7 +92,9 @@ fun TiendaTres(navController: NavHostController, cat: String, productoVM: Produc
                                 navController,
                                 text = producto.name,
                                 price = producto.price,
-                                imgurl = producto.image[0].url
+                                imgurl = producto.image[0].url,
+                                cartId,
+                                carritoVM
                             )
                         }
                         Spacer(modifier = Modifier.height(16.dp))

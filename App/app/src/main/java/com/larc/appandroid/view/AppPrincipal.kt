@@ -24,6 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.larc.appandroid.ui.theme.AppAndroidTheme
+import com.larc.appandroid.viewmodel.CarritoVM
 import com.larc.appandroid.viewmodel.DireccionVM
 import com.larc.appandroid.viewmodel.ProductoVM
 import com.larc.appandroid.viewmodel.UsuarioVM
@@ -40,6 +41,7 @@ fun AppPrincipal() {
     val productoVM: ProductoVM = viewModel()
     val usuarioVM: UsuarioVM = viewModel()
     val direccionVM: DireccionVM = viewModel()
+    val carritoVM: CarritoVM = viewModel()
     var searchText by remember { mutableStateOf("") }
 
     val onSearchTextChanged: (String) -> Unit = { text ->
@@ -60,7 +62,7 @@ fun AppPrincipal() {
             },
             bottomBar = { AppBottomBar(navController) },
         ) { innerPadding ->
-            AppNavHost(navController, productoVM, usuarioVM, direccionVM, modifier = Modifier.padding(innerPadding))
+            AppNavHost(navController, productoVM, usuarioVM, direccionVM, carritoVM, modifier = Modifier.padding(innerPadding))
         }
     }
 }
@@ -251,6 +253,7 @@ fun AppNavHost(navController: NavHostController,
                productoVM: ProductoVM,
                usuarioVM: UsuarioVM,
                direccionVM: DireccionVM,
+               carritoVM: CarritoVM,
                modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
@@ -287,7 +290,7 @@ fun AppNavHost(navController: NavHostController,
             Testimonios()
         }
         composable(Pantallas.RUTA_TIENDA_UNO) {
-            TiendaUno(navController, productoVM)
+            TiendaUno(navController, productoVM, usuarioVM)
         }
         composable(Pantallas.RUTA_MI_INFORMACION) {
             MiInformacion()
@@ -297,15 +300,16 @@ fun AppNavHost(navController: NavHostController,
         }
         composable(Pantallas.RUTA_TIENDA_DOS + "/{cat}") {
             val cat = it.arguments?.getString("cat")
-            TiendaDos(navController, cat!!, productoVM)
+            TiendaDos(navController, cat!!, productoVM, usuarioVM, carritoVM)
         }
         composable(Pantallas.RUTA_TIENDA_TRES + "/{cat}") {
             val cat = it.arguments?.getString("cat")
-            TiendaTres(navController, cat!!, productoVM)
+            TiendaTres(navController, cat!!, productoVM, usuarioVM, carritoVM)
         }
-        composable(Pantallas.RUTA_DETALLE_PRODUCTO + "/{id}") {
+        composable(Pantallas.RUTA_DETALLE_PRODUCTO + "/{id}" + "/{cartId}") {
             val id = it.arguments?.getString("id")
-            DetalleProducto(id!!, productoVM)
+            val cartId = it.arguments?.getString("cartId")
+            DetalleProducto(id!!, cartId!!, productoVM, carritoVM)
         }
         composable(Pantallas.RUTA_SIGN_UP) {
             SignUp(navController, usuarioVM)

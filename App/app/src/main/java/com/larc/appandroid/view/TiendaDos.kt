@@ -33,7 +33,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.larc.appandroid.viewmodel.CarritoVM
 import com.larc.appandroid.viewmodel.ProductoVM
+import com.larc.appandroid.viewmodel.UsuarioVM
 
 /**
  * Representa el listado de productos con un criterio de búsqueda (categoría).
@@ -41,7 +43,7 @@ import com.larc.appandroid.viewmodel.ProductoVM
  */
 
 @Composable
-fun TiendaDos(navController: NavHostController, cat: String, productoVM: ProductoVM, modifier: Modifier = Modifier) {
+fun TiendaDos(navController: NavHostController, cat: String, productoVM: ProductoVM, usuarioVM: UsuarioVM, carritoVM: CarritoVM, modifier: Modifier = Modifier) {
     val estadoListaTodosProductos = productoVM.estadoListaTodosProductos.collectAsState()
     val scrollState = productoVM.estadoScrollTop.collectAsState()
     val listState = rememberLazyListState()
@@ -49,6 +51,7 @@ fun TiendaDos(navController: NavHostController, cat: String, productoVM: Product
     val pagsTotales = productoVM.estadoTotalPaginas.collectAsState()
     val estadoSinResultados = productoVM.estadoSinResultados.collectAsState()
     val isLoading = productoVM.isLoading.collectAsState().value
+    val cartId = usuarioVM.getCartId()
 
     // Se meustra cuando se cargan los productos
     if (isLoading) {
@@ -103,7 +106,9 @@ fun TiendaDos(navController: NavHostController, cat: String, productoVM: Product
                                 navController,
                                 text = producto.name,
                                 price = producto.price,
-                                imgurl = producto.image[0].url
+                                imgurl = producto.image[0].url,
+                                cartId,
+                                carritoVM
                             )
                         }
                         Spacer(modifier = Modifier.height(16.dp))

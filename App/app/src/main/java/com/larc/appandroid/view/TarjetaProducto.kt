@@ -20,6 +20,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.larc.appandroid.viewmodel.ProductoVM
+import com.larc.appandroid.viewmodel.CarritoVM
 
 /**
  * Representa un elemento para mostrar cada producto.
@@ -37,7 +40,11 @@ import com.larc.appandroid.viewmodel.ProductoVM
  */
 
 @Composable
-fun TarjetaProducto(thisId: String, navController: NavHostController, text: String, price: Double, imgurl: String) {
+fun TarjetaProducto(thisId: String, navController: NavHostController, text: String, price: Double, imgurl: String, cartId: String, carritoVM: CarritoVM) {
+    val errorAgregar = carritoVM.errorAgregarProducto.collectAsState()
+    val productoAgregado = carritoVM.productoAgregado.collectAsState()
+    val messageShowed = carritoVM.messageShowed.collectAsState()
+
     Spacer(modifier = Modifier.height(16.dp))
     Box(
         contentAlignment = Alignment.Center,
@@ -60,7 +67,6 @@ fun TarjetaProducto(thisId: String, navController: NavHostController, text: Stri
                 .padding(top = 15.dp, start = 15.dp)) {
                 Text(
                     text = text,
-                    //textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                     color = AppColors.GrisOscuro,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
@@ -69,19 +75,42 @@ fun TarjetaProducto(thisId: String, navController: NavHostController, text: Stri
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
                     text = "Precio: $ $price",
-                    //textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                     color = AppColors.GrisOscuro,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-                BotonDetalle(onClick = { navController.navigate(Pantallas.RUTA_DETALLE_PRODUCTO+"/${thisId}") })
+                BotonDetalle(onClick = { navController.navigate(Pantallas.RUTA_DETALLE_PRODUCTO+"/${thisId}"+"/${cartId}") })
                 Spacer(modifier = Modifier.height(8.dp))
-                BotonAgregar(onClick = {})
+                BotonAgregar(onClick = { carritoVM.addToCart(cartId, thisId) })
                 Spacer(modifier = Modifier.height(10.dp))
             }
         }
+    }
+    if (!messageShowed.value) {
+        val showDialog = remember { mutableStateOf(false) }
+        val message = remember { mutableStateOf("") }
+
+        if (productoAgregado.value && !errorAgregar.value) {
+            message.value = "Producto agregado al carrito"
+            showDialog.value = true
+            carritoVM.resetErrores()
+        } else if (errorAgregar.value) {
+            message.value = "Error al agregar el producto"
+            showDialog.value = true
+            carritoVM.resetErrores()
+        }
+
+        ShowProductDialog(
+            showDialog = showDialog.value,
+            onDismiss = { showDialog.value = false },
+            message = message.value,
+            onButtonClick = {
+                carritoVM.setMessageShowed()
+                carritoVM.resetErrores()
+            }
+        )
     }
 }
 

@@ -127,11 +127,9 @@ fun SignUp(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
         // Mensaje de error al iniciar sesión
         item {
             if (loggedUsuario.value) {
-                Text(
-                    text = "Login successful! Token: ${estadoToken.value}",
-                    color = Color.Green,
-                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)
-                )
+                LaunchedEffect(loggedUsuario.value) {
+                    navController.navigate(Pantallas.RUTA_CUENTA)
+                }
             } else if (!loggedUsuario.value && errorLogin.value) {
                 Text(
                     text = "Hubo un error al iniciar sesión. Por favor intenta de nuevo",
