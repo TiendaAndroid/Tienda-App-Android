@@ -2,6 +2,7 @@ package com.larc.appandroid.model
 
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -24,5 +25,11 @@ interface CarritoAPI {
     suspend fun getCart(
         @Path("id") id: String
     ): Response<Cart>
+
+    // Borrar un producto del carrito
+    @DELETE("cart/item/{id}")
+    suspend fun deleteItem(
+        @Path("id") id: String
+    ): Response<Unit>
 
 }

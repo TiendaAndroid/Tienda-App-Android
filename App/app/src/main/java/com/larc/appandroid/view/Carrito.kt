@@ -29,21 +29,29 @@ import com.larc.appandroid.viewmodel.UsuarioVM
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
     val loggedUsuario = usuarioVM.loggedUsuario.collectAsState()
     val carrito = carritoVM.carritoNoRepeat.collectAsState()
-    //val carrito = carritoVM.productosCarrito.collectAsState()
+    val productoAgregado = carritoVM.productoAgregado.collectAsState()
     val user = usuarioVM.estadoMiUsuario.collectAsState()
     val cartId = user.value.cart?.id
+    val subTotal = carritoVM.subtotalCarrito.collectAsState()
+    val total = carritoVM.totalCarrito.collectAsState()
     carritoVM.getCart(user.value.id)
 
     if (!loggedUsuario.value) {
         SignUp(navController, usuarioVM)
     } else {
 
-        // Si está logueado, muestra la cuenta del usuario
         usuarioVM.getProfile()
+
+        LaunchedEffect(productoAgregado.value) {
+            if (productoAgregado.value) {
+                carritoVM.getCart(user.value.id)
+            }
+        }
 
         LazyColumn(
             modifier = Modifier
@@ -74,8 +82,6 @@ fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: U
                         horizontalArrangement = Arrangement.Center
                     ) {
                         ProductoItem(
-                            cartId = cartId.toString(),
-                            id = item.productId,
                             producto = thisName,
                             cantidad = thisQuantity,
                             price = thisPrice,
@@ -84,18 +90,45 @@ fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: U
                             onAdd = { carritoVM.addToCart(cartId ?: "", item.productId)
                                     Log.d("UserID", cartId ?: "")
                                     Log.d("ProductID", item.productId) },
-                            onRemove = {})
+                            onRemove = { carritoVM.removeFromCart(item.productId) })
                     }
                 }
             }
-            item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
+            if (carrito.value.isNotEmpty()) {
+                item {
                     Spacer(modifier = Modifier.height(16.dp))
-                    BotonPagar(onClick = {})
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "Subtotal: $ ${String.format("%.2f", subTotal.value)}",
+                            fontSize = 18.sp,
+                            color = AppColors.RosaZazil
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "Total: $ ${String.format("%.2f", total.value)}",
+                            fontSize = 18.sp,
+                            color = AppColors.RosaZazil
+                        )
+                    }
+                }
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        BotonPagar(onClick = {})
+                    }
                 }
             }
         }
@@ -105,8 +138,6 @@ fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: U
 @SuppressLint("DefaultLocale")
 @Composable
 fun ProductoItem(
-    cartId: String,
-    id: String,
     producto: String,
     cantidad: Int,
     price: Double,
@@ -199,7 +230,6 @@ fun ProductoItem(
         }
     }
 }
-
 
 // Botón para proceder al pago
 @Composable

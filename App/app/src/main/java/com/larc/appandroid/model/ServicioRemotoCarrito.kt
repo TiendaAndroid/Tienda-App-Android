@@ -79,4 +79,21 @@ class ServicioRemotoCarrito {
         }
     }
 
+    // Borrar un producto del carrito
+    suspend fun deleteItem(id: String): Unit? {
+        return try {
+            val response = servicio.deleteItem(id)
+            if (response.isSuccessful) {
+                //Log.d("Status", "Success")
+                response.body()
+            } else {
+                //Log.d("Status", "Not success :( ")
+                null
+            }
+        } catch (e: Exception) {
+            //Log.d("Status", "Error, $e")
+            null
+        }
+    }
+
 }

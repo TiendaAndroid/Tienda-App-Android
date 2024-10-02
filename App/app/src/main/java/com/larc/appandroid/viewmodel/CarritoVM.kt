@@ -33,6 +33,10 @@ class CarritoVM: ViewModel() {
     val messageShowed: MutableStateFlow<Boolean> = _messageShowed
     private val _carritoNoRepeat = MutableStateFlow(listOf<CartItemQ>())
     val carritoNoRepeat: MutableStateFlow<List<CartItemQ>> = _carritoNoRepeat
+    private val _subtotalCarrito = MutableStateFlow(0.0)
+    val subtotalCarrito: MutableStateFlow<Double> = _subtotalCarrito
+    private val _totalCarrito = MutableStateFlow(0.0)
+    val totalCarrito: MutableStateFlow<Double> = _totalCarrito
 
     //-------------------------------------------------------------------------------------
     // Interface para la vista
@@ -46,6 +50,7 @@ class CarritoVM: ViewModel() {
             if (result != null) {
                 _errorAgregarProducto.value = false
                 _productoAgregado.value = true
+                calculateCartTotals()
             } else {
                 _errorAgregarProducto.value = true
                 _productoAgregado.value = false
@@ -79,6 +84,7 @@ class CarritoVM: ViewModel() {
                     }
                 _carritoNoRepeat.value = groupedItems
                 _errorGetCart.value = false
+                calculateCartTotals()
                 Log.d("Status", "Success")
             } else {
                 _productosCarrito.value = listOf()
@@ -92,5 +98,45 @@ class CarritoVM: ViewModel() {
     }
     fun resetErrorGetCart() {
         _errorGetCart.value = false
+    }
+    private fun calculateCartTotals() {
+        val subtotal = _carritoNoRepeat.value.sumOf { it.price * it.quantity }
+        _subtotalCarrito.value = subtotal
+        _totalCarrito.value = subtotal * 1.16
+    }
+    fun removeFromCart(productId: String) {
+        val cartItem = _productosCarrito.value.find { it.product.id == productId }
+
+        cartItem?.let {
+            val cartItemId = it.id
+            viewModelScope.launch {
+                val result = servicioRemotoDireccion.deleteItem(cartItemId)
+                if (result != null) {
+                    _productosCarrito.value = _productosCarrito.value.filterNot { it.id == cartItemId }
+                    refreshCart()
+                } else {
+                    // Handle error in removal
+                    Log.d("Status", "Failed to remove item")
+                }
+            }
+        } ?: run {
+            Log.d("Status", "CartItem not found for productId: $productId")
+        }
+    }
+    private fun refreshCart() {
+        val groupedItems = _productosCarrito.value
+            .groupBy { it.product.id }
+            .map { (productId, items) ->
+                val totalQuantity = items.sumOf { it.quantity }
+                CartItemQ(
+                    productId = productId,
+                    quantity = totalQuantity,
+                    name = items[0].product.name,
+                    price = items[0].product.price,
+                    image = items[0].product.image[0].url
+                )
+            }
+        _carritoNoRepeat.value = groupedItems
+        calculateCartTotals()
     }
 }
