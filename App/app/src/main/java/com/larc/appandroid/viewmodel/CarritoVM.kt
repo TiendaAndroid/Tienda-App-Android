@@ -1,5 +1,6 @@
 package com.larc.appandroid.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.larc.appandroid.model.AddToCartRequest
@@ -30,6 +31,8 @@ class CarritoVM: ViewModel() {
     val errorGetCart: MutableStateFlow<Boolean> = _errorGetCart
     private val _messageShowed = MutableStateFlow(false)
     val messageShowed: MutableStateFlow<Boolean> = _messageShowed
+    private val _carritoNoRepeat = MutableStateFlow(listOf<CartItemQ>())
+    val carritoNoRepeat: MutableStateFlow<List<CartItemQ>> = _carritoNoRepeat
 
     //-------------------------------------------------------------------------------------
     // Interface para la vista
@@ -56,6 +59,8 @@ class CarritoVM: ViewModel() {
         _errorAgregarProducto.value = false
         _productoAgregado.value = false
     }
+
+    /*
     fun getCart(id: String) {
         _errorGetCart.value = false
         viewModelScope.launch {
@@ -69,8 +74,46 @@ class CarritoVM: ViewModel() {
             }
         }
     }
+     */
+
+
+    fun getCart(id: String) {
+        _errorGetCart.value = false
+        viewModelScope.launch {
+            val result = servicioRemotoDireccion.getCart(id)
+            if (result != null) {
+                _productosCarrito.value = result.cartItems
+
+
+                val groupedItems = result.cartItems
+                    .groupBy { it.product.id }
+                    .map { (productId, items) ->
+                        val totalQuantity = items.sumOf { it.quantity }
+                        CartItemQ(
+                            productId = productId,
+                            quantity = totalQuantity,
+                            name = items[0].product.name,
+                            price = items[0].product.price,
+                            image = items[0].product.image[0].url
+                        )
+                    }
+
+
+                _carritoNoRepeat.value = groupedItems
+                _errorGetCart.value = false
+                Log.d("Status", "Success")
+            } else {
+                _productosCarrito.value = listOf()
+                _carritoNoRepeat.value = listOf()
+                _errorGetCart.value = true
+                Log.d("Status", "Not success :( ")
+            }
+        }
+        Log.d("carritoNoRepeat", _carritoNoRepeat.value.size.toString())
+        Log.d("carritoR", _productosCarrito.value.size.toString())
+    }
+
     fun resetErrorGetCart() {
         _errorGetCart.value = false
     }
-
 }

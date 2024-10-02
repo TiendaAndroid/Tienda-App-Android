@@ -1,5 +1,7 @@
 package com.larc.appandroid.model
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * Representa la estructura para el carrito de compras.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
@@ -8,5 +10,5 @@ package com.larc.appandroid.model
 data class Cart(
     val id: String,
     val createdAt: String,
-    val cartItems: List<CartItem>
+    @SerializedName("cart_items") val cartItems: List<CartItem>
 )

@@ -1,5 +1,6 @@
 package com.larc.appandroid.model
 
+import android.util.Log
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -62,11 +63,15 @@ class ServicioRemotoCarrito {
         return try {
             val response = servicio.getCart(id)
             if (response.isSuccessful) {
+                //Log.d("This is:", response.body().toString())
+                //Log.d("Status", "Success")
                 response.body()
             } else {
+                //Log.d("Status", "Not success :( ")
                 null
             }
         } catch (e: Exception) {
+            //Log.d("Status", "Error, $e")
             null
         }
     }
