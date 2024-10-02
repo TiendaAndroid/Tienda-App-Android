@@ -5,5 +5,6 @@ data class CartItemQ(
     val quantity: Int,
     val name: String,
     val price: Double,
-    val image: String
+    val image: String,
+    val totalPrice: Double = price * quantity
 )

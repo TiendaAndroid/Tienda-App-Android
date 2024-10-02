@@ -59,32 +59,12 @@ class CarritoVM: ViewModel() {
         _errorAgregarProducto.value = false
         _productoAgregado.value = false
     }
-
-    /*
     fun getCart(id: String) {
         _errorGetCart.value = false
         viewModelScope.launch {
             val result = servicioRemotoDireccion.getCart(id)
             if (result != null) {
                 _productosCarrito.value = result.cartItems
-                _errorGetCart.value = false
-            } else {
-                _productosCarrito.value = listOf()
-                _errorGetCart.value = true
-            }
-        }
-    }
-     */
-
-
-    fun getCart(id: String) {
-        _errorGetCart.value = false
-        viewModelScope.launch {
-            val result = servicioRemotoDireccion.getCart(id)
-            if (result != null) {
-                _productosCarrito.value = result.cartItems
-
-
                 val groupedItems = result.cartItems
                     .groupBy { it.product.id }
                     .map { (productId, items) ->
@@ -97,8 +77,6 @@ class CarritoVM: ViewModel() {
                             image = items[0].product.image[0].url
                         )
                     }
-
-
                 _carritoNoRepeat.value = groupedItems
                 _errorGetCart.value = false
                 Log.d("Status", "Success")
@@ -112,7 +90,6 @@ class CarritoVM: ViewModel() {
         Log.d("carritoNoRepeat", _carritoNoRepeat.value.size.toString())
         Log.d("carritoR", _productosCarrito.value.size.toString())
     }
-
     fun resetErrorGetCart() {
         _errorGetCart.value = false
     }

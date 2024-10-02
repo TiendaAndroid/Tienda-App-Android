@@ -1,5 +1,6 @@
 package com.larc.appandroid.view
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -40,6 +41,7 @@ import com.larc.appandroid.viewmodel.ProductoVM
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun DetalleProducto(id: String, cartId: String, productoVM: ProductoVM, carritoVM: CarritoVM, modifier: Modifier = Modifier) {
     val prodActual = productoVM.estadoProductoActual.collectAsState()
@@ -105,7 +107,7 @@ fun DetalleProducto(id: String, cartId: String, productoVM: ProductoVM, carritoV
                             fontWeight = FontWeight.Normal
                         )
                         Text(
-                            text = prodActual.value?.price.toString(),
+                            text = String.format("%.2f", prodActual.value?.price),
                             fontSize = 20.sp,
                             color = AppColors.RosaZazil,
                             fontWeight = FontWeight.Normal

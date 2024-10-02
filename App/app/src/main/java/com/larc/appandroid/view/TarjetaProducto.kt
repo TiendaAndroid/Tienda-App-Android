@@ -1,5 +1,6 @@
 package com.larc.appandroid.view
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +40,7 @@ import com.larc.appandroid.viewmodel.CarritoVM
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun TarjetaProducto(thisId: String, navController: NavHostController, text: String, price: Double, imgurl: String, cartId: String, carritoVM: CarritoVM) {
     val errorAgregar = carritoVM.errorAgregarProducto.collectAsState()
@@ -74,7 +76,7 @@ fun TarjetaProducto(thisId: String, navController: NavHostController, text: Stri
                 )
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(
-                    text = "Precio: $ $price",
+                    text = "Precio: $ ${String.format("%.2f", price)}",
                     color = AppColors.GrisOscuro,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,

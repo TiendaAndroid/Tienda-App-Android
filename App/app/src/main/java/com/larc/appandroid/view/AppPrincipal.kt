@@ -272,7 +272,7 @@ fun AppNavHost(navController: NavHostController,
             })
         }
         composable(Pantallas.RUTA_CARRITO) {
-            Carrito(carritoVM, usuarioVM)
+            Carrito(navController, carritoVM, usuarioVM)
         }
         composable(Pantallas.RUTA_MIS_PEDIDOS) {
             MisPedidos()

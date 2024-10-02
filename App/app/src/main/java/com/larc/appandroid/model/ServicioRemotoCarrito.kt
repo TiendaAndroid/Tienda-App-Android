@@ -49,11 +49,14 @@ class ServicioRemotoCarrito {
         return try {
             val response = servicio.addToCart(addToCartRequest)
             if (response.isSuccessful) {
+                Log.d("Status", "Success")
                 response.body()
             } else {
+                Log.d("Status", "Not success :( ")
                 null
             }
         } catch (e: Exception) {
+            Log.d("Status", "Error, $e")
             null
         }
     }
