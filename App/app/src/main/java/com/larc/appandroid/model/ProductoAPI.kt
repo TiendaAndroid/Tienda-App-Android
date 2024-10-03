@@ -12,14 +12,31 @@ import retrofit2.http.Query
 
 interface ProductoAPI {
 
-    // Consultar productos (de 5 en 5)
+    /**
+     * Consulta una lista de productos, paginados de 5 en 5.
+     *
+     * Obtiene un conjunto de productos con un límite y un desplazamiento específicos.
+     *
+     * @param limit El número máximo de productos a devolver por página. El valor predeterminado es 5.
+     * @param offset El número de productos a saltar (usado para la paginación).
+     * @return La respuesta del servidor con los productos solicitados.
+     */
     @GET("products")
     suspend fun getProductos(
         @Query("limit") limit: Int = 5,
         @Query("offset") offset: Int
     ): Response<ProductoResponse>
 
-    // Consultar productos por categoría (de 5 en 5)
+    /**
+     * Consulta una lista de productos por categoría, paginados de 5 en 5.
+     *
+     * Obtiene un conjunto de productos pertenecientes a una categoría específica, con un límite y un desplazamiento específicos.
+     *
+     * @param categoria El nombre de la categoría a consultar.
+     * @param limit El número máximo de productos a devolver por página. El valor predeterminado es 5.
+     * @param offset El número de productos a saltar (usado para la paginación).
+     * @return La respuesta del servidor con los productos solicitados de la categoría.
+     */
     @GET("products/tipo/{categoria}")
     suspend fun getProductosPorCategoria(
         @Path("categoria") categoria: String,
@@ -27,13 +44,27 @@ interface ProductoAPI {
         @Query("offset") offset: Int
     ): Response<ProductoResponse>
 
-    // Consultar producto por id
+    /**
+     * Consulta un producto por su ID.
+     *
+     * Obtiene los detalles de un producto específico utilizando su ID.
+     *
+     * @param id El ID del producto que se desea consultar.
+     * @return La respuesta del servidor con los detalles del producto.
+     */
     @GET("products/{id}")
     suspend fun getProductoPorId(
         @Path("id") id: String
     ): Response<Producto>
 
-    // Consultar productos por palabra clave
+    /**
+     * Consulta productos por palabra clave.
+     *
+     * Realiza una búsqueda de productos basada en una palabra clave proporcionada.
+     *
+     * @param palabra La palabra clave a buscar en los productos.
+     * @return La respuesta del servidor con los productos que coincidan con la búsqueda.
+     */
     @GET("products/search/{palabra}")
     suspend fun searchProducts(
         @Path("palabra") palabra: String

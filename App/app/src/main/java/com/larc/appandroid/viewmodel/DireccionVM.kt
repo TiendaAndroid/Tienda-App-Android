@@ -32,19 +32,39 @@ class DireccionVM: ViewModel() {
 
     //-------------------------------------------------------------------------------------
     // Interface para la vista
-    fun createAddress(token: String,
-                      tipo: String,
-                      pais: String,
-                      municipio: String,
-                      estado: String,
-                      calle: String,
-                      noExterior: String,
-                      noInterior: String?,
-                      colonia: String,
-                      cp: Int) {
+
+    /**
+     * Crea una nueva dirección para el usuario autenticado.
+     *
+     * Valida que todos los campos necesarios estén completos y luego envía una solicitud para crear la dirección.
+     * Si la creación es exitosa, actualiza el estado para indicar que la dirección fue creada.
+     *
+     * @param token El token de autenticación en formato `Bearer`.
+     * @param tipo El tipo de dirección (ej: "Casa", "Oficina").
+     * @param pais El país de la dirección.
+     * @param municipio El municipio de la dirección.
+     * @param estado El estado o provincia de la dirección.
+     * @param calle El nombre de la calle de la dirección.
+     * @param noExterior El número exterior de la dirección.
+     * @param noInterior El número interior de la dirección (opcional).
+     * @param colonia La colonia o barrio de la dirección.
+     * @param cp El código postal de la dirección.
+     */
+    fun createAddress(
+        token: String,
+        tipo: String,
+        pais: String,
+        municipio: String,
+        estado: String,
+        calle: String,
+        noExterior: String,
+        noInterior: String?,
+        colonia: String,
+        cp: Int
+    ) {
         _errorNuevaDireccion.value = false
         _direccionCreada.value = false
-        if (token!="" && tipo!="" && pais!="" && municipio!="" && estado!="" && calle!="" && noExterior!="" && colonia!="" && cp!=0) {
+        if (token != "" && tipo != "" && pais != "" && municipio != "" && estado != "" && calle != "" && noExterior != "" && colonia != "" && cp != 0) {
             val direccionCompletaRequest = DireccionCompletaRequest(
                 tipo, pais, municipio, estado, calle, noExterior, noInterior, colonia, cp
             )
@@ -63,10 +83,24 @@ class DireccionVM: ViewModel() {
             _direccionCreada.value = false
         }
     }
+
+    /**
+     * Restablece los errores de creación de dirección.
+     */
     fun resetErrores() {
         _errorNuevaDireccion.value = false
         _direccionCreada.value = false
     }
+
+    /**
+     * Elimina una dirección por su ID.
+     *
+     * Envía una solicitud para eliminar una dirección específica del usuario autenticado.
+     * Si la eliminación es exitosa, actualiza el estado correspondiente.
+     *
+     * @param token El token de autenticación en formato `Bearer`.
+     * @param id El ID de la dirección que se va a eliminar.
+     */
     fun deleteAddress(token: String, id: String) {
         viewModelScope.launch {
             val result = servicioRemotoDireccion.deleteAddress(token, id)
@@ -79,6 +113,16 @@ class DireccionVM: ViewModel() {
             }
         }
     }
+
+    /**
+     * Consulta los detalles de una dirección específica.
+     *
+     * Envía una solicitud para obtener los detalles de una dirección individual por su ID y actualiza el estado
+     * con la información obtenida.
+     *
+     * @param token El token de autenticación en formato `Bearer`.
+     * @param id El ID de la dirección que se desea consultar.
+     */
     fun getDirecIndiv(token: String, id: String) {
         viewModelScope.launch {
             val result = servicioRemotoDireccion.getAddress(token, id)
@@ -98,6 +142,10 @@ class DireccionVM: ViewModel() {
             }
         }
     }
+
+    /**
+     * Restablece los errores de eliminación de dirección.
+     */
     fun resetErroresEliminar() {
         _errorEliminarDireccion.value = false
         _direccionEliminada.value = false

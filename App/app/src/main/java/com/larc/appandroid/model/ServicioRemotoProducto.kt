@@ -15,31 +15,39 @@ import java.util.concurrent.TimeUnit
 
 class ServicioRemotoProducto {
 
-    // Define the certificate pinning
+    /**
+     * Define el *certificate pinning* para asegurar la comunicación con el servidor.
+     */
     private val certificatePinner by lazy {
         CertificatePinner.Builder()
             .add("backend-tienda-production.up.railway.app", "sha256/FyVOgNsQG1rWPMMd3OLpZYcPsDlc5JxBQs59jmk8Vx4=")
             .build()
     }
 
-    // OkHttpClient
+    /**
+     * Cliente OkHttp configurado con *certificate pinning* y tiempos de espera.
+     * Incluye un interceptor opcional para logging en modo de depuración (comentado).
+     */
     private val okHttpClient by lazy {
         // Debugging
         /*
         val logging = HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
-         */
+        */
 
         OkHttpClient.Builder()
-            //.addInterceptor(logging)
+            //.addInterceptor(logging) // Interceptor para logging (opcional)
             .certificatePinner(certificatePinner)
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .build()
     }
 
-    // Objeto retrofit
+    /**
+     * Instancia Retrofit configurada para interactuar con la API de productos.
+     * Utiliza el cliente OkHttp previamente configurado.
+     */
     private val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl("https://backend-tienda-production.up.railway.app/api/")
@@ -48,12 +56,19 @@ class ServicioRemotoProducto {
             .build()
     }
 
-    // Objeto para descargar un dato o servicio
+    /**
+     * Servicio que interactúa con la API de productos.
+     */
     private val servicio by lazy {
         retrofit.create(ProductoAPI::class.java)
     }
 
-    // Descarga lista completa
+    /**
+     * Busca productos utilizando una palabra clave.
+     *
+     * @param palabra La palabra clave a utilizar en la búsqueda de productos.
+     * @return Un objeto `ProductoResponse` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun searchProducts(palabra: String): ProductoResponse? {
         return try {
             val response: Response<ProductoResponse> = servicio.searchProducts(palabra = palabra)
@@ -67,7 +82,12 @@ class ServicioRemotoProducto {
         }
     }
 
-    // Descarga lista de productos
+    /**
+     * Obtiene una lista de productos paginada.
+     *
+     * @param offset El número de productos a saltar (usado para la paginación).
+     * @return Un objeto `ProductoResponse` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun getProductos(offset: Int): ProductoResponse? {
         return try {
             val response: Response<ProductoResponse> = servicio.getProductos(offset = offset)
@@ -81,7 +101,13 @@ class ServicioRemotoProducto {
         }
     }
 
-    // Descarga lista de productos por categoría
+    /**
+     * Obtiene una lista de productos por categoría, paginada.
+     *
+     * @param categoria La categoría de productos a consultar.
+     * @param offset El número de productos a saltar (usado para la paginación).
+     * @return Un objeto `ProductoResponse` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun getProductosPorCategoria(categoria: String, offset: Int): ProductoResponse? {
         return try {
             val response: Response<ProductoResponse> = servicio.getProductosPorCategoria(categoria, offset = offset)
@@ -95,7 +121,12 @@ class ServicioRemotoProducto {
         }
     }
 
-    // Descarga producto por id
+    /**
+     * Obtiene los detalles de un producto específico por su ID.
+     *
+     * @param id El ID del producto que se desea consultar.
+     * @return Un objeto `Producto` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun getProductoPorId(id: String): Producto? {
         return try {
             val response: Response<Producto> = servicio.getProductoPorId(id)
@@ -108,4 +139,5 @@ class ServicioRemotoProducto {
             null
         }
     }
+
 }

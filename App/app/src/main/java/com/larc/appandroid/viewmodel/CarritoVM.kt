@@ -40,6 +40,16 @@ class CarritoVM: ViewModel() {
 
     //-------------------------------------------------------------------------------------
     // Interface para la vista
+
+    /**
+     * Agrega un producto al carrito.
+     *
+     * Envía una solicitud para agregar un producto al carrito del usuario. Luego actualiza el estado del carrito
+     * y recalcula los totales.
+     *
+     * @param id El ID del producto que se va a agregar.
+     * @param producto El nombre del producto que se va a agregar.
+     */
     fun addToCart(id: String, producto: String) {
         _messageShowed.value = false
         _errorAgregarProducto.value = false
@@ -57,13 +67,30 @@ class CarritoVM: ViewModel() {
             }
         }
     }
+
+    /**
+     * Indica que el mensaje de éxito ya fue mostrado.
+     */
     fun setMessageShowed() {
         _messageShowed.value = true
     }
+
+    /**
+     * Restablece los errores de agregar producto.
+     */
     fun resetErrores() {
         _errorAgregarProducto.value = false
         _productoAgregado.value = false
     }
+
+    /**
+     * Consulta el carrito del usuario por su ID.
+     *
+     * Obtiene el contenido del carrito del usuario y agrupa los productos por su ID, calculando las cantidades
+     * totales y actualizando el estado del carrito.
+     *
+     * @param id El ID del usuario cuyo carrito se va a consultar.
+     */
     fun getCart(id: String) {
         _errorGetCart.value = false
         viewModelScope.launch {
@@ -85,25 +112,41 @@ class CarritoVM: ViewModel() {
                 _carritoNoRepeat.value = groupedItems
                 _errorGetCart.value = false
                 calculateCartTotals()
-                Log.d("Status", "Success")
             } else {
                 _productosCarrito.value = listOf()
                 _carritoNoRepeat.value = listOf()
                 _errorGetCart.value = true
-                Log.d("Status", "Not success :( ")
             }
         }
-        Log.d("carritoNoRepeat", _carritoNoRepeat.value.size.toString())
-        Log.d("carritoR", _productosCarrito.value.size.toString())
     }
+
+    /**
+     * Restablece el error de consulta del carrito.
+     */
     fun resetErrorGetCart() {
         _errorGetCart.value = false
     }
+
+    /**
+     * Calcula el subtotal y el total del carrito.
+     *
+     * Calcula el subtotal sumando los precios y cantidades de los productos en el carrito.
+     * Luego, calcula el total aplicando un 16% de impuestos.
+     */
     private fun calculateCartTotals() {
         val subtotal = _carritoNoRepeat.value.sumOf { it.price * it.quantity }
         _subtotalCarrito.value = subtotal
         _totalCarrito.value = subtotal * 1.16
     }
+
+    /**
+     * Elimina un producto del carrito.
+     *
+     * Busca el producto en el carrito usando su ID de producto, obtiene el ID del `cartItem` y lo elimina.
+     * Luego, actualiza el estado del carrito.
+     *
+     * @param productId El ID del producto que se desea eliminar del carrito.
+     */
     fun removeFromCart(productId: String) {
         val cartItem = _productosCarrito.value.find { it.product.id == productId }
 
@@ -115,7 +158,6 @@ class CarritoVM: ViewModel() {
                     _productosCarrito.value = _productosCarrito.value.filterNot { it.id == cartItemId }
                     refreshCart()
                 } else {
-                    // Handle error in removal
                     Log.d("Status", "Failed to remove item")
                 }
             }
@@ -123,6 +165,10 @@ class CarritoVM: ViewModel() {
             Log.d("Status", "CartItem not found for productId: $productId")
         }
     }
+
+    /**
+     * Actualiza el estado del carrito agrupando los productos por ID y recalculando los totales.
+     */
     private fun refreshCart() {
         val groupedItems = _productosCarrito.value
             .groupBy { it.product.id }
@@ -139,4 +185,5 @@ class CarritoVM: ViewModel() {
         _carritoNoRepeat.value = groupedItems
         calculateCartTotals()
     }
+
 }

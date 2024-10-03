@@ -14,14 +14,18 @@ import java.util.concurrent.TimeUnit
 
 class ServicioRemotoDireccion {
 
-    // Define the certificate pinning
+    /**
+     * Define el *certificate pinning* para asegurar la comunicación con el servidor.
+     */
     private val certificatePinner by lazy {
         CertificatePinner.Builder()
             .add("backend-tienda-production.up.railway.app", "sha256/FyVOgNsQG1rWPMMd3OLpZYcPsDlc5JxBQs59jmk8Vx4=")
             .build()
     }
 
-    // Define the OkHttpClient with the certificate pinning
+    /**
+     * Define el cliente OkHttp configurado con *certificate pinning* y tiempos de espera.
+     */
     private val okHttpClient by lazy {
         OkHttpClient.Builder()
             .certificatePinner(certificatePinner)
@@ -30,7 +34,10 @@ class ServicioRemotoDireccion {
             .build()
     }
 
-    // Objeto retrofit
+    /**
+     * Objeto Retrofit configurado para la base de datos de la tienda.
+     * Utiliza el cliente OkHttp previamente configurado.
+     */
     private val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl("https://backend-tienda-production.up.railway.app/api/")
@@ -39,12 +46,20 @@ class ServicioRemotoDireccion {
             .build()
     }
 
-    // Objeto para descargar un dato o servicio
+    /**
+     * Servicio que interactúa con la API de direcciones.
+     */
     private val servicio by lazy {
         retrofit.create(DireccionAPI::class.java)
     }
 
-    // Crear una nueva dirección
+    /**
+     * Crea una nueva dirección para el usuario autenticado.
+     *
+     * @param token El token de autenticación (formato `Bearer`).
+     * @param direccionCompletaRequest Los detalles completos de la nueva dirección.
+     * @return Un objeto `DireccionCompletaResponse` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun createAddress(token: String, direccionCompletaRequest: DireccionCompletaRequest): DireccionCompletaResponse? {
         val bearerToken = "Bearer $token"
         return try {
@@ -59,7 +74,13 @@ class ServicioRemotoDireccion {
         }
     }
 
-    // Eliminar una dirección
+    /**
+     * Elimina una dirección específica del usuario autenticado.
+     *
+     * @param token El token de autenticación (formato `Bearer`).
+     * @param id El ID de la dirección que se desea eliminar.
+     * @return Un objeto `DeleteAddressResponse` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun deleteAddress(token: String, id: String): DeleteAddressResponse? {
         val bearerToken = "Bearer $token"
         return try {
@@ -74,7 +95,13 @@ class ServicioRemotoDireccion {
         }
     }
 
-    // Obtener una dirección
+    /**
+     * Consulta una dirección específica del usuario autenticado.
+     *
+     * @param token El token de autenticación (formato `Bearer`).
+     * @param id El ID de la dirección que se desea consultar.
+     * @return Un objeto `GetAddressResponse` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun getAddress(token: String, id: String): GetAddressResponse? {
         val bearerToken = "Bearer $token"
         return try {
@@ -88,4 +115,5 @@ class ServicioRemotoDireccion {
             null
         }
     }
+
 }

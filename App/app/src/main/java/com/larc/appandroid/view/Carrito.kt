@@ -127,7 +127,7 @@ fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: U
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Spacer(modifier = Modifier.height(16.dp))
-                        BotonPagar(onClick = {})
+                        BotonPagar(onClick = { navController.navigate(Pantallas.RUTA_PAYMENT) })
                     }
                 }
             }

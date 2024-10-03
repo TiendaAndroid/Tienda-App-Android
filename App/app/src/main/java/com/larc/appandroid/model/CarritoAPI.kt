@@ -14,19 +14,40 @@ import retrofit2.http.Path
 
 interface CarritoAPI {
 
-    // Agregar producto al carrito
+    /**
+     * Agrega un producto al carrito.
+     *
+     * Envía una solicitud para agregar un producto al carrito del usuario actual.
+     *
+     * @param addToCartRequest El objeto que contiene la información del producto a agregar.
+     * @return La respuesta del servidor con los detalles del producto agregado.
+     */
     @POST("cart/item")
     suspend fun addToCart(
         @Body addToCartRequest: AddToCartRequest
     ): Response<AddToCartResponse>
 
-    // Consultar carrito por id
+    /**
+     * Consulta el carrito de un usuario por su ID.
+     *
+     * Obtiene el contenido del carrito del usuario especificado por su ID.
+     *
+     * @param id El ID del usuario cuyo carrito se va a consultar.
+     * @return La respuesta del servidor que contiene los detalles del carrito.
+     */
     @GET("cart/user/{id}")
     suspend fun getCart(
         @Path("id") id: String
     ): Response<Cart>
 
-    // Borrar un producto del carrito
+    /**
+     * Borra un producto del carrito.
+     *
+     * Elimina un producto del carrito usando el ID del `cartItem`.
+     *
+     * @param id El ID del elemento en el carrito que se debe eliminar.
+     * @return La respuesta del servidor indicando si la eliminación fue exitosa.
+     */
     @DELETE("cart/item/{id}")
     suspend fun deleteItem(
         @Path("id") id: String

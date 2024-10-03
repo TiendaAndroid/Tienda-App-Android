@@ -1,5 +1,6 @@
 package com.larc.appandroid.view
 
+import Payment
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -325,6 +326,9 @@ fun AppNavHost(navController: NavHostController,
             val token = it.arguments?.getString("token")
             val addressId = it.arguments?.getString("addressId")
             EliminarDireccion(navController, token!!, addressId!!, direccionVM)
+        }
+        composable(Pantallas.RUTA_PAYMENT) {
+            Payment()
         }
     }
 }

@@ -15,14 +15,18 @@ import java.util.concurrent.TimeUnit
 
 class ServicioRemotoUsuario {
 
-    // Define the certificate pinning
+    /**
+     * Define el *certificate pinning* para asegurar la comunicación con el servidor.
+     */
     private val certificatePinner by lazy {
         CertificatePinner.Builder()
             .add("backend-tienda-production.up.railway.app", "sha256/FyVOgNsQG1rWPMMd3OLpZYcPsDlc5JxBQs59jmk8Vx4=")
             .build()
     }
 
-    // Define the OkHttpClient with the certificate pinning
+    /**
+     * Cliente OkHttp configurado con *certificate pinning* y tiempos de espera.
+     */
     private val okHttpClient by lazy {
         OkHttpClient.Builder()
             .certificatePinner(certificatePinner)
@@ -31,7 +35,10 @@ class ServicioRemotoUsuario {
             .build()
     }
 
-    // Objeto retrofit
+    /**
+     * Instancia Retrofit configurada para interactuar con la API de usuarios.
+     * Utiliza el cliente OkHttp previamente configurado.
+     */
     private val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl("https://backend-tienda-production.up.railway.app/api/")
@@ -40,12 +47,19 @@ class ServicioRemotoUsuario {
             .build()
     }
 
-    // Objeto para descargar un dato o servicio
+    /**
+     * Servicio que interactúa con la API de usuarios.
+     */
     private val servicio by lazy {
         retrofit.create(UsuarioAPI::class.java)
     }
 
-    // Método para iniciar sesión
+    /**
+     * Inicia sesión para un usuario.
+     *
+     * @param loginRequest El objeto que contiene las credenciales de inicio de sesión (correo y contraseña).
+     * @return Un objeto `UsuarioResponse` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun loginUser(loginRequest: LoginRequest): UsuarioResponse? {
         return try {
             val response: Response<UsuarioResponse> = servicio.loginUser(loginRequest)
@@ -59,7 +73,14 @@ class ServicioRemotoUsuario {
         }
     }
 
-    // Método para registrarse (recibir token por correo)
+    /**
+     * Solicita el registro de un usuario con su correo electrónico.
+     *
+     * Envía un correo electrónico con un token de verificación al usuario.
+     *
+     * @param signupRequest El objeto que contiene la información del usuario (nombre, correo).
+     * @return Una lista de cadenas con la respuesta del servidor si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun signupEmail(signupRequest: SignupRequest): List<String>? {
         return try {
             val response: Response<List<String>> = servicio.signupEmail(signupRequest)
@@ -77,7 +98,12 @@ class ServicioRemotoUsuario {
         }
     }
 
-    // Método para registrarse (ya con token)
+    /**
+     * Completa el registro de un usuario utilizando el token enviado al correo.
+     *
+     * @param registerRequest El objeto que contiene la información completa del usuario y el token de verificación.
+     * @return Un objeto `UsuarioResponseRegister` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun registerUser(registerRequest: RegisterRequest): UsuarioResponseRegister? {
         return try {
             val response: Response<UsuarioResponseRegister> = servicio.registerUser(registerRequest)
@@ -91,7 +117,12 @@ class ServicioRemotoUsuario {
         }
     }
 
-    // Método para obtener el perfil
+    /**
+     * Obtiene el perfil del usuario autenticado.
+     *
+     * @param token El token de autenticación en formato `Bearer`.
+     * @return Un objeto `ProfileResponse` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun getProfile(token: String): ProfileResponse? {
         val bearerToken = "Bearer $token"
         return try {
@@ -105,4 +136,5 @@ class ServicioRemotoUsuario {
             null
         }
     }
+
 }

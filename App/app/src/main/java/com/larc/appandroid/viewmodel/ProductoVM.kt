@@ -61,13 +61,28 @@ class ProductoVM: ViewModel() {
 
     //-------------------------------------------------------------------------------------
     // Interface para la vista
-    // Calcula el número de páginas de resultados
+
+    /**
+     * Calcula el número de páginas basado en el total de resultados.
+     *
+     * Dado un número total de productos, calcula cuántas páginas de 5 productos por página serían necesarias.
+     *
+     * @param total El número total de productos.
+     * @return El número de páginas calculado.
+     */
     private fun calcularPaginas(total: Int): Int {
         val num = ceil(total.toDouble() / 5.0)
         return num.toInt()
     }
 
-    // Para todos los productos
+    /**
+     * Obtiene todos los productos con paginación.
+     *
+     * Envía una solicitud para obtener productos, utilizando el `offset` para la paginación.
+     * Actualiza la lista de productos y el número de páginas totales.
+     *
+     * @param offset El número de productos a saltar (usado para la paginación).
+     */
     fun getAllProductos(offset: Int) {
         _isLoading.value = true
         viewModelScope.launch {
@@ -86,7 +101,15 @@ class ProductoVM: ViewModel() {
         }
     }
 
-    // Para productos por categoría
+    /**
+     * Obtiene productos por categoría con paginación.
+     *
+     * Envía una solicitud para obtener productos filtrados por categoría, utilizando el `offset` para la paginación.
+     * Actualiza la lista de productos, el número de páginas totales y la categoría actual.
+     *
+     * @param cat La categoría de productos.
+     * @param offset El número de productos a saltar (usado para la paginación).
+     */
     fun getProductosByCategory(cat: String, offset: Int) {
         _isLoading.value = true
         viewModelScope.launch {
@@ -106,7 +129,13 @@ class ProductoVM: ViewModel() {
         }
     }
 
-    // Para un producto por ID
+    /**
+     * Obtiene un producto específico por su ID.
+     *
+     * Envía una solicitud para obtener los detalles de un producto mediante su ID y actualiza el estado del producto actual.
+     *
+     * @param id El ID del producto que se desea consultar.
+     */
     fun getProductoPorId(id: String) {
         _isLoading.value = true
         viewModelScope.launch {
@@ -123,7 +152,13 @@ class ProductoVM: ViewModel() {
         }
     }
 
-    // Para productos por búsqueda
+    /**
+     * Realiza una búsqueda de productos por palabra clave.
+     *
+     * Envía una solicitud para buscar productos que coincidan con una palabra clave y actualiza la lista de resultados de búsqueda.
+     *
+     * @param palabra La palabra clave a utilizar en la búsqueda.
+     */
     fun searchProducto(palabra: String) {
         _isLoading.value = true
         viewModelScope.launch {
@@ -142,18 +177,36 @@ class ProductoVM: ViewModel() {
         }
     }
 
+    /**
+     * Establece la categoría actual para filtrar productos.
+     *
+     * @param cat La categoría a establecer.
+     */
     private fun setCategory(cat: String) {
         currentCat = cat
     }
-    // Filtrar o no
+
+    /**
+     * Activa el filtro por categoría.
+     */
     fun filterOn() {
         filtered = true
     }
+
+    /**
+     * Desactiva el filtro por categoría.
+     */
     fun filterOff() {
         filtered = false
     }
+
+    /**
+     * Avanza a la siguiente página de resultados.
+     *
+     * Si no se ha alcanzado la última página, incrementa el `offset` y solicita los productos de la siguiente página.
+     */
     fun nextPage() {
-        if (_paginaActual.value < _totalPaginas.value-1) {
+        if (_paginaActual.value < _totalPaginas.value - 1) {
             _paginaActual.value++
             otherOffset += 1
             if (filtered) {
@@ -164,6 +217,12 @@ class ProductoVM: ViewModel() {
             _scrollTop.value = true
         }
     }
+
+    /**
+     * Retrocede a la página anterior de resultados.
+     *
+     * Si no se está en la primera página, decrementa el `offset` y solicita los productos de la página anterior.
+     */
     fun previousPage() {
         if (_paginaActual.value > 0) {
             _paginaActual.value--
@@ -176,11 +235,20 @@ class ProductoVM: ViewModel() {
             _scrollTop.value = true
         }
     }
+
+    /**
+     * Restablece la página actual a la primera página.
+     */
     fun resetPagActual() {
         _paginaActual.value = 0
         otherOffset = 0
     }
+
+    /**
+     * Restablece el valor de `scrollTop` a falso.
+     */
     fun resetScrollTop() {
         _scrollTop.value = false
     }
+
 }

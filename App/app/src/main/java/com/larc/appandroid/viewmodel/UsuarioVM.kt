@@ -46,6 +46,15 @@ class UsuarioVM: ViewModel() {
     //-------------------------------------------------------------------------------------
     // Interface para la vista
 
+    /**
+     * Inicia sesión para un usuario.
+     *
+     * Envía una solicitud de inicio de sesión con el correo y contraseña del usuario. Si la operación es exitosa,
+     * se guarda el token de autenticación y se actualiza el estado para indicar que el usuario está autenticado.
+     *
+     * @param email El correo electrónico del usuario.
+     * @param password La contraseña del usuario.
+     */
     fun loginUser(email: String, password: String) {
         val loginRequest = LoginRequest(email, password)
         resetErrorLogin()
@@ -62,6 +71,18 @@ class UsuarioVM: ViewModel() {
             }
         }
     }
+
+    /**
+     * Solicita el envío de un correo electrónico para el registro de un nuevo usuario.
+     *
+     * Envía una solicitud con la información del usuario (nombre, apellido, correo y contraseña) para que se le
+     * envíe un correo de confirmación con un token de registro.
+     *
+     * @param email El correo electrónico del usuario.
+     * @param name El nombre del usuario.
+     * @param lastName El apellido del usuario.
+     * @param password La contraseña del usuario.
+     */
     fun registerSendMail(email: String, name: String, lastName: String, password: String) {
         _errorSendMail.value = false
         val signupRequest = SignupRequest(email, name, lastName, password)
@@ -76,6 +97,19 @@ class UsuarioVM: ViewModel() {
             }
         }
     }
+
+    /**
+     * Completa el registro de un usuario utilizando el token de verificación.
+     *
+     * Envía una solicitud con la información del usuario y el token de verificación para completar el registro.
+     * Si la operación es exitosa, se guarda el token de autenticación y se actualiza el estado del usuario.
+     *
+     * @param email El correo electrónico del usuario.
+     * @param name El nombre del usuario.
+     * @param lastName El apellido del usuario.
+     * @param password La contraseña del usuario.
+     * @param token El token de verificación recibido por correo.
+     */
     fun registerUSer(email: String, name: String, lastName: String, password: String, token: String) {
         _errorRegister.value = false
         val registerRequest = RegisterRequest(email, name, lastName, password, token)
@@ -95,6 +129,12 @@ class UsuarioVM: ViewModel() {
             }
         }
     }
+
+    /**
+     * Cierra sesión del usuario actual.
+     *
+     * Limpia el token de autenticación almacenado y actualiza el estado para indicar que el usuario no está autenticado.
+     */
     fun logoutUser() {
         viewModelScope.launch {
             clearToken()
@@ -102,18 +142,38 @@ class UsuarioVM: ViewModel() {
             _loggedUsuario.value = false
         }
     }
+
+    /**
+     * Restablece el estado de error del inicio de sesión.
+     */
     private fun resetErrorLogin() {
         _errorLogin.value = false
     }
 
+    /**
+     * Guarda el token de autenticación en SharedPreferences.
+     *
+     * @param token El token de autenticación a guardar.
+     */
     private fun saveToken(token: String) {
         val sharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().putString("auth_token", token).apply()
     }
+
+    /**
+     * Elimina el token de autenticación almacenado en SharedPreferences.
+     */
     private fun clearToken() {
         val sharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
         sharedPreferences.edit().remove("auth_token").apply()
     }
+
+    /**
+     * Verifica si el usuario está autenticado.
+     *
+     * Comprueba si existe un token de autenticación guardado. Si lo hay, actualiza el estado para indicar
+     * que el usuario está autenticado.
+     */
     fun checkIfLoggedIn() {
         val token = getToken()
         if (token != null) {
@@ -121,10 +181,23 @@ class UsuarioVM: ViewModel() {
             _loggedUsuario.value = true
         }
     }
+
+    /**
+     * Obtiene el token de autenticación almacenado.
+     *
+     * @return El token de autenticación almacenado o `null` si no existe.
+     */
     fun getToken(): String? {
         val sharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
         return sharedPreferences.getString("auth_token", null)
     }
+
+    /**
+     * Obtiene el perfil del usuario autenticado.
+     *
+     * Envía una solicitud para obtener los detalles del perfil del usuario utilizando el token de autenticación.
+     * Actualiza el estado del perfil con la información recibida.
+     */
     fun getProfile() {
         if (getToken() != null) {
             viewModelScope.launch {
@@ -146,8 +219,18 @@ class UsuarioVM: ViewModel() {
             }
         }
     }
+
+    /**
+     * Obtiene el ID del carrito del usuario autenticado.
+     *
+     * Llama a la función `getProfile` para asegurarse de que el perfil está actualizado y luego retorna el ID
+     * del carrito del usuario.
+     *
+     * @return El ID del carrito del usuario o una cadena vacía si no se encuentra el carrito.
+     */
     fun getCartId(): String {
         getProfile()
         return _estadoMiUsuario.value.cart?.id ?: ""
     }
+
 }

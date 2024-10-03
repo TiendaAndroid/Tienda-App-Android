@@ -14,14 +14,18 @@ import java.util.concurrent.TimeUnit
 
 class ServicioRemotoCarrito {
 
-    // Define the certificate pinning
+    /**
+     * Define el *certificate pinning* para la comunicación segura con el servidor.
+     */
     private val certificatePinner by lazy {
         CertificatePinner.Builder()
             .add("backend-tienda-production.up.railway.app", "sha256/FyVOgNsQG1rWPMMd3OLpZYcPsDlc5JxBQs59jmk8Vx4=")
             .build()
     }
 
-    // Define the OkHttpClient with the certificate pinning
+    /**
+     * Define el cliente OkHttp configurado con el *certificate pinning* y tiempos de espera.
+     */
     private val okHttpClient by lazy {
         OkHttpClient.Builder()
             .certificatePinner(certificatePinner)
@@ -30,7 +34,10 @@ class ServicioRemotoCarrito {
             .build()
     }
 
-    // Objeto retrofit
+    /**
+     * Objeto Retrofit configurado para la base de datos de la tienda.
+     * Utiliza el cliente OkHttp previamente configurado.
+     */
     private val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl("https://backend-tienda-production.up.railway.app/api/")
@@ -39,12 +46,21 @@ class ServicioRemotoCarrito {
             .build()
     }
 
-    // Objeto para descargar un dato o servicio
+    /**
+     * Servicio que interactúa con la API del carrito.
+     */
     private val servicio by lazy {
         retrofit.create(CarritoAPI::class.java)
     }
 
-    // Agregar producto al carrito
+    /**
+     * Agrega un producto al carrito.
+     *
+     * Envía una solicitud a la API para agregar el producto especificado al carrito del usuario.
+     *
+     * @param addToCartRequest El objeto que contiene los datos del producto que se agregará al carrito.
+     * @return Un objeto `AddToCartResponse` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun addToCart(addToCartRequest: AddToCartRequest): AddToCartResponse? {
         return try {
             val response = servicio.addToCart(addToCartRequest)
@@ -61,37 +77,40 @@ class ServicioRemotoCarrito {
         }
     }
 
-    // Consultar carrito por id
+    /**
+     * Consulta el carrito del usuario por su ID.
+     *
+     * @param id El ID del usuario cuyo carrito se va a consultar.
+     * @return Un objeto `Cart` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun getCart(id: String): Cart? {
         return try {
             val response = servicio.getCart(id)
             if (response.isSuccessful) {
-                //Log.d("This is:", response.body().toString())
-                //Log.d("Status", "Success")
                 response.body()
             } else {
-                //Log.d("Status", "Not success :( ")
                 null
             }
         } catch (e: Exception) {
-            //Log.d("Status", "Error, $e")
             null
         }
     }
 
-    // Borrar un producto del carrito
+    /**
+     * Elimina un producto del carrito por su ID.
+     *
+     * @param id El ID del `cartItem` que se debe eliminar.
+     * @return `Unit?` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun deleteItem(id: String): Unit? {
         return try {
             val response = servicio.deleteItem(id)
             if (response.isSuccessful) {
-                //Log.d("Status", "Success")
                 response.body()
             } else {
-                //Log.d("Status", "Not success :( ")
                 null
             }
         } catch (e: Exception) {
-            //Log.d("Status", "Error, $e")
             null
         }
     }
