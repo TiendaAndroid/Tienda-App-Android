@@ -136,7 +136,7 @@ fun BotonApachurrable(text: String, onClick: () -> Unit, imagen: String) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp),
+                    .height(60.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Image(painter = painterResource(id = imagen.toInt()),

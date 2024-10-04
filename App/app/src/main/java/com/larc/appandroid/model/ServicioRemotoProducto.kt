@@ -20,7 +20,8 @@ class ServicioRemotoProducto {
      */
     private val certificatePinner by lazy {
         CertificatePinner.Builder()
-            .add("backend-tienda-production.up.railway.app", "sha256/FyVOgNsQG1rWPMMd3OLpZYcPsDlc5JxBQs59jmk8Vx4=")
+            //.add("backend-tienda-production.up.railway.app", "sha256/FyVOgNsQG1rWPMMd3OLpZYcPsDlc5JxBQs59jmk8Vx4=")
+            .add("fabm.online", "sha256/BTvVjAWnPX4FDA4NB0n6OlshgFbmV/5RAV8M8BFG/o8=")
             .build()
     }
 
@@ -50,7 +51,8 @@ class ServicioRemotoProducto {
      */
     private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://backend-tienda-production.up.railway.app/api/")
+            //.baseUrl("https://backend-tienda-production.up.railway.app/api/")
+            .baseUrl("https://fabm.online/zazil_backend/api/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

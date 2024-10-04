@@ -1,6 +1,5 @@
 package com.larc.appandroid.view
 
-import Payment
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,9 +26,10 @@ import androidx.navigation.compose.rememberNavController
 import com.larc.appandroid.ui.theme.AppAndroidTheme
 import com.larc.appandroid.viewmodel.CarritoVM
 import com.larc.appandroid.viewmodel.DireccionVM
+import com.larc.appandroid.viewmodel.PaymentsVM
 import com.larc.appandroid.viewmodel.ProductoVM
 import com.larc.appandroid.viewmodel.UsuarioVM
-import kotlinx.coroutines.delay
+import com.stripe.android.paymentsheet.PaymentSheet
 
 /**
  * Representa la vista principal de la aplicación, con sus barras superior e inferior.
@@ -37,12 +37,13 @@ import kotlinx.coroutines.delay
  */
 
 @Composable
-fun AppPrincipal() {
+fun AppPrincipal(paymentSheet: PaymentSheet) {
     val navController = rememberNavController()
     val productoVM: ProductoVM = viewModel()
     val usuarioVM: UsuarioVM = viewModel()
     val direccionVM: DireccionVM = viewModel()
     val carritoVM: CarritoVM = viewModel()
+    val paymentsViewModel: PaymentsVM = viewModel()
     var searchText by remember { mutableStateOf("") }
 
     val onSearchTextChanged: (String) -> Unit = { text ->
@@ -63,7 +64,7 @@ fun AppPrincipal() {
             },
             bottomBar = { AppBottomBar(navController) },
         ) { innerPadding ->
-            AppNavHost(navController, productoVM, usuarioVM, direccionVM, carritoVM, modifier = Modifier.padding(innerPadding))
+            AppNavHost(navController, productoVM, usuarioVM, direccionVM, carritoVM, paymentsViewModel, paymentSheet, modifier = Modifier.padding(innerPadding))
         }
     }
 }
@@ -87,7 +88,7 @@ fun AppTopBar(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 12.dp)
+                    .padding(top = 28.dp)//12.dp)
             ) {
                 TextField(
                     value = searchText,
@@ -255,6 +256,8 @@ fun AppNavHost(navController: NavHostController,
                usuarioVM: UsuarioVM,
                direccionVM: DireccionVM,
                carritoVM: CarritoVM,
+               paymentsViewModel: PaymentsVM,
+               paymentSheet: PaymentSheet,
                modifier: Modifier = Modifier) {
     NavHost(
         navController = navController,
@@ -327,8 +330,15 @@ fun AppNavHost(navController: NavHostController,
             val addressId = it.arguments?.getString("addressId")
             EliminarDireccion(navController, token!!, addressId!!, direccionVM)
         }
-        composable(Pantallas.RUTA_PAYMENT) {
-            Payment()
+        composable("payment_screen" + "/{total}") {
+            val total = it.arguments?.getString("total")
+            if (total != null) {
+                val totalAmountInCents = (total.toDouble() * 100).toInt()
+                PaymentScreen(navController, paymentsViewModel, amount = totalAmountInCents, paymentSheet = paymentSheet)
+            }
+        }
+        composable(Pantallas.RUTA_DIRECCION_ENTREGA) {
+            DireccionEntrega(navController, usuarioVM)
         }
     }
 }
