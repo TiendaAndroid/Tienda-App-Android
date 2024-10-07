@@ -26,6 +26,9 @@ class PaymentsVM : ViewModel() {
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
 
+    private val _estadoDireccionEntrega = MutableStateFlow( EstadoDireccionEntrega() )
+    val estadoDireccionEntrega: StateFlow<EstadoDireccionEntrega> = _estadoDireccionEntrega
+
     /**
      * Crea un PaymentIntent usando el servicio remoto.
      *
@@ -33,12 +36,10 @@ class PaymentsVM : ViewModel() {
      * que será usado para confirmar el pago con Stripe.
      *
      * @param token El token de autorización del usuario.
-     * @param amount El monto de la transacción.
      * @param currency La moneda de la transacción (ej: "usd").
      */
     fun createPaymentIntent(
-        token: String,
-        amount: Int,
+        token: String?,
         currency: String,
         tipo: String,
         pais: String,
@@ -52,35 +53,65 @@ class PaymentsVM : ViewModel() {
         _isLoading.value = true
         _error.value = null
 
-        viewModelScope.launch {
-            try {
-                val paymentSessionDto = PaymentSessionDto(
-                    //amount = amount,
-                    currency = currency,
-                    tipo = tipo,
-                    pais = pais,
-                    municipio = municipio,
-                    estado = estado,
-                    calle = calle,
-                    noExterior = noExterior,
-                    noInterior = "",
-                    colonia = colonia,
-                    cp = cp
-                )
-                val result = servicioRemotoPayments.createPaymentIntent(token, paymentSessionDto)
-                if (result != null) {
-                    _clientSecret.value = result.clientSecret
-                } else {
-                    _error.value = "Error: Unable to fetch client secret."
+        if (token == null) {
+            _error.value = "Error: Token is null."
+            return
+        } else {
+            viewModelScope.launch {
+                try {
+                    val paymentSessionDto = PaymentSessionDto(
+                        currency = currency,
+                        tipo = tipo,
+                        pais = pais,
+                        municipio = municipio,
+                        estado = estado,
+                        calle = calle,
+                        noExterior = noExterior,
+                        noInterior = "",
+                        colonia = colonia,
+                        cp = cp
+                    )
+                    val result =
+                        servicioRemotoPayments.createPaymentIntent(token, paymentSessionDto)
+                    if (result != null) {
+                        _clientSecret.value = result.clientSecret
+                    } else {
+                        _error.value = "Error: Unable to fetch client secret."
+                    }
+                } catch (e: Exception) {
+                    _error.value = "Exception: ${e.message}"
+                } finally {
+                    _isLoading.value = false
                 }
-            } catch (e: Exception) {
-                _error.value = "Exception: ${e.message}"
-            } finally {
-                _isLoading.value = false
             }
         }
     }
     fun resetError() {
         _error.value = null
+    }
+    fun updateEstadoDireccionEntrega(
+        tipo: String,
+        pais: String,
+        municipio: String,
+        estado: String,
+        calle: String,
+        noExterior: String,
+        noInterior: String?,
+        colonia: String,
+        cp: Int
+    ) {
+        viewModelScope.launch {
+            _estadoDireccionEntrega.value = _estadoDireccionEntrega.value.copy(
+                tipo = tipo,
+                pais = pais,
+                municipio = municipio,
+                estado = estado,
+                calle = calle,
+                noExterior = noExterior,
+                noInterior = noInterior,
+                colonia = colonia,
+                cp = cp
+            )
+        }
     }
 }

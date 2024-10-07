@@ -40,6 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.larc.appandroid.viewmodel.PaymentsVM
 import com.larc.appandroid.viewmodel.UsuarioVM
 
 /**
@@ -48,7 +49,7 @@ import com.larc.appandroid.viewmodel.UsuarioVM
  */
 
 @Composable
-fun DireccionEntrega(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
+fun DireccionEntrega(navController: NavHostController, usuarioVM: UsuarioVM, paymentsVM: PaymentsVM, total: Double, modifier: Modifier = Modifier) {
 
     usuarioVM.getProfile()
     val estadoUsuario = usuarioVM.estadoMiUsuario.collectAsState()
@@ -87,7 +88,16 @@ fun DireccionEntrega(navController: NavHostController, usuarioVM: UsuarioVM, mod
                         thisAddressId,
                         thisAddress,
                         selectedAddressId = selectedAddressId,
-                        onSelect = { selectedAddressId = thisAddressId } )
+                        onSelect = { selectedAddressId = thisAddressId
+                        paymentsVM.updateEstadoDireccionEntrega(direction.tipo,
+                            direction.pais,
+                            direction.municipio,
+                            direction.estado,
+                            direction.calle,
+                            direction.noExterior,
+                            direction.noInterior,
+                            direction.colonia,
+                            direction.cp) } )
                 }
                 Spacer(modifier = Modifier.height(6.dp))
             }
@@ -100,7 +110,7 @@ fun DireccionEntrega(navController: NavHostController, usuarioVM: UsuarioVM, mod
                 BotonContinuarDireccion(
                     onClick = {
                         if (selectedAddressId != null) {
-                            navController.navigate(Pantallas.RUTA_PAYMENT_SCREEN + "/${100.00/*total.value*/}")
+                            navController.navigate(Pantallas.RUTA_PAYMENT_SCREEN + "/${total}")
                         }
                     })
             }

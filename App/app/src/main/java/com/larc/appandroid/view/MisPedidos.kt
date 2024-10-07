@@ -1,16 +1,25 @@
 package com.larc.appandroid.view
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.larc.appandroid.viewmodel.UsuarioVM
 
 /**
  * Representa la vista que presenta los pedidos realizados.
@@ -19,84 +28,43 @@ import androidx.compose.ui.unit.sp
  */
 
 @Composable
-fun MisPedidos() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Mis Pedidos",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFFD5507C),
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
+fun MisPedidos(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
 
-        PedidoItem(
-            pedidoId = "12345",
-            fecha = "01/09/2024",
-            estado = "En tránsito"
-        )
+    usuarioVM.getProfile()
+    val estadoUsuario = usuarioVM.estadoMiUsuario.collectAsState()
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        PedidoItem(
-            pedidoId = "67890",
-            fecha = "25/08/2024",
-            estado = "Entregado"
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        PedidoItem(
-            pedidoId = "76542",
-            fecha = "30/08/2024",
-            estado = "Entregado"
-        )
-    }
-}
-
-@Composable
-fun PedidoItem(pedidoId: String, fecha: String, estado: String) {
-    Card(
+    LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFF4D0CB)
-        ),
-        shape = RoundedCornerShape(8.dp)
+            .background(Color(0xFFFAF8FF)),
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(text = "Pedido ID: $pedidoId", fontSize = 20.sp, color = Color.Black)
-            Text(text = "Fecha: $fecha", fontSize = 18.sp, color = Color.Gray)
-            Text(text = "Estado: $estado", fontSize = 18.sp, color = Color.Gray)
-
-            Button(
-                onClick = { },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFD5507C)
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
-                    .height(40.dp)
-            ) {
-                Text(text = "Rastrear Pedido", color = Color.White)
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "Mis pedidos",
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                color = AppColors.RosaZazil,
+                fontWeight = FontWeight.Normal,
+                fontSize = 22.sp,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+        }
+        estadoUsuario.value.direction?.forEach { direction ->
+            item {
+                val thisAddressId = direction.id
+                val thisCalle = direction.calle
+                val thisNoExt = direction.noExterior
+                val thisAddress = "$thisCalle, #$thisNoExt..."
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    TarjetaDireccion(navController, thisAddressId, thisAddress, usuarioVM.getToken().toString())
+                }
+                Spacer(modifier = Modifier.height(6.dp))
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MisPedidosPreview() {
-    MisPedidos()
 }

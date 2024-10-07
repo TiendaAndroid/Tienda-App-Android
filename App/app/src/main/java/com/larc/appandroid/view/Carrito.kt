@@ -128,7 +128,7 @@ fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: U
                     ) {
                         Spacer(modifier = Modifier.height(16.dp))
                         //BotonPagar(onClick = { navController.navigate(Pantallas.RUTA_PAYMENT_SCREEN + "/${100.00/*total.value*/}") })
-                        BotonPagar(onClick = { navController.navigate(Pantallas.RUTA_DIRECCION_ENTREGA) })
+                        BotonPagar(onClick = { navController.navigate(Pantallas.RUTA_DIRECCION_ENTREGA + "/${total.value}") })
                     }
                 }
             }

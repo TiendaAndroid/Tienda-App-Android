@@ -279,7 +279,7 @@ fun AppNavHost(navController: NavHostController,
             Carrito(navController, carritoVM, usuarioVM)
         }
         composable(Pantallas.RUTA_MIS_PEDIDOS) {
-            MisPedidos()
+            MisPedidos(navController, usuarioVM)
         }
         composable(Pantallas.RUTA_FAQS) {
             Faqs()
@@ -333,12 +333,13 @@ fun AppNavHost(navController: NavHostController,
         composable("payment_screen" + "/{total}") {
             val total = it.arguments?.getString("total")
             if (total != null) {
-                val totalAmountInCents = (total.toDouble() * 100).toInt()
-                PaymentScreen(navController, paymentsViewModel, amount = totalAmountInCents, paymentSheet = paymentSheet)
+                val totalAmount = total.toDouble()
+                PaymentScreen(navController, paymentsViewModel, usuarioVM, amount = totalAmount, paymentSheet = paymentSheet)
             }
         }
-        composable(Pantallas.RUTA_DIRECCION_ENTREGA) {
-            DireccionEntrega(navController, usuarioVM)
+        composable(Pantallas.RUTA_DIRECCION_ENTREGA + "/{total}") {
+            val total = it.arguments?.getString("total")
+            DireccionEntrega(navController, usuarioVM, paymentsViewModel, total!!.toDouble())
         }
     }
 }
