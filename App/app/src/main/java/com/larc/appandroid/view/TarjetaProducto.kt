@@ -106,7 +106,10 @@ fun TarjetaProducto(thisId: String, navController: NavHostController, text: Stri
 
         ShowProductDialog(
             showDialog = showDialog.value,
-            onDismiss = { showDialog.value = false },
+            onDismiss = {
+                carritoVM.setMessageShowed()
+                carritoVM.resetErrores()
+                showDialog.value = false },
             message = message.value,
             onButtonClick = {
                 carritoVM.setMessageShowed()

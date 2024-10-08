@@ -88,8 +88,10 @@ fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: U
                             image = thisImage,
                             totalPrice = item.totalPrice,
                             onAdd = { carritoVM.addToCart(cartId ?: "", item.productId)
-                                    Log.d("UserID", cartId ?: "")
-                                    Log.d("ProductID", item.productId) },
+                                carritoVM.setMessageShowed()
+                                carritoVM.resetErrores()
+                                Log.d("UserID", cartId ?: "")
+                                Log.d("ProductID", item.productId) },
                             onRemove = { carritoVM.removeFromCart(item.productId) })
                     }
                 }
