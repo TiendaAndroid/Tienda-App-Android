@@ -38,7 +38,9 @@ fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: U
     val user = usuarioVM.estadoMiUsuario.collectAsState()
     val cartId = user.value.cart?.id
     val subTotal = carritoVM.subtotalCarrito.collectAsState()
+    val carritoRepeat = carritoVM.productosCarrito.collectAsState()
     val total = carritoVM.totalCarrito.collectAsState()
+    val numProductos = carritoRepeat.value.size
     carritoVM.getCart(user.value.id)
 
     if (!loggedUsuario.value) {
@@ -69,6 +71,14 @@ fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: U
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(6.dp))
+            }
+            if (carrito.value.isEmpty()) {
+                item {
+                    Spacer(modifier = Modifier.height(50.dp))
+                    Text(text = "El carrito está vacío",
+                        Modifier.fillMaxWidth(),
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+                }
             }
             carrito.value.forEach { item ->
                 item {
@@ -105,6 +115,17 @@ fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: U
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
+                            text = "Productos: $numProductos",
+                            fontSize = 18.sp,
+                            color = AppColors.RosaZazil
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
                             text = "Subtotal: $ ${String.format("%.2f", subTotal.value)}",
                             fontSize = 18.sp,
                             color = AppColors.RosaZazil
@@ -116,8 +137,9 @@ fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: U
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Total: $ ${String.format("%.2f", total.value)}",
+                            text = "Total (con IVA 16%): $ ${String.format("%.2f", total.value)}",
                             fontSize = 18.sp,
+                            fontWeight = FontWeight.Medium,
                             color = AppColors.RosaZazil
                         )
                     }

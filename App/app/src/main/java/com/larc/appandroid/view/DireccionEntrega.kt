@@ -3,6 +3,7 @@ package com.larc.appandroid.view
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -17,10 +18,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -112,7 +111,9 @@ fun DireccionEntrega(navController: NavHostController, usuarioVM: UsuarioVM, pay
                         if (selectedAddressId != null) {
                             navController.navigate(Pantallas.RUTA_PAYMENT_SCREEN + "/${total}")
                         }
-                    })
+                    },
+                    enabled = selectedAddressId != null
+                )
             }
             Spacer(modifier = Modifier.height(6.dp))
         }
@@ -135,6 +136,7 @@ fun TarjetaDireccionDos(navController: NavHostController,
             .padding(10.dp)
             .clip(RoundedCornerShape(20.dp))
             .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
+            .clickable { onSelect() }
     ) {
         Row(Modifier.padding(10.dp)) {
             Text(
@@ -147,16 +149,16 @@ fun TarjetaDireccionDos(navController: NavHostController,
                     .padding(top = 4.dp, start = 5.dp)
             )
             IconButton(
-                onClick = onSelect, // Call onSelect when the button is pressed
+                onClick = onSelect,
                 modifier = Modifier
                     .width(30.dp)
                     .height(30.dp)
                     .clip(CircleShape)
             ) {
                 Icon(
-                    imageVector = if (selectedAddressId == thisAddressId) Icons.Default.CheckCircle else Icons.Default.Check, // Check icon if selected, default otherwise
+                    imageVector = if (selectedAddressId == thisAddressId) Icons.Default.CheckCircle else Icons.Default.Check,
                     contentDescription = if (selectedAddressId == thisAddressId) "Dirección seleccionada" else "Seleccionar dirección",
-                    tint = if (selectedAddressId == thisAddressId) AppColors.RosaZazil else Color.Gray // Change color based on selection
+                    tint = if (selectedAddressId == thisAddressId) AppColors.RosaZazil else Color.Gray
                 )
             }
         }
@@ -164,7 +166,7 @@ fun TarjetaDireccionDos(navController: NavHostController,
 }
 
 @Composable
-fun BotonContinuarDireccion(onClick: () -> Unit) {
+fun BotonContinuarDireccion(onClick: () -> Unit, enabled: Boolean) {
     Button(
         onClick = onClick,
         contentPadding = PaddingValues(0.dp),
@@ -178,7 +180,10 @@ fun BotonContinuarDireccion(onClick: () -> Unit) {
         colors = ButtonDefaults.buttonColors(
             containerColor = AppColors.White,
             contentColor = AppColors.GrisOscuro,
+            disabledContainerColor = Color.LightGray,
+            disabledContentColor = Color.Gray
         ),
+        enabled = enabled
     ) {
         Box(
             contentAlignment = Alignment.Center,

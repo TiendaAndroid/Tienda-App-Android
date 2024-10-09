@@ -18,8 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.larc.appandroid.viewmodel.CarritoVM
 import com.larc.appandroid.viewmodel.PaymentsVM
 import com.larc.appandroid.viewmodel.UsuarioVM
 import com.stripe.android.PaymentConfiguration
@@ -30,26 +32,16 @@ import com.stripe.android.paymentsheet.PaymentSheetResult
 
 @SuppressLint("DefaultLocale")
 @Composable
-fun PaymentScreen(navController: NavHostController, paymentsVM: PaymentsVM, usuarioVM: UsuarioVM, amount: Double, paymentSheet: PaymentSheet, modifier: Modifier = Modifier) {
+fun PaymentScreen(navController: NavHostController, paymentsVM: PaymentsVM, usuarioVM: UsuarioVM, carritoVM: CarritoVM, amount: Double, paymentSheet: PaymentSheet, modifier: Modifier = Modifier) {
     val clientSecret = paymentsVM.clientSecret.collectAsState().value
     val isLoading = paymentsVM.isLoading.collectAsState().value
     val error = paymentsVM.error.collectAsState().value
     val selectedAddress = paymentsVM.estadoDireccionEntrega.collectAsState().value
+    val carritoRepeat = carritoVM.productosCarrito.collectAsState()
+    val numProductos = carritoRepeat.value.size
 
-    // Other details
     val currency = "mxn"
-    /*
-    val tipo: String = "casa"
-    val pais: String = "México"
-    val municipio: String = "Guadalajara"
-    val estado: String = "Jalisco"
-    val calle: String = "Av. Morelos"
-    val noExterior: String = "123"
-    val colonia: String = "Colonia Centro"
-    val cp: Int = 44500
-     */
 
-    // Load payment intent when screen is shown
     LaunchedEffect(Unit) {
         val token = usuarioVM.getToken()
         paymentsVM.createPaymentIntent(token,
@@ -74,8 +66,19 @@ fun PaymentScreen(navController: NavHostController, paymentsVM: PaymentsVM, usua
         }
 
         clientSecret?.let {
-            Text(text = "Total: $ ${String.format("%.2f", amount)}")
-            ConfirmPaymentButton(clientSecret = it, paymentSheet = paymentSheet)
+            Column(modifier = Modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(text = "Dirección de entrega:")
+                Text(text = "${selectedAddress.calle}, ${selectedAddress.noExterior}")
+                Text(text = "${selectedAddress.colonia}, ${selectedAddress.municipio}")
+                Text(text = "${selectedAddress.estado}, ${selectedAddress.cp}")
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Productos: $numProductos")
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(text = "Total (con IVA 16%): $ ${String.format("%.2f", amount)}")
+                Spacer(modifier = Modifier.height(16.dp))
+                ConfirmPaymentButton(clientSecret = it, paymentSheet = paymentSheet, navController = navController)
+            }
         }
 
         error?.let {
@@ -85,9 +88,8 @@ fun PaymentScreen(navController: NavHostController, paymentsVM: PaymentsVM, usua
 }
 
 @Composable
-fun ConfirmPaymentButton(clientSecret: String, paymentSheet: PaymentSheet, modifier: Modifier = Modifier) {
+fun ConfirmPaymentButton(clientSecret: String, paymentSheet: PaymentSheet, navController: NavHostController, modifier: Modifier = Modifier) {
     Button(onClick = {
-        // Show PaymentSheet to the user
         paymentSheet.presentWithPaymentIntent(
             paymentIntentClientSecret = clientSecret,
             configuration = PaymentSheet.Configuration(

@@ -37,8 +37,8 @@ import com.stripe.android.paymentsheet.PaymentSheet
  */
 
 @Composable
-fun AppPrincipal(paymentSheet: PaymentSheet) {
-    val navController = rememberNavController()
+fun AppPrincipal(navController: NavHostController, paymentSheet: PaymentSheet) {
+    //val navController = rememberNavController()
     val productoVM: ProductoVM = viewModel()
     val usuarioVM: UsuarioVM = viewModel()
     val direccionVM: DireccionVM = viewModel()
@@ -334,7 +334,7 @@ fun AppNavHost(navController: NavHostController,
             val total = it.arguments?.getString("total")
             if (total != null) {
                 val totalAmount = total.toDouble()
-                PaymentScreen(navController, paymentsViewModel, usuarioVM, amount = totalAmount, paymentSheet = paymentSheet)
+                PaymentScreen(navController, paymentsViewModel, usuarioVM, carritoVM, amount = totalAmount, paymentSheet = paymentSheet)
             }
         }
         composable(Pantallas.RUTA_DIRECCION_ENTREGA + "/{total}") {
