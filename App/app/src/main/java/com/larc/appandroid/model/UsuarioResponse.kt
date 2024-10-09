@@ -21,7 +21,7 @@ data class UsuarioResponseRegister(
     val googleId: String?,
     val id: String,
     val isActive: Boolean,
-    val role: List<Order>?,
+    val role: List<String>?,
     val token: String
 )
 

@@ -1,6 +1,7 @@
 package com.larc.appandroid.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.larc.appandroid.MyApp
@@ -124,11 +125,13 @@ class UsuarioVM: ViewModel() {
                 saveToken(result.token)
                 _errorRegister.value = false
                 _registroExitoso.value = true
+                Log.d("Registro:", "Registro exitoso")
             } else {
                 _estadoToken.value = ""
                 _loggedUsuario.value = false
                 _errorRegister.value = true
                 _registroExitoso.value = false
+                Log.d("Registro:", "Registro fallido")
             }
         }
     }

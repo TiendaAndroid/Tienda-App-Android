@@ -110,11 +110,14 @@ class ServicioRemotoUsuario {
         return try {
             val response: Response<UsuarioResponseRegister> = servicio.registerUser(registerRequest)
             if (response.isSuccessful) {
+                Log.d("Regist response:", response.body().toString())
                 response.body()
             } else {
+                Log.d("Regist response else:", response.body().toString())
                 null
             }
         } catch (e: Exception) {
+            Log.d("Regist response:", e.message.toString())
             null
         }
     }
