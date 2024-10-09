@@ -34,7 +34,7 @@ import com.larc.appandroid.viewmodel.OrdenVM
 fun DetalleOrden(navController: NavHostController, ordenVM: OrdenVM, orderId: String, modifier: Modifier = Modifier) {
 
     val estadoThisOrder = ordenVM.estadoThisOrder.collectAsState()
-    val productosEnLaOrden = estadoThisOrder.value.orderItems
+    val productosEnLaOrden = ordenVM.shortList.collectAsState() // estadoThisOrder.value.orderItems
     ordenVM.getOrders(orderId)
 
     // Se muestra la dirección para confirmar la eliminación
@@ -117,6 +117,7 @@ fun DetalleOrden(navController: NavHostController, ordenVM: OrdenVM, orderId: St
             }
         }
 
+        /*
         productosEnLaOrden?.forEach { prod ->
             item {
                 Row(Modifier.fillMaxWidth().padding(top = 6.dp, start = 16.dp, end = 16.dp)) {
@@ -132,7 +133,26 @@ fun DetalleOrden(navController: NavHostController, ordenVM: OrdenVM, orderId: St
                 }
             }
         }
+         */
 
+        productosEnLaOrden.value.forEach { prod ->
+            item {
+                Row(Modifier.fillMaxWidth()
+                    .padding(top = 0.dp, start = 16.dp, end = 16.dp)) {
+                    Text(
+                        text = "${prod.name}, x ${prod.quantity}",
+                        textAlign = androidx.compose.ui.text.style.TextAlign
+                            .Center,
+                        color = AppColors.GrisOscuro,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            }
+        }
+
+        /*
         estadoThisOrder.value.orderItems?.forEach { _ ->
             item {
                 Row(Modifier.fillMaxWidth().padding(top = 6.dp, start = 16.dp, end = 16.dp)) {
@@ -149,6 +169,7 @@ fun DetalleOrden(navController: NavHostController, ordenVM: OrdenVM, orderId: St
                 }
             }
         }
+         */
 
         // Botón para cancelar la acción
         item {

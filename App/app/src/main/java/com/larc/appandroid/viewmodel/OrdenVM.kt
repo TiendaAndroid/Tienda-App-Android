@@ -19,6 +19,8 @@ class OrdenVM: ViewModel() {
     // Estado
     private val _estadoThisOrder = MutableStateFlow( EstadoOrderDos() )
     val estadoThisOrder: StateFlow<EstadoOrderDos> = _estadoThisOrder
+    private val _shortList = MutableStateFlow(listOf<NameQuant>())
+    val shortList: StateFlow<List<NameQuant>> = _shortList
 
     //-------------------------------------------------------------------------------------
     // Interface para la vista
@@ -42,12 +44,27 @@ class OrdenVM: ViewModel() {
                         orderItems = it.orderItems,
                     )
                 }!!
+                groupOrderItemsByName()
                 Log.d("OrdenVM", _estadoThisOrder.value.orderItems.toString())
                 Log.d("OrdenVM", _estadoThisOrder.value.id)
             } else {
                 Log.d("OrdenVM", "Error fetching orders")
                 _estadoThisOrder.value = EstadoOrderDos()
             }
+        }
+    }
+
+    private fun groupOrderItemsByName() {
+        val groupedItems = _estadoThisOrder.value.orderItems
+            ?.groupBy { it.product.name }
+            ?.mapValues { entry ->
+                entry.value.sumOf { it.quantity }
+            }
+        val nameQuantList = groupedItems?.map { (name, quantity) ->
+            NameQuant(name = name, quantity = quantity)
+        }
+        if (nameQuantList != null) {
+            _shortList.value = nameQuantList
         }
     }
 
