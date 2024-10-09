@@ -10,11 +10,13 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -23,9 +25,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.larc.appandroid.model.NetworkManager
 import com.larc.appandroid.ui.theme.AppAndroidTheme
 import com.larc.appandroid.viewmodel.CarritoVM
 import com.larc.appandroid.viewmodel.DireccionVM
+import com.larc.appandroid.viewmodel.NetworkManagerVM
 import com.larc.appandroid.viewmodel.PaymentsVM
 import com.larc.appandroid.viewmodel.ProductoVM
 import com.larc.appandroid.viewmodel.UsuarioVM
@@ -44,27 +48,54 @@ fun AppPrincipal(navController: NavHostController, paymentSheet: PaymentSheet) {
     val direccionVM: DireccionVM = viewModel()
     val carritoVM: CarritoVM = viewModel()
     val paymentsViewModel: PaymentsVM = viewModel()
+    val networkVM: NetworkManagerVM = viewModel()
     var searchText by remember { mutableStateOf("") }
 
-    val onSearchTextChanged: (String) -> Unit = { text ->
-        searchText = text
-    }
+    val connection = networkVM.checkNetworkConnection()
 
-    usuarioVM.checkIfLoggedIn()
+    if (!connection) {
+        Box(
+            modifier = Modifier.fillMaxSize()
+                .background(Color(0xFFFAF8FF)),
+            contentAlignment = Alignment.Center
 
-    AppAndroidTheme {
-        Scaffold(
-            topBar = {
-                AppTopBar(
-                    navController = navController,
-                    onSearchTextChanged = onSearchTextChanged,
-                    searchText = searchText,
-                    usuarioVM
+        ) {
+            Text(text = "No tienes conexión. Te sugerimos revisar la conexión de tu dispositivo para disfrutar de la aplicación.",
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+                    .padding(16.dp))
+        }
+    } else {
+
+        val onSearchTextChanged: (String) -> Unit = { text ->
+            searchText = text
+        }
+
+        usuarioVM.checkIfLoggedIn()
+
+        AppAndroidTheme {
+            Scaffold(
+                topBar = {
+                    AppTopBar(
+                        navController = navController,
+                        onSearchTextChanged = onSearchTextChanged,
+                        searchText = searchText,
+                        usuarioVM
+                    )
+                },
+                bottomBar = { AppBottomBar(navController) },
+            ) { innerPadding ->
+                AppNavHost(
+                    navController,
+                    productoVM,
+                    usuarioVM,
+                    direccionVM,
+                    carritoVM,
+                    paymentsViewModel,
+                    paymentSheet,
+                    modifier = Modifier.padding(innerPadding)
                 )
-            },
-            bottomBar = { AppBottomBar(navController) },
-        ) { innerPadding ->
-            AppNavHost(navController, productoVM, usuarioVM, direccionVM, carritoVM, paymentsViewModel, paymentSheet, modifier = Modifier.padding(innerPadding))
+            }
         }
     }
 }
@@ -121,7 +152,7 @@ fun AppTopBar(
         actions = {
             IconButton(
                 onClick = { expanded = true },
-                modifier = Modifier.padding(top = 20.dp)
+                modifier = Modifier.padding(top = 32.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.Menu,
@@ -148,6 +179,7 @@ fun AppTopBar(
                         navigateTo(navController, Pantallas.RUTA_TIENDA_UNO)
                     }
                 )
+                /*
                 DropdownMenuItem(
                     text = { Text("Testimonios", color = AppColors.GrisOscuro) },
                     onClick = {
@@ -155,6 +187,7 @@ fun AppTopBar(
                         navigateTo(navController, Pantallas.RUTA_TESTIMONIOS)
                     }
                 )
+                 */
                 DropdownMenuItem(
                     text = { Text("Preguntas frecuentes", color = AppColors.GrisOscuro) },
                     onClick = {

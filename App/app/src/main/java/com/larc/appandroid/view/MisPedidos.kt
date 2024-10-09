@@ -2,11 +2,15 @@ package com.larc.appandroid.view
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,8 +34,9 @@ import com.larc.appandroid.viewmodel.UsuarioVM
 @Composable
 fun MisPedidos(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
 
+    val ordersList = usuarioVM.ordersList.collectAsState()
     usuarioVM.getProfile()
-    val estadoUsuario = usuarioVM.estadoMiUsuario.collectAsState()
+    usuarioVM.populateOrderList()
 
     LazyColumn(
         modifier = Modifier
@@ -50,21 +55,105 @@ fun MisPedidos(navController: NavHostController, usuarioVM: UsuarioVM, modifier:
             )
             Spacer(modifier = Modifier.height(6.dp))
         }
-        estadoUsuario.value.direction?.forEach { direction ->
+        ordersList.value.forEach { order ->
             item {
-                val thisAddressId = direction.id
-                val thisCalle = direction.calle
-                val thisNoExt = direction.noExterior
-                val thisAddress = "$thisCalle, #$thisNoExt..."
+                val thisOrderId = order.id
+                val thisOrderStatus = order.status
+                val thisOrderDate = order.createdAt
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    TarjetaDireccion(navController, thisAddressId, thisAddress, usuarioVM.getToken().toString())
+                    TarjetaOrden(navController, thisOrderId, thisOrderStatus, thisOrderDate)
                 }
-                Spacer(modifier = Modifier.height(6.dp))
+            }
+        }
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+    }
+}
+
+@Composable
+fun TarjetaOrden(
+    navController: NavHostController,
+    thisOrderId: String,
+    thisOrderStatus: String,
+    thisOrderDate: String,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(130.dp)
+            .padding(10.dp)
+            .clip(RoundedCornerShape(20.dp))
+            .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column(
+                modifier = Modifier.weight(8f)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 8.dp, end = 8.dp),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Text(
+                        text = "ID: ",
+                        color = AppColors.GrisOscuro,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                    Text(
+                        text = thisOrderId,
+                        color = AppColors.GrisOscuro,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 8.dp, end = 8.dp)
+                ) {
+                    Text(
+                        text = "Fecha: ${thisOrderDate.take(10)}",
+                        color = AppColors.GrisOscuro,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(end = 8.dp)
+                    )
+                    Text(
+                        text = "Estatus: $thisOrderStatus",
+                        color = AppColors.GrisOscuro,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Normal,
+                        modifier = Modifier.padding(start = 8.dp)
+                    )
+                }
+            }
+            IconButton(
+                onClick = {  },
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Info,
+                    contentDescription = "Más información",
+                    tint = AppColors.RosaZazil
+                )
             }
         }
     }
 }
+

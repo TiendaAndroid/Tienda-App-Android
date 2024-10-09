@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.larc.appandroid.MyApp
 import com.larc.appandroid.model.LoginRequest
+import com.larc.appandroid.model.Order
 import com.larc.appandroid.model.RegisterRequest
 import com.larc.appandroid.model.ServicioRemotoUsuario
 import com.larc.appandroid.model.SignupRequest
@@ -42,6 +43,8 @@ class UsuarioVM: ViewModel() {
     val registroExitoso: StateFlow<Boolean> = _registroExitoso
     private val _estadoMiUsuario = MutableStateFlow( EstadoUsuario() )
     val estadoMiUsuario: StateFlow<EstadoUsuario> = _estadoMiUsuario
+    private val _ordersList = MutableStateFlow<List<Order>>(emptyList())
+    val ordersList: StateFlow<List<Order>> = _ordersList
 
     //-------------------------------------------------------------------------------------
     // Interface para la vista
@@ -231,6 +234,16 @@ class UsuarioVM: ViewModel() {
     fun getCartId(): String {
         getProfile()
         return _estadoMiUsuario.value.cart?.id ?: ""
+    }
+
+    fun populateOrderList() {
+        viewModelScope.launch {
+            _ordersList.value = emptyList()
+            if (estadoMiUsuario.value.orders != null) {
+                val filteredOrders = estadoMiUsuario.value.orders!!.filter { it.status != "PENDING" }
+                _ordersList.value = filteredOrders
+            }
+        }
     }
 
 }
