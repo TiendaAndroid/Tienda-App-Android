@@ -183,7 +183,8 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                     item {
                         Text(
                             text = "Hubo un error. Por favor revise sus datos." +
-                                    "La contraseña debe tener 6 o más caracteres, debe contar con al menos un número, una letra mayúscula, una letra minúscula y un carácter especial.",
+                                    "La contraseña debe tener 6 o más caracteres, debe contar con al menos un número, una letra mayúscula, una letra minúscula y un carácter especial." +
+                                    "Verifique que su correo no tenga espacios en blanco al inicio ni al final.",
                             color = Color.Red,
                             fontSize = 14.sp,
                             modifier = Modifier
