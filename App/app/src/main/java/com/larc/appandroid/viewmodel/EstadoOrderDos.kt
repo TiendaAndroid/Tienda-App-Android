@@ -1,5 +1,7 @@
 package com.larc.appandroid.viewmodel
 
+import com.larc.appandroid.model.OrderItem
+
 data class EstadoOrderDos(
     val id: String = "",
     val status: String = "",
@@ -15,5 +17,5 @@ data class EstadoOrderDos(
     val colonia: String = "",
     val cp: Int = 0,
     val createdAt: String = "",
-    val orderItems: List<EstadoOrderItem>? = emptyList(),
+    val orderItems: List<OrderItem>? = emptyList(),
 )

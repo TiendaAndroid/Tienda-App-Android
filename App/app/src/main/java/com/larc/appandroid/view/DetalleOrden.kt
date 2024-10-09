@@ -27,11 +27,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.larc.appandroid.viewmodel.OrdenVM
 
 @Composable
-fun DetalleOrden(modifier: Modifier = Modifier) {
+fun DetalleOrden(navController: NavHostController, ordenVM: OrdenVM, orderId: String, modifier: Modifier = Modifier) {
 
-    /*
+    val estadoThisOrder = ordenVM.estadoThisOrder.collectAsState()
+    val productosEnLaOrden = estadoThisOrder.value.orderItems
+    ordenVM.getOrders(orderId)
+
     // Se muestra la dirección para confirmar la eliminación
     LazyColumn(
         modifier = Modifier
@@ -51,64 +56,94 @@ fun DetalleOrden(modifier: Modifier = Modifier) {
             )
         }
         item {
-            Row(Modifier.fillMaxWidth().padding(26.dp)) {
-                val pais = estadoMiDirecIndiv.value.pais
-
+            Row(Modifier.fillMaxWidth().padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
                 Text(
-                    text = direccionCompleta,
+                    text = "Id: ${estadoThisOrder.value.id}",
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                     color = AppColors.GrisOscuro,
                     fontWeight = FontWeight.Normal,
-                    fontSize = 16.sp,
+                    fontSize = 14.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            Row(Modifier.fillMaxWidth().padding(top = 6.dp, start = 16.dp, end = 16.dp)) {
+                Text(
+                    text = "Estatus: ${estadoThisOrder.value.status}",
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    color = AppColors.GrisOscuro,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            Row(Modifier.fillMaxWidth().padding(top = 6.dp, start = 16.dp, end = 16.dp)) {
+                Text(
+                    text = "Fecha de creación: ${estadoThisOrder.value.createdAt.take(10)}",
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    color = AppColors.GrisOscuro,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            Row(Modifier.fillMaxWidth().padding(top = 6.dp, start = 16.dp, end = 16.dp)) {
+                Text(
+                    text = "Dirección de envío: ${estadoThisOrder.value.calle}, " +
+                            "#${estadoThisOrder.value.noExterior}, " +
+                            "${estadoThisOrder.value.noInterior} " +
+                            "${estadoThisOrder.value.colonia}, " +
+                            "${estadoThisOrder.value.municipio}, " +
+                            "${estadoThisOrder.value.estado}, " +
+                            "${estadoThisOrder.value.pais}, " +
+                            "${estadoThisOrder.value.cp}",
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    color = AppColors.GrisOscuro,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+        item {
+            Row(Modifier.fillMaxWidth().padding(top = 6.dp, start = 16.dp, end = 16.dp)) {
+                Text(
+                    text = "Productos:",
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    color = AppColors.GrisOscuro,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
         }
 
-        // Mensaje de error si hubo un error al eliminar la dirección
-        item {
-            if (errorEliminarDireccion.value) {
-                Text(
-                    text = "Hubo un error al eliminar la dirección. Por favor intenta de nuevo.",
-                    color = Color.Red,
-                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)
-                )
+        productosEnLaOrden?.forEach { prod ->
+            item {
+                Row(Modifier.fillMaxWidth().padding(top = 6.dp, start = 16.dp, end = 16.dp)) {
+                    Text(
+                        text = "${prod.product.name}, x ${prod.quantity}",
+                        textAlign = androidx.compose.ui.text.style.TextAlign
+                            .Center,
+                        color = AppColors.GrisOscuro,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 14.sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
 
-        // Botón para eliminar la dirección
-        item {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Button(
-                    onClick = {
-                        direccionVM.deleteAddress(token, addressId)
-                    },
-                    border = BorderStroke(2.dp, Color.LightGray),
-                    modifier = Modifier
-                        .height(80.dp)
-                        .fillMaxWidth(.9f)
-                        .clip(RoundedCornerShape(20.dp))
-                        .padding(16.dp),
-                    shape = RoundedCornerShape(20),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = AppColors.White,
-                        contentColor = AppColors.GrisOscuro
-                    )
-                ) {
-                    Row {
+        estadoThisOrder.value.orderItems?.forEach { _ ->
+            item {
+                Row(Modifier.fillMaxWidth().padding(top = 6.dp, start = 16.dp, end = 16.dp)) {
+                    estadoThisOrder.value.orderItems?.get(0)?.product?.name?.let {
                         Text(
-                            text = "Eliminar dirección",
-                            fontSize = 17.sp,
-                            fontWeight = FontWeight.Normal
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "Añadir dirección",
-                            tint = AppColors.RosaZazil
+                            text = "$it, x ${estadoThisOrder.value.orderItems!![0].quantity}",
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                            color = AppColors.GrisOscuro,
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 14.sp,
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
                 }
@@ -123,7 +158,7 @@ fun DetalleOrden(modifier: Modifier = Modifier) {
             ) {
                 Button(
                     onClick = {
-                        navController.navigate(Pantallas.RUTA_DIRECCIONES)
+                        navController.navigate(Pantallas.RUTA_MIS_PEDIDOS)
                     },
                     border = BorderStroke(2.dp, Color.LightGray),
                     modifier = Modifier
@@ -139,15 +174,9 @@ fun DetalleOrden(modifier: Modifier = Modifier) {
                 ) {
                     Row {
                         Text(
-                            text = "Cancelar",
+                            text = "Regresar",
                             fontSize = 17.sp,
                             fontWeight = FontWeight.Normal
-                        )
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Icon(
-                            imageVector = Icons.Default.Clear,
-                            contentDescription = "Añadir dirección",
-                            tint = AppColors.RosaZazil
                         )
                     }
                 }
@@ -157,6 +186,6 @@ fun DetalleOrden(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(20.dp))
         }
     }
-     */
+
 
 }

@@ -71,6 +71,19 @@ fun DireccionEntrega(navController: NavHostController, usuarioVM: UsuarioVM, pay
             )
             Spacer(modifier = Modifier.height(6.dp))
         }
+
+        if (estadoUsuario.value.direction?.isEmpty() == true) {
+            item {
+                Spacer(modifier = Modifier.height(50.dp))
+                Text(
+                    text = "Aún no tienes direcciones. Puedes agregar una nueva dirección desde tu cuenta.",
+                    Modifier.fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp),
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                )
+            }
+        }
+
         estadoUsuario.value.direction?.forEach { direction ->
             item {
                 val thisAddressId = direction.id

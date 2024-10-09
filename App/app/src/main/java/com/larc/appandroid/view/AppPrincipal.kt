@@ -30,6 +30,7 @@ import com.larc.appandroid.ui.theme.AppAndroidTheme
 import com.larc.appandroid.viewmodel.CarritoVM
 import com.larc.appandroid.viewmodel.DireccionVM
 import com.larc.appandroid.viewmodel.NetworkManagerVM
+import com.larc.appandroid.viewmodel.OrdenVM
 import com.larc.appandroid.viewmodel.PaymentsVM
 import com.larc.appandroid.viewmodel.ProductoVM
 import com.larc.appandroid.viewmodel.UsuarioVM
@@ -48,6 +49,7 @@ fun AppPrincipal(navController: NavHostController, paymentSheet: PaymentSheet) {
     val direccionVM: DireccionVM = viewModel()
     val carritoVM: CarritoVM = viewModel()
     val paymentsViewModel: PaymentsVM = viewModel()
+    val ordenVM: OrdenVM = viewModel()
     val networkVM: NetworkManagerVM = viewModel()
     var searchText by remember { mutableStateOf("") }
 
@@ -92,6 +94,7 @@ fun AppPrincipal(navController: NavHostController, paymentSheet: PaymentSheet) {
                     direccionVM,
                     carritoVM,
                     paymentsViewModel,
+                    ordenVM,
                     paymentSheet,
                     modifier = Modifier.padding(innerPadding)
                 )
@@ -290,6 +293,7 @@ fun AppNavHost(navController: NavHostController,
                direccionVM: DireccionVM,
                carritoVM: CarritoVM,
                paymentsViewModel: PaymentsVM,
+               ordenVM: OrdenVM,
                paymentSheet: PaymentSheet,
                modifier: Modifier = Modifier) {
     NavHost(
@@ -373,6 +377,10 @@ fun AppNavHost(navController: NavHostController,
         composable(Pantallas.RUTA_DIRECCION_ENTREGA + "/{total}") {
             val total = it.arguments?.getString("total")
             DireccionEntrega(navController, usuarioVM, paymentsViewModel, total!!.toDouble())
+        }
+        composable(Pantallas.RUTA_DETALLE_ORDEN + "/{orderId}") {
+            val orderId = it.arguments?.getString("orderId")
+            DetalleOrden(navController, ordenVM, orderId!!)
         }
     }
 }

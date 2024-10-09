@@ -55,6 +55,16 @@ fun MisPedidos(navController: NavHostController, usuarioVM: UsuarioVM, modifier:
             )
             Spacer(modifier = Modifier.height(6.dp))
         }
+
+        if (ordersList.value.isEmpty()) {
+            item {
+                Spacer(modifier = Modifier.height(50.dp))
+                Text(text = "Aún no tienes pedidos",
+                    Modifier.fillMaxWidth(),
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+            }
+        }
+
         ordersList.value.forEach { order ->
             item {
                 val thisOrderId = order.id
@@ -142,7 +152,7 @@ fun TarjetaOrden(
                 }
             }
             IconButton(
-                onClick = {  },
+                onClick = { navController.navigate(Pantallas.RUTA_DETALLE_ORDEN + "/${thisOrderId}") },
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape)

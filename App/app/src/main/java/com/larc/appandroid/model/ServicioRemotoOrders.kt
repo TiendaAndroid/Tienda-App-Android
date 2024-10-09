@@ -1,5 +1,6 @@
 package com.larc.appandroid.model
 
+import android.util.Log
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -54,6 +55,7 @@ class ServicioRemotoOrders {
         return try {
             val response: Response<Order> = servicio.getOrder(id)
             if (response.isSuccessful) {
+                Log.d("SROrden", response.body().toString())
                 response
             } else {
                 null

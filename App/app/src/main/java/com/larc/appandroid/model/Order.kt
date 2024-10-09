@@ -1,5 +1,7 @@
 package com.larc.appandroid.model
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * Representa la estructura para una orden.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
@@ -20,5 +22,5 @@ data class Order(
     val colonia: String,
     val cp: Int,
     val createdAt: String,
-    val orderItems: List<OrderItem>?,
+    @SerializedName("order_items")val orderItems: List<OrderItem>?,
 )
