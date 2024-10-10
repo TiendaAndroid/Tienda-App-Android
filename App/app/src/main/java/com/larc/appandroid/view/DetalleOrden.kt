@@ -76,7 +76,7 @@ fun DetalleOrden(navController: NavHostController, ordenVM: OrdenVM, orderId: St
                     modifier = Modifier.fillMaxWidth()
                 )
             }
-            Row(Modifier.fillMaxWidth().padding(top = 6.dp, start = 16.dp, end = 16.dp)) {
+            Row(Modifier.fillMaxWidth().padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
                 Text(
                     text = "Fecha de creación: ${estadoThisOrder.value.createdAt.take(10)}",
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
@@ -86,7 +86,7 @@ fun DetalleOrden(navController: NavHostController, ordenVM: OrdenVM, orderId: St
                     modifier = Modifier.fillMaxWidth()
                 )
             }
-            Row(Modifier.fillMaxWidth().padding(top = 6.dp, start = 16.dp, end = 16.dp)) {
+            Row(Modifier.fillMaxWidth().padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
                 Text(
                     text = "Dirección de envío: ${estadoThisOrder.value.calle}, " +
                             "#${estadoThisOrder.value.noExterior}, " +
@@ -105,7 +105,7 @@ fun DetalleOrden(navController: NavHostController, ordenVM: OrdenVM, orderId: St
             }
         }
         item {
-            Row(Modifier.fillMaxWidth().padding(top = 6.dp, start = 16.dp, end = 16.dp)) {
+            Row(Modifier.fillMaxWidth().padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
                 Text(
                     text = "Productos:",
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center,
@@ -117,30 +117,12 @@ fun DetalleOrden(navController: NavHostController, ordenVM: OrdenVM, orderId: St
             }
         }
 
-        /*
-        productosEnLaOrden?.forEach { prod ->
-            item {
-                Row(Modifier.fillMaxWidth().padding(top = 6.dp, start = 16.dp, end = 16.dp)) {
-                    Text(
-                        text = "${prod.product.name}, x ${prod.quantity}",
-                        textAlign = androidx.compose.ui.text.style.TextAlign
-                            .Center,
-                        color = AppColors.GrisOscuro,
-                        fontWeight = FontWeight.Normal,
-                        fontSize = 14.sp,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
-            }
-        }
-         */
-
         productosEnLaOrden.value.forEach { prod ->
             item {
                 Row(Modifier.fillMaxWidth()
-                    .padding(top = 0.dp, start = 16.dp, end = 16.dp)) {
+                    .padding(start = 16.dp, end = 16.dp)) {
                     Text(
-                        text = "${prod.name}, x ${prod.quantity}",
+                        text = "${prod.name} x ${prod.quantity}",
                         textAlign = androidx.compose.ui.text.style.TextAlign
                             .Center,
                         color = AppColors.GrisOscuro,
@@ -152,26 +134,7 @@ fun DetalleOrden(navController: NavHostController, ordenVM: OrdenVM, orderId: St
             }
         }
 
-        /*
-        estadoThisOrder.value.orderItems?.forEach { _ ->
-            item {
-                Row(Modifier.fillMaxWidth().padding(top = 6.dp, start = 16.dp, end = 16.dp)) {
-                    estadoThisOrder.value.orderItems?.get(0)?.product?.name?.let {
-                        Text(
-                            text = "$it, x ${estadoThisOrder.value.orderItems!![0].quantity}",
-                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                            color = AppColors.GrisOscuro,
-                            fontWeight = FontWeight.Normal,
-                            fontSize = 14.sp,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    }
-                }
-            }
-        }
-         */
-
-        // Botón para cancelar la acción
+        // Botón para regresar
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
