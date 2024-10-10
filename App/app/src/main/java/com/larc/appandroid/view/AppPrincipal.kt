@@ -205,6 +205,13 @@ fun AppTopBar(
                         navigateTo(navController, Pantallas.RUTA_SERVICIO_CLIENTE)
                     }
                 )
+                DropdownMenuItem(
+                    text = { Text("Aviso de privacidad", color = AppColors.GrisOscuro) },
+                    onClick = {
+                        expanded = false
+                        navigateTo(navController, Pantallas.RUTA_AVISO_PRIVACIDAD)
+                    }
+                )
                 if (!loggedUsuario.value) {
                     DropdownMenuItem(
                         text = { Text("Iniciar sesión", color = AppColors.GrisOscuro) },
@@ -313,7 +320,7 @@ fun AppNavHost(navController: NavHostController,
             })
         }
         composable(Pantallas.RUTA_CARRITO) {
-            Carrito(navController, carritoVM, usuarioVM)
+            Carrito(navController, carritoVM, usuarioVM, productoVM)
         }
         composable(Pantallas.RUTA_MIS_PEDIDOS) {
             MisPedidos(navController, usuarioVM)
@@ -378,6 +385,9 @@ fun AppNavHost(navController: NavHostController,
         composable(Pantallas.RUTA_DETALLE_ORDEN + "/{orderId}") {
             val orderId = it.arguments?.getString("orderId")
             DetalleOrden(navController, ordenVM, orderId!!)
+        }
+        composable(Pantallas.RUTA_AVISO_PRIVACIDAD) {
+            AvisoPrivacidad()
         }
     }
 }

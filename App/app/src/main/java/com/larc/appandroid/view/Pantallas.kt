@@ -18,7 +18,6 @@ object Pantallas {
     const val RUTA_MIS_PEDIDOS = "mis_pedidos"
     const val RUTA_ACERCAC_DE = "acerca_de"
     const val RUTA_SERVICIO_CLIENTE = "servicio_cliente"
-    const val RUTA_TESTIMONIOS = "testimonios"
     const val RUTA_FAQS = "faqs"
     const val RUTA_TIENDA_UNO = "tienda_uno"
     const val RUTA_TIENDA_DOS = "tienda_dos"
@@ -33,6 +32,7 @@ object Pantallas {
     const val RUTA_PAYMENT_SCREEN = "payment_screen"
     const val RUTA_DIRECCION_ENTREGA = "direccion_entrega"
     const val RUTA_DETALLE_ORDEN = "detalle_orden"
+    const val RUTA_AVISO_PRIVACIDAD = "aviso_privacidad"
 
     val listaPantallas = listOf(
         Pantalla("Home", RUTA_HOME, Icons.Filled.Home),

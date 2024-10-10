@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.larc.appandroid.viewmodel.CarritoVM
+import com.larc.appandroid.viewmodel.ProductoVM
 import com.larc.appandroid.viewmodel.UsuarioVM
 
 /**
@@ -31,7 +32,7 @@ import com.larc.appandroid.viewmodel.UsuarioVM
 
 @SuppressLint("DefaultLocale")
 @Composable
-fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
+fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: UsuarioVM, productoVM: ProductoVM, modifier: Modifier = Modifier) {
     val loggedUsuario = usuarioVM.loggedUsuario.collectAsState()
     val carrito = carritoVM.carritoNoRepeat.collectAsState()
     val productoAgregado = carritoVM.productoAgregado.collectAsState()
@@ -86,6 +87,7 @@ fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: U
                     val thisQuantity = item.quantity
                     val thisPrice = item.price
                     val thisImage = item.image
+                    val thisProdId = item.productId
                     Spacer(modifier = Modifier.height(6.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -97,12 +99,15 @@ fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: U
                             price = thisPrice,
                             image = thisImage,
                             totalPrice = item.totalPrice,
+                            thisProdId = thisProdId,
+                            productVM = productoVM,
                             onAdd = { carritoVM.addToCart(cartId ?: "", item.productId)
                                 carritoVM.setMessageShowed()
                                 carritoVM.resetErrores()
                                 Log.d("UserID", cartId ?: "")
                                 Log.d("ProductID", item.productId) },
-                            onRemove = { carritoVM.removeFromCart(item.productId) })
+                            onRemove = { carritoVM.removeFromCart(item.productId) }
+                        )
                     }
                 }
             }
@@ -168,9 +173,15 @@ fun ProductoItem(
     price: Double,
     image: String,
     totalPrice: Double,
+    thisProdId: String,
+    productVM: ProductoVM,
     onAdd: () -> Unit,
     onRemove: () -> Unit
 ) {
+
+    val stock = productVM.stock.collectAsState()
+    productVM.getStock(thisProdId)
+
     Card(
         modifier = Modifier
             .fillMaxWidth(.9f)
@@ -229,6 +240,7 @@ fun ProductoItem(
 
                     Button(
                         onClick = onAdd,
+                        enabled = cantidad < stock.value,
                         contentPadding = PaddingValues(4.dp),
                         modifier = Modifier.size(30.dp),
                         border = BorderStroke(1.dp, Color.LightGray),

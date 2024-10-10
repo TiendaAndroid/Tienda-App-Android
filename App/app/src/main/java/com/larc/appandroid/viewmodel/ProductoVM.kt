@@ -59,6 +59,9 @@ class ProductoVM: ViewModel() {
     private val _isLoading = MutableStateFlow(true)
     val isLoading: StateFlow<Boolean> = _isLoading
 
+    private val _stock = MutableStateFlow(0)
+    val stock: StateFlow<Int> = _stock
+
     //-------------------------------------------------------------------------------------
     // Interface para la vista
 
@@ -149,6 +152,17 @@ class ProductoVM: ViewModel() {
                 _sinResultIndiv.value = true
             }
             _isLoading.value = false
+        }
+    }
+
+    fun getStock(id: String) {
+        viewModelScope.launch {
+            val result = servicioRemotoProducto.getProductoPorId(id)
+            if (result != null) {
+                _stock.value = result.stock
+            } else {
+                _stock.value = 0
+            }
         }
     }
 
