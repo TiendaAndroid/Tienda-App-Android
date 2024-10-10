@@ -327,14 +327,11 @@ fun AppNavHost(navController: NavHostController,
         composable(Pantallas.RUTA_SERVICIO_CLIENTE) {
             ServicioCliente()
         }
-        composable(Pantallas.RUTA_TESTIMONIOS) {
-            Testimonios()
-        }
         composable(Pantallas.RUTA_TIENDA_UNO) {
             TiendaUno(navController, productoVM, usuarioVM)
         }
         composable(Pantallas.RUTA_MI_INFORMACION) {
-            MiInformacion()
+            MiInformacion(navController, usuarioVM)
         }
         composable(Pantallas.RUTA_DIRECCIONES) {
             Direcciones(navController, usuarioVM)

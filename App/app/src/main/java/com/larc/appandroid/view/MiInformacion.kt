@@ -1,15 +1,22 @@
 package com.larc.appandroid.view
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.larc.appandroid.viewmodel.UsuarioVM
 
 /**
  * Representa la vista que muestra la información personal del usuario.
@@ -18,87 +25,90 @@ import androidx.compose.ui.unit.sp
  */
 
 @Composable
-fun MiInformacion(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+fun MiInformacion(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
+
+    val usuarioDatos = usuarioVM.estadoMiUsuario.collectAsState()
+
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color(0xFFFAF8FF)),
     ) {
-        Text(
-            text = "Mi información",
-            fontSize = 32.sp,
-            color = Color(0xFFD5507C),
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
-        Text(
-            text = "Nombre: Lucio Mendoza",
-            fontSize = 20.sp,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-
-        Text(
-            text = "Correo: todasbrillamos@gmail.com",
-            fontSize = 20.sp,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-
-        Text(
-            text = "Teléfono: +52 55 1234 5678",
-            fontSize = 20.sp,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-
-        // Sección de Dirección
-        Text(
-            text = "Dirección:",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFFD5507C),
-            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
-        )
-
-        Text(
-            text = "Calle: Carretera Lago de Guadalupe KM 3.5",
-            fontSize = 17.sp,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-
-        Text(
-            text = "Colonia: San Pedro",
-            fontSize = 17.sp,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-
-        Text(
-            text = "Ciudad: Estado de México",
-            fontSize = 17.sp,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-
-
-        Text(
-            text = "Código Postal: 12345",
-            fontSize = 17.sp,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
-        Button(
-            onClick = { },
-            modifier = Modifier.padding(top = 16.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFD5507C)
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "Mi información",
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                color = AppColors.RosaZazil,
+                fontWeight = FontWeight.Normal,
+                fontSize = 22.sp,
+                modifier = Modifier.fillMaxWidth()
             )
-        ) {
-            Text(text = "Editar información", color = Color.White)
+            Spacer(modifier = Modifier.height(6.dp))
+        }
+        item {
+            Spacer(modifier = Modifier.height(20.dp))
+        }
+        item {
+            Row(Modifier.fillMaxWidth().padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
+                Text(
+                    text = "Nombre: ${usuarioDatos.value.name} ${usuarioDatos.value.lastName}",
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    color = AppColors.GrisOscuro,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 16.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+        item {
+            Row(Modifier.fillMaxWidth().padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
+                Text(
+                    text = "Correo: ${usuarioDatos.value.email}",
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    color = AppColors.GrisOscuro,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 16.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+        item {
+            Spacer(modifier = Modifier.height(30.dp))
+        }
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Button(
+                    onClick = {
+                        navController.navigate(Pantallas.RUTA_CUENTA)
+                    },
+                    border = BorderStroke(2.dp, Color.LightGray),
+                    modifier = Modifier
+                        .height(80.dp)
+                        .fillMaxWidth(.9f)
+                        .clip(RoundedCornerShape(20.dp))
+                        .padding(16.dp),
+                    shape = RoundedCornerShape(20),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = AppColors.White,
+                        contentColor = AppColors.GrisOscuro
+                    )
+                ) {
+                    Row {
+                        Text(
+                            text = "Regresar",
+                            fontSize = 17.sp,
+                            fontWeight = FontWeight.Normal
+                        )
+                    }
+                }
+            }
+        }
+        item {
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MiInformacionPreview() {
-    MiInformacion()
 }

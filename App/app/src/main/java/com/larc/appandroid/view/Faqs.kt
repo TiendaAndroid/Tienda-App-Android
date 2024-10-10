@@ -3,6 +3,8 @@ package com.larc.appandroid.view
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,17 +65,23 @@ fun Faqs(modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp)
+            .background(AppColors.White),
         verticalArrangement = Arrangement.Top
     ) {
         item {
             Text(
                 text = "Preguntas frecuentes",
-                fontSize = 32.sp,
-                modifier = Modifier.padding(bottom = 16.dp)
+                textAlign = TextAlign.Center,
+                color = AppColors.RosaZazil,
+                fontWeight = FontWeight.Normal,
+                fontSize = 22.sp,
+                modifier = Modifier.fillMaxWidth()
             )
         }
-
+        item {
+            Spacer(modifier = Modifier.height(20.dp))
+        }
         items(faqs.size) { index ->
             val (pregunta, respuesta) = faqs[index]
             FaqItem(pregunta, respuesta)
@@ -89,18 +98,20 @@ fun FaqItem(pregunta: String, respuesta: String) {
             .fillMaxWidth()
             .padding(vertical = 8.dp)
             .clickable { expanded = !expanded },
+        border = BorderStroke(2.dp, Color.LightGray),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFD5507C) // Color rosa
+            containerColor = AppColors.White,
+            contentColor = AppColors.GrisOscuro
         ),
-        elevation = CardDefaults.cardElevation(4.dp)
+        //elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = pregunta,
-                fontSize = 20.sp,
+                fontSize = 18.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
-                color = Color.White // Texto blanco
+                color = AppColors.GrisOscuro
             )
 
             AnimatedVisibility(
@@ -111,7 +122,7 @@ fun FaqItem(pregunta: String, respuesta: String) {
                 Text(
                     text = respuesta,
                     fontSize = 16.sp,
-                    color = Color.White,
+                    color = AppColors.GrisOscuro,
                     modifier = Modifier.padding(top = 8.dp)
                 )
             }
