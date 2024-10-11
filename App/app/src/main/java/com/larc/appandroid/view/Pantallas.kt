@@ -33,6 +33,8 @@ object Pantallas {
     const val RUTA_DIRECCION_ENTREGA = "direccion_entrega"
     const val RUTA_DETALLE_ORDEN = "detalle_orden"
     const val RUTA_AVISO_PRIVACIDAD = "aviso_privacidad"
+    const val RUTA_TODAS_BRILLAMOS = "todas_brillamos"
+    const val RUTA_CREDITOS = "creditos"
 
     val listaPantallas = listOf(
         Pantalla("Home", RUTA_HOME, Icons.Filled.Home),

@@ -65,26 +65,35 @@ fun Faqs(modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp)
             .background(AppColors.White),
         verticalArrangement = Arrangement.Top
     ) {
         item {
-            Text(
-                text = "Preguntas frecuentes",
-                textAlign = TextAlign.Center,
-                color = AppColors.RosaZazil,
-                fontWeight = FontWeight.Normal,
-                fontSize = 22.sp,
-                modifier = Modifier.fillMaxWidth()
-            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(modifier = modifier.fillMaxWidth()
+                .padding(horizontal = 16.dp)) {
+                Text(
+                    text = "Preguntas frecuentes",
+                    textAlign = TextAlign.Center,
+                    color = AppColors.RosaZazil,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 22.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
         item {
             Spacer(modifier = Modifier.height(20.dp))
         }
         items(faqs.size) { index ->
-            val (pregunta, respuesta) = faqs[index]
-            FaqItem(pregunta, respuesta)
+            Row(modifier = modifier.fillMaxWidth()
+                .padding(horizontal = 16.dp)) {
+                val (pregunta, respuesta) = faqs[index]
+                FaqItem(pregunta, respuesta)
+            }
+        }
+        item {
+            Spacer(modifier = Modifier.height(30.dp))
         }
     }
 }
@@ -103,7 +112,6 @@ fun FaqItem(pregunta: String, respuesta: String) {
             containerColor = AppColors.White,
             contentColor = AppColors.GrisOscuro
         ),
-        //elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(

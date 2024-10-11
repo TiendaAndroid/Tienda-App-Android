@@ -24,8 +24,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.larc.appandroid.model.NetworkManager
 import com.larc.appandroid.ui.theme.AppAndroidTheme
 import com.larc.appandroid.viewmodel.CarritoVM
 import com.larc.appandroid.viewmodel.DireccionVM
@@ -212,6 +210,13 @@ fun AppTopBar(
                         navigateTo(navController, Pantallas.RUTA_AVISO_PRIVACIDAD)
                     }
                 )
+                DropdownMenuItem(
+                    text = { Text("Créditos", color = AppColors.GrisOscuro) },
+                    onClick = {
+                        expanded = false
+                        navigateTo(navController, Pantallas.RUTA_CREDITOS)
+                    }
+                )
                 if (!loggedUsuario.value) {
                     DropdownMenuItem(
                         text = { Text("Iniciar sesión", color = AppColors.GrisOscuro) },
@@ -329,7 +334,7 @@ fun AppNavHost(navController: NavHostController,
             Faqs()
         }
         composable(Pantallas.RUTA_ACERCAC_DE) {
-            AcercaDe()
+            AcercaDe(navController)
         }
         composable(Pantallas.RUTA_SERVICIO_CLIENTE) {
             ServicioCliente()
@@ -388,6 +393,12 @@ fun AppNavHost(navController: NavHostController,
         }
         composable(Pantallas.RUTA_AVISO_PRIVACIDAD) {
             AvisoPrivacidad()
+        }
+        composable(Pantallas.RUTA_TODAS_BRILLAMOS) {
+            TodasBrillamos()
+        }
+        composable(Pantallas.RUTA_CREDITOS) {
+            Creditos()
         }
     }
 }

@@ -1,25 +1,21 @@
 package com.larc.appandroid.view
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.larc.appandroid.R
 
 /**
@@ -29,29 +25,41 @@ import com.larc.appandroid.R
  */
 
 @Composable
-fun AcercaDe(modifier: Modifier = Modifier) {
+fun AcercaDe(navController: NavController, modifier: Modifier = Modifier) {
+
+    val dadata = listOf(
+        "¿Quiénes somos?" to "Zazil es una marca comprometida con el bienestar de las mujeres y el cuidado del medio ambiente. Su misión es proporcionar soluciones innovadoras y sostenibles para el período menstrual. ¿Cómo lo hacen? A través de la creación de toallas femeninas reutilizables.",
+        "Ahorro a largo plazo" to "Al invertir en Zazil, estás invirtiendo en un producto que dura. Olvídate de compras mensuales; nuestras toallas son una inversión que ahorra dinero con el tiempo.",
+        "Oportunidades de emprendimiento" to "Zazil apoya programas que proporcionan oportunidades de emprendimiento para mujeres locales, contribuyendo así al empoderamiento económico en comunidades de todo el mundo.",
+        "Únete a nosotros en nuestra misión" to "Cada apoyo, cada voz y cada esfuerzo cuentan. Únete a la Fundación \"Todas Brillamos AC\" en nuestra misión de crear un México más igualitario y libre de pobreza menstrual. ¡Juntos, brillamos más fuerte!"
+    )
+
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White)
-            .padding(16.dp),
-        contentPadding = PaddingValues(bottom = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(AppColors.White),
+        verticalArrangement = Arrangement.Top
     ) {
         item {
-            Text(
-                text = "Acerca de",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFFD5507C),
-                modifier = Modifier.padding(bottom = 24.dp)
-            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(modifier = modifier.fillMaxWidth()
+                .padding(horizontal = 16.dp)) {
+                Text(
+                    text = "Nosotros somos Zazil",
+                    textAlign = TextAlign.Center,
+                    color = AppColors.RosaZazil,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 22.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
-
+        item {
+            Spacer(modifier = Modifier.height(30.dp))
+        }
         item {
             Image(
-                painter = painterResource(R.drawable.logozazil),
+                painter = painterResource(R.drawable.logozaziltransp),
                 contentDescription = "Logo de Todas Brillamos",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -59,69 +67,39 @@ fun AcercaDe(modifier: Modifier = Modifier) {
                     .padding(bottom = 30.dp)
             )
         }
-
-        items(expandableSections) { section ->
-            ExpandableTextButton(
-                title = section.title,
-                content = section.content
-            )
-        }
-    }
-}
-
-@Composable
-fun ExpandableTextButton(title: String, content: String) {
-    var expanded by remember { mutableStateOf(false) }
-
-    Column(modifier = Modifier.padding(vertical = 8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
-            text = title,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFFD5507C),
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(bottom = 8.dp)
-                .clickable { expanded = !expanded }
-                .fillMaxWidth()
-        )
-
-        AnimatedVisibility(
-            visible = expanded,
-            enter = expandVertically(),
-            exit = shrinkVertically(),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Box(
-                modifier = Modifier.fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = content,
-                    fontSize = 16.sp,
-                    color = Color.Black,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth(0.85f)
-                        .padding(top = 8.dp)
-                        .align(Alignment.Center)
-                )
+        items(dadata.size) { index ->
+            Row(modifier = modifier.fillMaxWidth()
+                .padding(horizontal = 16.dp)) {
+                val (pregunta, respuesta) = dadata[index]
+                ContactItem(pregunta, respuesta)
             }
         }
+        item {
+            Row(modifier = modifier.fillMaxWidth()
+                .padding(horizontal = 16.dp)) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                        .clickable { navController.navigate(Pantallas.RUTA_TODAS_BRILLAMOS) },
+                    border = BorderStroke(2.dp, Color.LightGray),
+                    colors = CardDefaults.cardColors(
+                        containerColor = AppColors.White,
+                        contentColor = AppColors.GrisOscuro
+                    ),
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = "Conoce más sobre \"Todas Brillamos AC\"",
+                            fontSize = 18.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth(),
+                            color = AppColors.GrisOscuro
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(30.dp))
+        }
     }
-}
-
-val expandableSections = listOf(
-    ExpandableSection("¿Quiénes somos?", "Somos la Fundación Todas Brillamos AC, una organización sin fines de lucro y Donataria Autorizada comprometida con el cambio positivo en la sociedad mexicana. Nuestro enfoque se centra en la igualdad de género, el empoderamiento de las mujeres y la erradicación de la pobreza menstrual. Nuestra misión es crear unentorno donde todas las personas, sin importar su género, puedan vivir con dignidad y libertad. Trabajamos incansablemente para promover la igualdad, empoderar a las mujeres y asegurar que todas tengan acceso a productos de higiene menstrual. Únete a nosotros en esta importante causa y juntos hagamos brillar a todas las personas\"."),
-    ExpandableSection("Misión", "Nuestra misión es impulsar un cambio positivo en la sociedad mexicana al abordar las desigualdades de género, empoderar a las mujeres y niñas, y promover la igualdad de oportunidades. Nos dedicamos a proporcionar educación menstrual, acceso a productos de higiene menstrual, y oportunidades de empoderamiento económico. Buscamos erradicar la pobreza menstrual y crear una sociedad donde todas las personas, sin importar su género, puedan vivir con dignidad y libertad. Nos esforzamos por inculcar una responsabilidad social y ambiental en las nuevas generaciones, resaltando la importancia de tomar decisiones informadas y sostenibles para un mundo mejor."),
-    ExpandableSection("Visión", "Nuestra visión es un futuro en elque la igualdad de género es unarealidad, donde cada mujer yniña puede acceder a laeducación menstrual, recursoseconómicos, y oportunidadespara alcanzar su máximopotencial. Buscamos un mundodonde la pobreza menstrual seaun recuerdo del pasado y dondela sostenibilidad ambiental seauna parte intrínseca de nuestraforma de vida. Visualizamoscomunidades comprometidascon la responsabilidad social y elrespeto por nuestro planeta. Eneste futuro, todos descubren subrillo único y contribuyen albienestar de la humanidad."),
-)
-
-data class ExpandableSection(val title: String, val content: String)
-
-@Preview(showBackground = true)
-@Composable
-fun AcercaDePreview() {
-    AcercaDe()
 }
