@@ -285,7 +285,7 @@ class ProductoVM: ViewModel() {
                 }
 
                 _totalHomeItems.value = _listHome.value.size
-                _currentHome.value = _listHome.value.firstOrNull()
+                _currentHome.value = _listHome.value[_currentHomeIndex.value]
             } else {
                 Log.d("ProductoVM", "Error fetching products")
             }

@@ -57,6 +57,7 @@ import com.larc.appandroid.R
 import com.larc.appandroid.model.NetworkManager
 import com.larc.appandroid.viewmodel.NetworkManagerVM
 import com.larc.appandroid.viewmodel.ProductoVM
+import com.larc.appandroid.viewmodel.UsuarioVM
 
 /**
  * Representa la vista de inicio de la aplicación.
@@ -66,11 +67,12 @@ import com.larc.appandroid.viewmodel.ProductoVM
 
 @SuppressLint("DefaultLocale")
 @Composable
-fun Home(navController: NavController, productoVM: ProductoVM, modifier: Modifier = Modifier) {
+fun Home(navController: NavController, productoVM: ProductoVM, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
 
     val currentIndex = productoVM.currentHomeIndex.collectAsState()
     val totalItems = productoVM.totalHomeItems.collectAsState()
     val currentHome = productoVM.currentHome.collectAsState()
+    val cartId = usuarioVM.getCartId()
 
     productoVM.getProductosHome()
 
@@ -112,7 +114,8 @@ fun Home(navController: NavController, productoVM: ProductoVM, modifier: Modifie
                     modifier = Modifier
                         .fillMaxSize(.8f)
                         .clip(RoundedCornerShape(20.dp))
-                        .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))
+                        .clickable { navController.navigate(Pantallas.RUTA_DETALLE_PRODUCTO+"/${currentHome.value?.id.toString()}"+"/${cartId}") }
+                        .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
                 ) {
 
 
