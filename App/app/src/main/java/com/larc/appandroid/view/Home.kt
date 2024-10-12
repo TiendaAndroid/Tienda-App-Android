@@ -69,6 +69,10 @@ import com.larc.appandroid.viewmodel.UsuarioVM
 @Composable
 fun Home(navController: NavController, productoVM: ProductoVM, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
 
+    val faqs = listOf(
+        "¿Por qué Zazil?" to "Empleamos materiales de alta calidad, hipoalergénicos y absorbentes, que garantizan una experiencia cómoda y segura durante el período menstrual. Pero lo más importante es que son reutilizables, lo que significa que ayudan a reducir la generación de residuos y contribuyen a la conservación del medio ambiente."
+    )
+
     val currentIndex = productoVM.currentHomeIndex.collectAsState()
     val totalItems = productoVM.totalHomeItems.collectAsState()
     val currentHome = productoVM.currentHome.collectAsState()
@@ -85,16 +89,24 @@ fun Home(navController: NavController, productoVM: ProductoVM, usuarioVM: Usuari
             Row(modifier = Modifier.fillMaxWidth()) {
                 Image(
                     painter = painterResource(R.drawable.banner),
-                    contentDescription = "Logo de Todas Brillamos",
+                    contentDescription = "Banner de inicio",
                     modifier = Modifier
                         .fillMaxWidth()
                 )
             }
         }
         item {
+            val (pregunta, respuesta) = faqs[0]
+            Row(modifier = modifier.fillMaxWidth()
+                .padding(horizontal = 16.dp)) {
+                ContactItem(pregunta, respuesta)
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+        item {
             Row(modifier = Modifier.fillMaxWidth()
                 .padding(horizontal = 16.dp)) {
-                Text(text = "Algunos de nuestros productos:",
+                Text(text = "Descubre nuestros productos:",
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Normal,
                     modifier = Modifier.fillMaxWidth())
@@ -151,23 +163,9 @@ fun Home(navController: NavController, productoVM: ProductoVM, usuarioVM: Usuari
                             textAlign = TextAlign.Center
                         )
                         Spacer(modifier = Modifier.height(10.dp))
-                        // BotonDetalleDos(onClick = { /*navController.navigate(Pantallas.RUTA_DETALLE_PRODUCTO+"/${thisId}"+"/${cartId}")*/ })
-                        // Spacer(modifier = Modifier.height(10.dp))
                     }
 
                 }
-                /*
-                Box(modifier = Modifier.weight(20f)
-                    .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp))) {
-                    Image(
-                        painter = painterResource(R.drawable.logotodasbrillamos),
-                        contentDescription = "Logo de Todas Brillamos",
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(RoundedCornerShape(20.dp))
-                    )
-                }
-                 */
                 Spacer(modifier = Modifier.weight(1f))
                 BotonSiguienteDos(onclic = {
                     productoVM.nextHome()
@@ -184,20 +182,6 @@ fun Home(navController: NavController, productoVM: ProductoVM, usuarioVM: Usuari
                 }
             }
         }
-        /*
-        item {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                for (i in 0 until totalItems) {
-                    IndicatorDot(isSelected = i == currentIndex)
-                }
-            }
-        }
-         */
         item {
             Spacer(modifier = Modifier.height(8.dp))
         }
@@ -248,7 +232,6 @@ fun BotonAnteriorDos(onclic: () -> Unit, modifier: Modifier = Modifier) {
             containerColor = AppColors.White,
             contentColor = AppColors.GrisOscuro,
         ),
-        //enabled = productoVM.estadoPaginaActual.collectAsState().value > 0
     ) {
         Box(
             contentAlignment = Alignment.Center
@@ -278,7 +261,6 @@ fun BotonSiguienteDos(onclic: () -> Unit, modifier: Modifier = Modifier) {
             containerColor = AppColors.White,
             contentColor = AppColors.GrisOscuro,
         ),
-        //enabled = productoVM.estadoPaginaActual.collectAsState().value < productoVM.estadoTotalPaginas.collectAsState().value-1
     ) {
         Box(
             contentAlignment = Alignment.Center
