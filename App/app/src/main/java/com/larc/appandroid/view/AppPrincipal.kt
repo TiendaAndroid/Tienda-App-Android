@@ -314,7 +314,7 @@ fun AppNavHost(navController: NavHostController,
         modifier = modifier.fillMaxSize()
     ) {
         composable(Pantallas.RUTA_HOME) {
-            Home()
+            Home(navController, productoVM)
         }
         composable(Pantallas.RUTA_CUENTA) {
             Cuenta(navController, usuarioVM, navigateTo = { route ->

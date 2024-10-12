@@ -99,7 +99,7 @@ fun TarjetaProducto(thisId: String, navController: NavHostController, text: Stri
             showDialog.value = true
             carritoVM.resetErrores()
         } else if (errorAgregar.value) {
-            message.value = "Error al agregar el producto"
+            message.value = "El producto no se agregó"
             showDialog.value = true
             carritoVM.resetErrores()
         }

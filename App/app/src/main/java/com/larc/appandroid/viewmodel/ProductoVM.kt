@@ -62,6 +62,14 @@ class ProductoVM: ViewModel() {
     private val _stock = MutableStateFlow(0)
     val stock: StateFlow<Int> = _stock
 
+    private val _listHome = MutableStateFlow(listOf<HomeProduct>())
+    private val _currentHome = MutableStateFlow<HomeProduct?>(null)
+    val currentHome: StateFlow<HomeProduct?> = _currentHome
+    private val _currentHomeIndex = MutableStateFlow(0)
+    val currentHomeIndex: StateFlow<Int> = _currentHomeIndex
+    private val _totalHomeItems = MutableStateFlow(0)
+    val totalHomeItems: StateFlow<Int> = _totalHomeItems
+
     //-------------------------------------------------------------------------------------
     // Interface para la vista
 
@@ -263,6 +271,45 @@ class ProductoVM: ViewModel() {
      */
     fun resetScrollTop() {
         _scrollTop.value = false
+    }
+
+    fun getProductosHome() {
+        viewModelScope.launch {
+            val result = servicioRemotoProducto.getProductos(0)
+            if (result != null) {
+                val products = result.data
+                Log.d("ProductoVM", "Products fetched: ${products.size}")
+
+                _listHome.value = products.map {
+                    HomeProduct(it.id, it.name, it.price, it.image[0].url)
+                }
+
+                _totalHomeItems.value = _listHome.value.size
+                _currentHome.value = _listHome.value.firstOrNull()
+            } else {
+                Log.d("ProductoVM", "Error fetching products")
+            }
+        }
+    }
+
+    fun nextHome() {
+        if (_currentHomeIndex.value < _listHome.value.size - 1) {
+            _currentHomeIndex.value++
+            _currentHome.value = _listHome.value[_currentHomeIndex.value]
+        } else if (_currentHomeIndex.value == _listHome.value.size - 1) {
+            _currentHomeIndex.value = 0
+            _currentHome.value = _listHome.value[_currentHomeIndex.value]
+        }
+    }
+
+    fun prevHome() {
+        if (_currentHomeIndex.value > 0) {
+            _currentHomeIndex.value--
+            _currentHome.value = _listHome.value[_currentHomeIndex.value]
+        } else if (_currentHomeIndex.value == 0) {
+            _currentHomeIndex.value = _listHome.value.size - 1
+            _currentHome.value = _listHome.value[_currentHomeIndex.value]
+        }
     }
 
 }

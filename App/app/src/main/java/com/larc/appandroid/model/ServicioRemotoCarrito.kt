@@ -74,6 +74,8 @@ class ServicioRemotoCarrito {
                 null
             }
         } catch (e: Exception) {
+            Log.d("Status", "$addToCartRequest")
+            Log.d("Status", "Aquí está el error")
             Log.d("Status", "Error, $e")
             null
         }
