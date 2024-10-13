@@ -113,10 +113,12 @@ class UsuarioVM: ViewModel() {
      * @param lastName El apellido del usuario.
      * @param password La contraseña del usuario.
      * @param token El token de verificación recibido por correo.
+     * @param birthDay La fecha de nacimiento del usuario.
+     * @param phone El número de teléfono del usuario.
      */
-    fun registerUSer(email: String, name: String, lastName: String, password: String, token: String) {
+    fun registerUSer(email: String, name: String, lastName: String, password: String, token: String, birthDay: String, phone: String) {
         _errorRegister.value = false
-        val registerRequest = RegisterRequest(email, name, lastName, password, token)
+        val registerRequest = RegisterRequest(email, name, lastName, password, token, birthDay, phone)
         viewModelScope.launch {
             val result = servicioRemotoUsuario.registerUser(registerRequest)
             if (result != null) {
@@ -214,6 +216,8 @@ class UsuarioVM: ViewModel() {
                         email = result.email,
                         name = result.name,
                         lastName = result.lastName,
+                        birthDay = result.birthDay,
+                        phoneNumber = result.phoneNumber,
                         googleId = result.googleId,
                         isActive = result.isActive,
                         role = result.role,

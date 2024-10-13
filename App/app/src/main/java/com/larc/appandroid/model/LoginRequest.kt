@@ -22,5 +22,7 @@ data class RegisterRequest(
     val name: String,
     val lastName: String,
     val password: String,
-    val token: String
+    val token: String,
+    val birthDay: String,
+    val phoneNumber: String
 )

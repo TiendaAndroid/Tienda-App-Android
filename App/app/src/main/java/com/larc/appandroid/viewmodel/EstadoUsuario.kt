@@ -14,6 +14,8 @@ data class EstadoUsuario(
     val email: String = "",
     val name: String = "",
     val lastName: String = "",
+    val birthDay: String? = null,
+    val phoneNumber: String? = null,
     val googleId: String? = null,
     val isActive: Boolean = false,
     val role: List<String> = emptyList(),

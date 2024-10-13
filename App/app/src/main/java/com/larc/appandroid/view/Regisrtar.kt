@@ -37,6 +37,8 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var codigo by remember { mutableStateOf("") }
+        var fechaNacimiento by remember { mutableStateOf("") }
+        var telefono by remember { mutableStateOf("") }
         val estadoCorreoEnviado = usuarioVM.mailEnviado.collectAsState()
         val errorSendMail = usuarioVM.errorSendMail.collectAsState()
         val errorRegistro = usuarioVM.errorRegister.collectAsState()
@@ -131,7 +133,9 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                                         nombre,
                                         apellidos,
                                         password,
-                                        codigo
+                                        codigo,
+                                        fechaNacimiento,
+                                        telefono
                                     )
                                 },
                                 border = BorderStroke(2.dp, Color.LightGray),
@@ -254,8 +258,45 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                         label = { Text("Contraseña") },
                         placeholder = { Text("Ingresa tu contraseña") },
                         keyboardOptions = KeyboardOptions.Default.copy(
-                            imeAction = ImeAction.Done,
+                            imeAction = ImeAction.Next,
                             keyboardType = KeyboardType.Password
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onNext = { }
+                        ),
+                        visualTransformation = PasswordVisualTransformation(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                    )
+                }
+                item {
+                    TextField(
+                        value = fechaNacimiento,
+                        onValueChange = { fechaNacimiento = it },
+                        label = { Text("Fecha de nacimiento") },
+                        placeholder = { Text("dd/mm/aaaa") },
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            imeAction = ImeAction.Next,
+                            keyboardType = KeyboardType.Number
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onNext = { }
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                    )
+                }
+                item {
+                    TextField(
+                        value = telefono,
+                        onValueChange = { telefono = it },
+                        label = { Text("Teléfono") },
+                        placeholder = { Text("Ingresa tu teléfono") },
+                        keyboardOptions = KeyboardOptions.Default.copy(
+                            imeAction = ImeAction.Done,
+                            keyboardType = KeyboardType.Number
                         ),
                         keyboardActions = KeyboardActions(
                             onDone = {
@@ -268,7 +309,6 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                                 keyboardController?.hide()
                             }
                         ),
-                        visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)

@@ -74,6 +74,30 @@ fun MiInformacion(navController: NavHostController, usuarioVM: UsuarioVM, modifi
             }
         }
         item {
+            Row(Modifier.fillMaxWidth().padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
+                Text(
+                    text = "Teléfono: ${usuarioDatos.value.phoneNumber}",
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    color = AppColors.GrisOscuro,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 16.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+        item {
+            Row(Modifier.fillMaxWidth().padding(top = 16.dp, start = 16.dp, end = 16.dp)) {
+                Text(
+                    text = "Fecha de nacimiento: ${usuarioDatos.value.birthDay}",
+                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    color = AppColors.GrisOscuro,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 16.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+        item {
             Spacer(modifier = Modifier.height(30.dp))
         }
         item {
