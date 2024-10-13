@@ -1,7 +1,9 @@
 package com.larc.appandroid.view
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,11 +24,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.larc.appandroid.R
 import com.larc.appandroid.viewmodel.UsuarioVM
 
 @Composable
-fun Carta(usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
+fun Carta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
 
     val personas = usuarioVM.personas.collectAsState()
     val kilogramos = usuarioVM.kilogramos.collectAsState()
@@ -245,6 +250,35 @@ fun Carta(usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxWidth()
                 )
             }
+        }
+        item {
+            Row(modifier = modifier
+                .fillMaxWidth()
+                .padding(horizontal = 32.dp)) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                        .clickable { navController.navigate(Pantallas.RUTA_CALCULOS) },
+                    border = BorderStroke(2.dp, Color.LightGray),
+                    colors = CardDefaults.cardColors(
+                        containerColor = AppColors.White,
+                        contentColor = AppColors.White
+                    ),
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = "¿Quieres saber más sobre estos cálculos?",
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 18.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth(),
+                            color = AppColors.RosaZazil
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(30.dp))
         }
     }
 

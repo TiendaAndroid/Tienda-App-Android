@@ -420,7 +420,10 @@ fun AppNavHost(navController: NavHostController,
             Creditos()
         }
         composable(Pantallas.RUTA_CARTA) {
-            Carta(usuarioVM)
+            Carta(navController, usuarioVM)
+        }
+        composable(Pantallas.RUTA_CALCULOS) {
+            Calculos()
         }
     }
 }

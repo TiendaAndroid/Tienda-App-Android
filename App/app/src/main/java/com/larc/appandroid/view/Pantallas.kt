@@ -36,6 +36,7 @@ object Pantallas {
     const val RUTA_TODAS_BRILLAMOS = "todas_brillamos"
     const val RUTA_CREDITOS = "creditos"
     const val RUTA_CARTA = "carta"
+    const val RUTA_CALCULOS = "calculos"
 
     val listaPantallas = listOf(
         Pantalla("Home", RUTA_HOME, Icons.Filled.Home),
