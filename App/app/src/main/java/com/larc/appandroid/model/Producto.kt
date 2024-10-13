@@ -17,4 +17,5 @@ data class Producto(
     val isActive: Boolean,
     val image: List<Imagenes>,
     val type: List<String>,
+    val valor: Int
 )

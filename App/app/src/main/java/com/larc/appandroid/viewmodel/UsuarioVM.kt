@@ -249,4 +249,8 @@ class UsuarioVM: ViewModel() {
         }
     }
 
+    fun sortOrderList() {
+        _ordersList.value = _ordersList.value.sortedByDescending { it.createdAt }
+    }
+
 }

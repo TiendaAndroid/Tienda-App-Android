@@ -37,6 +37,7 @@ fun MisPedidos(navController: NavHostController, usuarioVM: UsuarioVM, modifier:
     val ordersList = usuarioVM.ordersList.collectAsState()
     usuarioVM.getProfile()
     usuarioVM.populateOrderList()
+    usuarioVM.sortOrderList()
 
     LazyColumn(
         modifier = Modifier

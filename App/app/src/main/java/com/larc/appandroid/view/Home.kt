@@ -231,7 +231,7 @@ fun Home(navController: NavController, productoVM: ProductoVM, usuarioVM: Usuari
                 .fillMaxWidth()
                 .padding(horizontal = 32.dp)) {
                 Text (
-                    text = "¡Síguenos en nuestras redes sociales:",
+                    text = "¡Síguenos en nuestras redes sociales!",
                     textAlign = TextAlign.Center,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Normal,

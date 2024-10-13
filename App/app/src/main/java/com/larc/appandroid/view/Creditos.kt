@@ -58,7 +58,7 @@ fun Creditos(modifier: Modifier = Modifier) {
                             "Es posible contactar a los desarrolladores en:\n\n" +
                             "arturo_barrios_8@hotmail.com\n" +
                             "lucioarturoreyes@gmail.com\n" +
-                            "Fidel\n" +
+                            "fbonillamontalvo@gmail.com\n" +
                             "vicentejesusramos@gmail.com",
                     textAlign = TextAlign.Center,
                     modifier = modifier.fillMaxWidth()
