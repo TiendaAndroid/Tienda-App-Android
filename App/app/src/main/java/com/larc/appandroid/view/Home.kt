@@ -1,7 +1,12 @@
 package com.larc.appandroid.view
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.launch
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -69,6 +74,10 @@ import com.larc.appandroid.viewmodel.UsuarioVM
 @Composable
 fun Home(navController: NavController, productoVM: ProductoVM, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
 
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { }
+
     val faqs = listOf(
         "¿Por qué Zazil?" to "Empleamos materiales de alta calidad, hipoalergénicos y absorbentes, que garantizan una experiencia cómoda y segura durante el período menstrual. Pero lo más importante es que son reutilizables, lo que significa que ayudan a reducir la generación de residuos y contribuyen a la conservación del medio ambiente."
     )
@@ -97,14 +106,16 @@ fun Home(navController: NavController, productoVM: ProductoVM, usuarioVM: Usuari
         }
         item {
             val (pregunta, respuesta) = faqs[0]
-            Row(modifier = modifier.fillMaxWidth()
+            Row(modifier = modifier
+                .fillMaxWidth()
                 .padding(horizontal = 16.dp)) {
                 ContactItem(pregunta, respuesta)
             }
             Spacer(modifier = Modifier.height(16.dp))
         }
         item {
-            Row(modifier = Modifier.fillMaxWidth()
+            Row(modifier = Modifier
+                .fillMaxWidth()
                 .padding(horizontal = 16.dp)) {
                 Text(text = "Descubre nuestros productos:",
                     textAlign = TextAlign.Center,
@@ -113,7 +124,8 @@ fun Home(navController: NavController, productoVM: ProductoVM, usuarioVM: Usuari
             }
         }
         item {
-            Row(modifier = Modifier.fillMaxWidth()
+            Row(modifier = Modifier
+                .fillMaxWidth()
                 .padding(horizontal = 10.dp)
                 .height(300.dp),
                 verticalAlignment = Alignment.CenterVertically) {
@@ -126,7 +138,7 @@ fun Home(navController: NavController, productoVM: ProductoVM, usuarioVM: Usuari
                     modifier = Modifier
                         .fillMaxSize(.8f)
                         .clip(RoundedCornerShape(20.dp))
-                        .clickable { navController.navigate(Pantallas.RUTA_DETALLE_PRODUCTO+"/${currentHome.value?.id.toString()}"+"/${cartId}") }
+                        .clickable { navController.navigate(Pantallas.RUTA_DETALLE_PRODUCTO + "/${currentHome.value?.id.toString()}" + "/${cartId}") }
                         .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
                 ) {
 
@@ -186,7 +198,8 @@ fun Home(navController: NavController, productoVM: ProductoVM, usuarioVM: Usuari
             Spacer(modifier = Modifier.height(8.dp))
         }
         item {
-            Row(modifier = modifier.fillMaxWidth()
+            Row(modifier = modifier
+                .fillMaxWidth()
                 .padding(horizontal = 32.dp)) {
                 Card(
                     modifier = Modifier
@@ -210,6 +223,74 @@ fun Home(navController: NavController, productoVM: ProductoVM, usuarioVM: Usuari
                         )
                     }
                 }
+            }
+        }
+        item {
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(modifier = modifier
+                .fillMaxWidth()
+                .padding(horizontal = 32.dp)) {
+                Text (
+                    text = "¡Síguenos en nuestras redes sociales:",
+                    textAlign = TextAlign.Center,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Normal,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(modifier = modifier
+                .fillMaxWidth()
+                .padding(horizontal = 32.dp)) {
+                Spacer(modifier = Modifier.weight(3f))
+                Image(painter = painterResource(R.drawable.logometa),
+                    contentDescription = "Banner de inicio",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(2f)
+                        .clickable {
+                            val url = "https://www.facebook.com/FundacionTodasBrillamos?_rdr"
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            launcher.launch(intent)
+                        }
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Image(painter = painterResource(R.drawable.logoinstagram),
+                    contentDescription = "Banner de inicio",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(2f)
+                        .clickable {
+                            val url = "https://www.instagram.com/fundaciontodasbrillamos/"
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            launcher.launch(intent)
+                        }
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Image(painter = painterResource(R.drawable.logotiktok),
+                    contentDescription = "Banner de inicio",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(2f)
+                        .clickable {
+                            val url = "https://vm.tiktok.com/ZMjKEqyJH/"
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            launcher.launch(intent)
+                        }
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Image(painter = painterResource(R.drawable.logoyoutube),
+                    contentDescription = "Banner de inicio",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(2f)
+                        .clickable {
+                            val url = "https://www.youtube.com/@FundacionTodasBrillamos"
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            launcher.launch(intent)
+                        }
+                )
+                Spacer(modifier = Modifier.weight(3f))
             }
         }
         item {
