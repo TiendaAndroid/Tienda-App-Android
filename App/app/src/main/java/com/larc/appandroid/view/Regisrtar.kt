@@ -45,6 +45,10 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
         val registroExitoso = usuarioVM.registroExitoso.collectAsState()
         val keyboardController = LocalSoftwareKeyboardController.current
 
+        var day by remember { mutableStateOf("") }
+        var month by remember { mutableStateOf("") }
+        var year by remember { mutableStateOf("") }
+
         if (estadoCorreoEnviado.value) {
 
             // Mensaje de registro exitoso
@@ -126,6 +130,13 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.Center
                         ) {
+                            if (day.length == 1) {
+                                day = "0$day"
+                            }
+                            if (month.length == 1) {
+                                month = "0$month"
+                            }
+                            fechaNacimiento = "$day/$month/$year"
                             Button(
                                 onClick = {
                                     usuarioVM.registerUSer(
@@ -270,6 +281,7 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
                     )
                 }
+                /*
                 item {
                     TextField(
                         value = fechaNacimiento,
@@ -288,6 +300,73 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
                     )
                 }
+                 */
+
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                    ) {
+                        Text(
+                            text = "Fecha de nacimiento:",
+                            color = AppColors.GrisOscuro,
+                            fontWeight = FontWeight.Normal
+                        )
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 8.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        TextField(
+                            value = day,
+                            onValueChange = {
+                                if (it.length <= 2) day = it
+                            },
+                            label = { Text("Día") },
+                            placeholder = { Text("dd") },
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Next,
+                                keyboardType = KeyboardType.Number
+                            ),
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 8.dp)
+                        )
+                        TextField(
+                            value = month,
+                            onValueChange = {
+                                if (it.length <= 2) month = it
+                            },
+                            label = { Text("Mes") },
+                            placeholder = { Text("mm") },
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Next,
+                                keyboardType = KeyboardType.Number
+                            ),
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 8.dp)
+                        )
+                        TextField(
+                            value = year,
+                            onValueChange = {
+                                if (it.length <= 4) year = it
+                            },
+                            label = { Text("Año") },
+                            placeholder = { Text("aaaa") },
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Done,
+                                keyboardType = KeyboardType.Number
+                            ),
+                            modifier = Modifier
+                                .weight(2f)
+                        )
+                    }
+                }
+
                 item {
                     TextField(
                         value = telefono,

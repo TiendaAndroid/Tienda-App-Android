@@ -46,6 +46,12 @@ class UsuarioVM: ViewModel() {
     val estadoMiUsuario: StateFlow<EstadoUsuario> = _estadoMiUsuario
     private val _ordersList = MutableStateFlow<List<Order>>(emptyList())
     val ordersList: StateFlow<List<Order>> = _ordersList
+    private val _personas = MutableStateFlow(0)
+    val personas: StateFlow<Int> = _personas
+    private val _kilogramos = MutableStateFlow(0)
+    val kilogramos: StateFlow<Int> = _kilogramos
+    private val _ahorro = MutableStateFlow(0)
+    val ahorro: StateFlow<Int> = _ahorro
 
     //-------------------------------------------------------------------------------------
     // Interface para la vista
@@ -255,6 +261,15 @@ class UsuarioVM: ViewModel() {
 
     fun sortOrderList() {
         _ordersList.value = _ordersList.value.sortedByDescending { it.createdAt }
+    }
+
+    fun calcularAyuda() {
+        val valores =  _estadoMiUsuario.value.orders?.flatMap { order ->
+            order.orderItems?.map { it.product.valor } ?: emptyList()
+        }?.sum() ?: 0
+        _personas.value = valores
+        _kilogramos.value = ((valores/6)+1) * 29
+        _ahorro.value = ((valores/6)+1) * 3750
     }
 
 }

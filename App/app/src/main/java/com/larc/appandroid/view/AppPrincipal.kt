@@ -15,9 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -113,6 +115,7 @@ fun AppTopBar(
     var expanded by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
     val loggedUsuario = usuarioVM.loggedUsuario.collectAsState()
+    val daUser = usuarioVM.estadoMiUsuario.collectAsState()
 
     TopAppBar(
         modifier = Modifier.height(120.dp),
@@ -233,6 +236,22 @@ fun AppTopBar(
                             expanded = false
                             usuarioVM.logoutUser()
                             navigateTo(navController, Pantallas.RUTA_HOME)
+                        }
+                    )
+                }
+                if (loggedUsuario.value && daUser.value.orders?.isEmpty() == false) {
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                "Nuestra carta para ti",
+                                color = AppColors.RosaZazil,
+                                fontFamily = FontFamily.Cursive,
+                                fontSize = 16.sp
+                            )
+                        },
+                        onClick = {
+                            expanded = false
+                            navigateTo(navController, Pantallas.RUTA_CARTA)
                         }
                     )
                 }
@@ -399,6 +418,9 @@ fun AppNavHost(navController: NavHostController,
         }
         composable(Pantallas.RUTA_CREDITOS) {
             Creditos()
+        }
+        composable(Pantallas.RUTA_CARTA) {
+            Carta(usuarioVM)
         }
     }
 }
