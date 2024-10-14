@@ -7,6 +7,9 @@ import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -224,6 +227,35 @@ fun Home(navController: NavController, productoVM: ProductoVM, usuarioVM: Usuari
                     }
                 }
             }
+        }
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(modifier = modifier
+                .fillMaxWidth()
+                .padding(horizontal = 32.dp)) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
+                        .clickable { navController.navigate(Pantallas.RUTA_CALCULOS) },
+                    border = BorderStroke(2.dp, Color.LightGray),
+                    colors = CardDefaults.cardColors(
+                        containerColor = AppColors.White,
+                        contentColor = AppColors.GrisOscuro
+                    ),
+                ) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = "Tu ayuda cuenta, descubre cómo",
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth(),
+                            color = AppColors.GrisOscuro
+                        )
+                    }
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
         }
         item {
             Spacer(modifier = Modifier.height(8.dp))

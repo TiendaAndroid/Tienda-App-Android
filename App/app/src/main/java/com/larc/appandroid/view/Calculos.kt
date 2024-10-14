@@ -30,7 +30,6 @@ fun Calculos(modifier: Modifier = Modifier) {
             .background(Color(0xFFFAF8FF)),
     ) {
         item {
-            Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "Tu ayuda cuenta",
                 textAlign = TextAlign.Center,
@@ -39,7 +38,7 @@ fun Calculos(modifier: Modifier = Modifier) {
                 fontSize = 22.sp,
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
         }
         item {
             Row(
@@ -75,7 +74,7 @@ fun Calculos(modifier: Modifier = Modifier) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp, start = 32.dp, end = 32.dp, bottom = 32.dp)
+                    .padding(top = 32.dp, start = 32.dp, end = 32.dp, bottom = 16.dp)
             ) {
                 Text(
                     text = "Referencias:",
@@ -83,6 +82,26 @@ fun Calculos(modifier: Modifier = Modifier) {
                     color = AppColors.GrisOscuro,
                     fontWeight = FontWeight.Normal,
                     fontSize = 14.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+        item {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 32.dp, end = 32.dp, bottom = 32.dp)
+            ) {
+                Text(
+                    text = "Procuraduría Federal del Consumidor. (enero 6, 2022). Vigilará Profeco precios de productos de gestión menstrual." +
+                            "Boletín de Prensa Profeco. Recuperado de: https://www.gob.mx/profeco/prensa/vigilara-profeco-precios-de-productos-de-gestion-menstrual?idiom=es \n" +
+                            "\nRevista del consumidor. (marzo, 2020). Toallas sanitarias femeninas. Revista del consumidor, pp. 34-51. " +
+                            "Recuperado de: https://www.gob.mx/cms/uploads/attachment/file/538780/ESTUDIO_CALIDAD_TOALLAS_SANITARIAS_FEMENINAS.pdf",
+                    textAlign = TextAlign.Start,
+                    color = AppColors.GrisOscuro,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 10.sp,
+                    lineHeight = 12.sp,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
