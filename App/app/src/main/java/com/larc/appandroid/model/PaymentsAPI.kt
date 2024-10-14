@@ -5,6 +5,10 @@ import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 
+/**
+ * Representa las llamadas a la API relacionadas con pagos.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 interface PaymentsAPI {
     /**
      * Crea una sesión de pago para Android.

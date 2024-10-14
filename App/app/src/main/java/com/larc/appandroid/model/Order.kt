@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName
  * Representa la estructura para una orden.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 data class Order(
     val id: String,
     val status: String,

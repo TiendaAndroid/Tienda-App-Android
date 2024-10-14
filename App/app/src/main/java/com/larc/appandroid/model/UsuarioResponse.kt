@@ -4,7 +4,6 @@ package com.larc.appandroid.model
  * Representa la estructura para la respuesta del backend sobre usuarios.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 data class UsuarioResponse(
     val id: String,
     val email: String,
@@ -14,6 +13,10 @@ data class UsuarioResponse(
     val token: String
 )
 
+/**
+ * Representa la estructura para la respuesta del backend sobre usuarios (registro).
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 data class UsuarioResponseRegister(
     val email: String,
     val name: String,
@@ -27,6 +30,10 @@ data class UsuarioResponseRegister(
     val token: String
 )
 
+/**
+ * Representa la estructura para la respuesta del backend sobre el perfil de un usuario.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 data class ProfileResponse(
     val id: String,
     val email: String,

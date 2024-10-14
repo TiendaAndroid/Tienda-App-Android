@@ -11,7 +11,6 @@ import retrofit2.http.Path
  * Representa las llamadas a la API relacionadas con carrito.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 interface CarritoAPI {
 
     /**

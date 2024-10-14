@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit
  * Representa la estructura para el servicio remoto de productos.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 class ServicioRemotoProducto {
 
     /**

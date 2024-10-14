@@ -4,7 +4,6 @@ package com.larc.appandroid.model
  * Representa la estructura para las respuestas del backend sobre direcciones.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 data class DireccionCompletaResponse(
     val tipo: String,
     val pais: String,
@@ -19,6 +18,10 @@ data class DireccionCompletaResponse(
     val id: String,
 )
 
+/**
+ * Representa la estructura para la respuesta del backend sobre direcciones.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 data class UserAddressResponse(
     val id: String,
     val email: String,
@@ -33,10 +36,18 @@ data class UserAddressResponse(
     val orders: List<Order>?
 )
 
+/**
+ * Representa la estructura para la respuesta del backend sobre eliminar direcciones.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 data class DeleteAddressResponse(
     val message: String
 )
 
+/**
+ * Representa la estructura para la respuesta del backend sobre obtener direcciones.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 data class GetAddressResponse(
     val id: String,
     val tipo: String,

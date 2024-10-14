@@ -8,6 +8,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+/**
+ * Representa la estructura para el servicio remoto de órdenes.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 class ServicioRemotoOrders {
 
     /**
@@ -51,6 +55,12 @@ class ServicioRemotoOrders {
         retrofit.create(OrdersAPI::class.java)
     }
 
+    /**
+     * Obtiene una orden específica por su ID.
+     *
+     * @param id El ID de la orden que se desea consultar.
+     * @return Un objeto `Order` si la operación fue exitosa, de lo contrario `null`.
+     */
     suspend fun getOrder(id: String): Response<Order>? {
         return try {
             val response: Response<Order> = servicio.getOrder(id)
