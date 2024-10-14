@@ -40,7 +40,6 @@ import com.stripe.android.paymentsheet.PaymentSheet
  * Representa la vista principal de la aplicación, con sus barras superior e inferior.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @Composable
 fun AppPrincipal(navController: NavHostController, paymentSheet: PaymentSheet) {
     //val navController = rememberNavController()
@@ -54,6 +53,7 @@ fun AppPrincipal(navController: NavHostController, paymentSheet: PaymentSheet) {
     var searchText by remember { mutableStateOf("") }
 
     val connection = networkVM.checkNetworkConnection()
+
 
     if (!connection) {
         Box(
@@ -183,15 +183,6 @@ fun AppTopBar(
                         navigateTo(navController, Pantallas.RUTA_TIENDA_UNO)
                     }
                 )
-                /*
-                DropdownMenuItem(
-                    text = { Text("Testimonios", color = AppColors.GrisOscuro) },
-                    onClick = {
-                        expanded = false
-                        navigateTo(navController, Pantallas.RUTA_TESTIMONIOS)
-                    }
-                )
-                 */
                 DropdownMenuItem(
                     text = { Text("Preguntas frecuentes", color = AppColors.GrisOscuro) },
                     onClick = {

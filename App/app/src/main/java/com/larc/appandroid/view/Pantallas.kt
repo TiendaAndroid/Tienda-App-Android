@@ -1,6 +1,7 @@
 package com.larc.appandroid.view
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -10,7 +11,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
  * Representa las pantallas de la aplicación.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 object Pantallas {
     const val RUTA_HOME = "home"
     const val RUTA_CUENTA = "cuenta"
@@ -41,6 +41,7 @@ object Pantallas {
     val listaPantallas = listOf(
         Pantalla("Home", RUTA_HOME, Icons.Filled.Home),
         Pantalla("Cuenta", RUTA_CUENTA, Icons.Filled.Person),
+        Pantalla("Catálogo", RUTA_TIENDA_UNO, Icons.Filled.Favorite),
         Pantalla("Carrito", RUTA_CARRITO, Icons.Filled.ShoppingCart),
     )
 }

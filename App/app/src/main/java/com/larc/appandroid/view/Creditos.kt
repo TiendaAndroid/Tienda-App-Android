@@ -47,12 +47,12 @@ fun Creditos(modifier: Modifier = Modifier) {
             Row(modifier = modifier.fillMaxWidth()
                 .padding(horizontal = 16.dp)) {
                 Text(
-                    text = "Esta aplicación fue desarrollada por:\n\n" +
+                    text = "Esta aplicación fue desarrollada para la fundación \"Todas Brillamos AC\" por:\n\n" +
                             "Arturo Barrios Mendoza\n" +
                             "Lucio Arturo Reyes Castillo\n" +
                             "Fidel Alexander Bonilla Montalvo\n" +
                             "Vicente Jesús Ramos Chávez,\n\n" +
-                            "Alumnos de 5° semestre de la Ingeniería en Tecnologías computacionales" +
+                            "Alumnos de 5° semestre de la Ingeniería en Tecnologías computacionales " +
                             "del Instituto Tecnológico y de Estudios Superiores de Monterrey, Campus Estado de México\n\n" +
                             "El proyecto fue concluido en octubre del 2024.\n\n\n" +
                             "Es posible contactar a los desarrolladores en:\n\n" +
