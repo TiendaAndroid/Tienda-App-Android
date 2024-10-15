@@ -78,7 +78,6 @@ fun DetalleProducto(id: String, cartId: String, productoVM: ProductoVM, carritoV
                         textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                         fontWeight = FontWeight.Normal,
                         fontSize = 25.sp,
-                        //modifier = Modifier.padding(start = 20.dp, end = 20.dp),
                         modifier = Modifier.fillMaxWidth(),
                         color = AppColors.RosaZazil
                     )
@@ -130,7 +129,7 @@ fun DetalleProducto(id: String, cartId: String, productoVM: ProductoVM, carritoV
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center
                     ) {
-                        BotonAgregarCarrito(onClick = { carritoVM.addToCart(cartId, id) })
+                        BotonAgregarCarrito(onClick = { carritoVM.addToCart(cartId, id) }, enabled = loggedUsuario.value )
                     }
                 }
 
@@ -170,9 +169,10 @@ fun DetalleProducto(id: String, cartId: String, productoVM: ProductoVM, carritoV
 
 // Botón para agregar un producto al carrito de compras
 @Composable
-fun BotonAgregarCarrito(onClick: () -> Unit) {
+fun BotonAgregarCarrito(onClick: () -> Unit, enabled: Boolean) {
     Button(
         onClick = onClick,
+        enabled = enabled,
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
             .height(80.dp)

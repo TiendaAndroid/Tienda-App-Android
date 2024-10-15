@@ -89,7 +89,7 @@ fun TarjetaProducto(thisId: String, navController: NavHostController, text: Stri
                 Spacer(modifier = Modifier.height(10.dp))
                 BotonDetalle(onClick = { navController.navigate(Pantallas.RUTA_DETALLE_PRODUCTO+"/${thisId}"+"/${cartId}") })
                 Spacer(modifier = Modifier.height(8.dp))
-                BotonAgregar(onClick = { carritoVM.addToCart(cartId, thisId) })
+                BotonAgregar(onClick = { carritoVM.addToCart(cartId, thisId) }, enabled = loggedUsuario.value)
                 Spacer(modifier = Modifier.height(10.dp))
             }
         }
@@ -138,7 +138,7 @@ fun BotonDetalle(onClick: () -> Unit) {
             .border(2.dp, AppColors.AzulZazil, RoundedCornerShape(20.dp))
             .height(30.dp)
             .clip(RoundedCornerShape(20.dp)),
-        shape = RoundedCornerShape(20),
+        shape = RoundedCornerShape(100),
         colors = ButtonDefaults.buttonColors(
             containerColor = AppColors.White,
             contentColor = AppColors.AzulZazil,
@@ -167,19 +167,24 @@ fun BotonDetalle(onClick: () -> Unit) {
 
 // Botón para agregar al carrito
 @Composable
-fun BotonAgregar(onClick: () -> Unit) {
+fun BotonAgregar(onClick: () -> Unit, enabled: Boolean) {
+    var borderColor = AppColors.AzulZazil
+    if (!enabled) {
+        borderColor = Color.Gray
+    }
     Button(
         onClick = onClick,
+        enabled = enabled,
         contentPadding = PaddingValues(0.dp),
         modifier = Modifier
             .fillMaxWidth(.80f)
-            .border(2.dp, AppColors.AzulZazil, RoundedCornerShape(20.dp))
+            .border(2.dp, borderColor, RoundedCornerShape(20.dp))
             .height(30.dp)
             .clip(RoundedCornerShape(20.dp)),
-        shape = RoundedCornerShape(20),
+        shape = RoundedCornerShape(100),
         colors = ButtonDefaults.buttonColors(
             containerColor = AppColors.White,
-            contentColor = AppColors.AzulZazil,
+            contentColor = AppColors.AzulZazil
         )
     ) {
         Box(

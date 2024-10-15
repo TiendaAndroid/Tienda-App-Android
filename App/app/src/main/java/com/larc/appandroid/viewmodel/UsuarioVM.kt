@@ -190,7 +190,7 @@ class UsuarioVM: ViewModel() {
      */
     fun checkIfLoggedIn() {
         val token = getToken()
-        if (token != null) {
+        if (!token.isNullOrEmpty()) {
             _estadoToken.value = token
             _loggedUsuario.value = true
         }
