@@ -140,6 +140,10 @@ fun AppTopBar(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(40.dp)),
+                    colors = TextFieldDefaults.textFieldColors(
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    ),
                     keyboardActions = KeyboardActions(
                         onSearch = {
                             if(searchText.isNotEmpty()) {
@@ -369,7 +373,7 @@ fun AppNavHost(navController: NavHostController,
         composable(Pantallas.RUTA_DETALLE_PRODUCTO + "/{id}" + "/{cartId}") {
             val id = it.arguments?.getString("id")
             val cartId = it.arguments?.getString("cartId")
-            DetalleProducto(id!!, cartId!!, productoVM, carritoVM)
+            DetalleProducto(id!!, cartId!!, productoVM, carritoVM, usuarioVM)
         }
         composable(Pantallas.RUTA_SIGN_UP) {
             SignUp(navController, usuarioVM)

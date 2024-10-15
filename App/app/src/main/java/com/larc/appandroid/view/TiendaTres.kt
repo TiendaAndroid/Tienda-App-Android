@@ -94,7 +94,8 @@ fun TiendaTres(navController: NavHostController, cat: String, productoVM: Produc
                                 price = producto.price,
                                 imgurl = producto.image[0].url,
                                 cartId,
-                                carritoVM
+                                carritoVM,
+                                usuarioVM
                             )
                         }
                         Spacer(modifier = Modifier.height(16.dp))

@@ -243,9 +243,26 @@ fun Carta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modi
                 Text(
                     text = "¡Gracias por ayudarnos a hacer de éste un mundo mejor, un ciclo a la vez!",
                     textAlign = TextAlign.Center,
+                    color = AppColors.GrisOscuro,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+        item {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(
+                    text = "Atentamente,\n" +
+                            "Fundación Todas Brillamos AC",
+                    textAlign = TextAlign.Center,
                     color = AppColors.RosaZazil,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 26.sp,
+                    fontSize = 18.sp,
                     fontFamily = FontFamily.Cursive,
                     modifier = Modifier.fillMaxWidth()
                 )

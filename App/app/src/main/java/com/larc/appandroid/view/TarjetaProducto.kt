@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.larc.appandroid.viewmodel.CarritoVM
+import com.larc.appandroid.viewmodel.UsuarioVM
 
 /**
  * Representa un elemento para mostrar cada producto.
@@ -42,7 +43,10 @@ import com.larc.appandroid.viewmodel.CarritoVM
 
 @SuppressLint("DefaultLocale")
 @Composable
-fun TarjetaProducto(thisId: String, navController: NavHostController, text: String, price: Double, imgurl: String, cartId: String, carritoVM: CarritoVM) {
+fun TarjetaProducto(thisId: String, navController: NavHostController, text: String, price: Double, imgurl: String, cartId: String, carritoVM: CarritoVM, usuarioVM: UsuarioVM) {
+
+    val loggedUsuario = usuarioVM.loggedUsuario.collectAsState()
+
     val errorAgregar = carritoVM.errorAgregarProducto.collectAsState()
     val productoAgregado = carritoVM.productoAgregado.collectAsState()
     val messageShowed = carritoVM.messageShowed.collectAsState()
@@ -99,7 +103,11 @@ fun TarjetaProducto(thisId: String, navController: NavHostController, text: Stri
             showDialog.value = true
             carritoVM.resetErrores()
         } else if (errorAgregar.value) {
-            message.value = "El producto no se agregó"
+            if (!loggedUsuario.value) {
+                message.value = "Error: ingresa a tu cuenta"
+            } else {
+                message.value = "El producto no se agregó"
+            }
             showDialog.value = true
             carritoVM.resetErrores()
         }

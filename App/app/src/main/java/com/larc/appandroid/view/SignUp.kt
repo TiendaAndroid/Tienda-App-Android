@@ -2,6 +2,7 @@ package com.larc.appandroid.view
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,6 +30,7 @@ import com.larc.appandroid.viewmodel.UsuarioVM
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUp(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
     var email by remember { mutableStateOf("") }
@@ -69,6 +71,12 @@ fun SignUp(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                    .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = AppColors.White,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                )
             )
         }
         item {
@@ -92,6 +100,12 @@ fun SignUp(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                    .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = AppColors.White,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                )
             )
         }
         item {

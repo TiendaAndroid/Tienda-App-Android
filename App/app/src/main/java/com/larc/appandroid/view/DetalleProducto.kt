@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.larc.appandroid.viewmodel.CarritoVM
 import com.larc.appandroid.viewmodel.ProductoVM
+import com.larc.appandroid.viewmodel.UsuarioVM
 
 /**
  * Representa la vista con la información de un producto seleccionado.
@@ -43,7 +44,8 @@ import com.larc.appandroid.viewmodel.ProductoVM
 
 @SuppressLint("DefaultLocale")
 @Composable
-fun DetalleProducto(id: String, cartId: String, productoVM: ProductoVM, carritoVM: CarritoVM, modifier: Modifier = Modifier) {
+fun DetalleProducto(id: String, cartId: String, productoVM: ProductoVM, carritoVM: CarritoVM, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
+    val loggedUsuario = usuarioVM.loggedUsuario.collectAsState()
     val prodActual = productoVM.estadoProductoActual.collectAsState()
     val estadoSinResultIndiv = productoVM.estadoSinResultIndiv.collectAsState()
     val isLoading = productoVM.isLoading.collectAsState().value
@@ -144,7 +146,11 @@ fun DetalleProducto(id: String, cartId: String, productoVM: ProductoVM, carritoV
             showDialog.value = true
             carritoVM.resetErrores()
         } else if (errorAgregar.value) {
-            message.value = "Error al agregar el producto"
+            if (!loggedUsuario.value) {
+                message.value = "Error: ingresa a tu cuenta"
+            } else {
+                message.value = "El producto no se agregó"
+            }
             showDialog.value = true
             carritoVM.resetErrores()
         }

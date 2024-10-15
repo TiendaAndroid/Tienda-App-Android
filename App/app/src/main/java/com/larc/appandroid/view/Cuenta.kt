@@ -95,21 +95,6 @@ fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Mod
                         onClick = { navigateTo(Pantallas.RUTA_SERVICIO_CLIENTE) },
                         imagen = R.drawable.applhead.toString())
                 }
-
-                /*
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    BotonApachurrable(
-                        text = "Pagos",
-                        onClick = { /* Navegar a Configuración */ },
-                        imagen = R.drawable.applpay.toString())
-                }
-                 */
-
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }

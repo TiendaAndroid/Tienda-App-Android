@@ -1,7 +1,10 @@
+@file:Suppress("DEPRECATION")
+
 package com.larc.appandroid.view
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,6 +32,7 @@ import com.larc.appandroid.viewmodel.UsuarioVM
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
     AppAndroidTheme {
@@ -101,7 +105,7 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                                 fontSize = 14.sp,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                                    .padding(start = 32.dp, end = 32.dp, bottom = 16.dp)
                             )
                         }
                     }
@@ -121,6 +125,12 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                                .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = AppColors.White,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent
+                            )
                         )
                     }
 
@@ -197,8 +207,9 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                 if (errorSendMail.value) {
                     item {
                         Text(
-                            text = "Hubo un error. Por favor revise sus datos." +
-                                    "La contraseña debe tener 6 o más caracteres, debe contar con al menos un número, una letra mayúscula, una letra minúscula y un carácter especial." +
+                            text = "Hubo un error. Por favor revise sus datos. " +
+                                    "La contraseña debe tener 6 o más caracteres, debe contar con al menos un número, una letra mayúscula, una letra minúscula y un carácter especial. " +
+                                    "La contraseña debe comenzar con una letra mayúscula. " +
                                     "Verifique que su correo no tenga espacios en blanco al inicio ni al final.",
                             color = Color.Red,
                             fontSize = 14.sp,
@@ -224,6 +235,12 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                            .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = AppColors.White,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        )
                     )
                 }
                 item {
@@ -242,6 +259,12 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                            .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = AppColors.White,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        )
                     )
                 }
                 item {
@@ -260,6 +283,23 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                            .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = AppColors.White,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        )
+                    )
+                }
+                item {
+                    Text(
+                        text = "La contraseña debe tener 6 o más caracteres, debe contar con al menos un número, una letra mayúscula, una letra minúscula y un carácter especial. " +
+                                "Debe comenzar con una letra mayúscula.",
+                        color = AppColors.GrisOscuro,
+                        fontSize = 14.sp,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 32.dp, end = 32.dp, bottom = 16.dp)
                     )
                 }
                 item {
@@ -279,29 +319,14 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                            .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = AppColors.White,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        )
                     )
                 }
-                /*
-                item {
-                    TextField(
-                        value = fechaNacimiento,
-                        onValueChange = { fechaNacimiento = it },
-                        label = { Text("Fecha de nacimiento") },
-                        placeholder = { Text("dd/mm/aaaa") },
-                        keyboardOptions = KeyboardOptions.Default.copy(
-                            imeAction = ImeAction.Next,
-                            keyboardType = KeyboardType.Number
-                        ),
-                        keyboardActions = KeyboardActions(
-                            onNext = { }
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-                    )
-                }
-                 */
-
                 item {
                     Row(
                         modifier = Modifier
@@ -311,7 +336,9 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                         Text(
                             text = "Fecha de nacimiento:",
                             color = AppColors.GrisOscuro,
-                            fontWeight = FontWeight.Normal
+                            fontWeight = FontWeight.Normal,
+                            modifier = Modifier.weight(1f)
+                                .padding(horizontal = 16.dp)
                         )
                     }
                     Row(
@@ -334,6 +361,12 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                             modifier = Modifier
                                 .weight(1f)
                                 .padding(end = 8.dp)
+                                .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = AppColors.White,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent
+                            )
                         )
                         TextField(
                             value = month,
@@ -349,6 +382,12 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                             modifier = Modifier
                                 .weight(1f)
                                 .padding(end = 8.dp)
+                                .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = AppColors.White,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent
+                            )
                         )
                         TextField(
                             value = year,
@@ -363,6 +402,12 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                             ),
                             modifier = Modifier
                                 .weight(2f)
+                                .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = AppColors.White,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent
+                            )
                         )
                     }
                 }
@@ -391,6 +436,12 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                            .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = AppColors.White,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        )
                     )
                 }
 

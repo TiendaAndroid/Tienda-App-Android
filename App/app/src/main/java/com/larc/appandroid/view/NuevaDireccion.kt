@@ -2,6 +2,7 @@ package com.larc.appandroid.view
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,9 +19,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -44,6 +47,7 @@ import com.larc.appandroid.viewmodel.DireccionVM
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NuevaDireccion(navController: NavHostController, token: String, direccionVM: DireccionVM, modifier: Modifier = Modifier) {
 
@@ -141,6 +145,12 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                        .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = AppColors.White,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
                 )
             }
             item {
@@ -155,6 +165,12 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                        .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = AppColors.White,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
                 )
             }
             item {
@@ -169,6 +185,12 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                        .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = AppColors.White,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
                 )
             }
             item {
@@ -183,6 +205,12 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                        .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = AppColors.White,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
                 )
             }
             item {
@@ -197,6 +225,12 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                        .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = AppColors.White,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
                 )
             }
             item {
@@ -212,6 +246,12 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
                         modifier = Modifier
                             .weight(1f)
                             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                            .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = AppColors.White,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        )
                     )
                     TextField(
                         value = noInterior,
@@ -224,6 +264,12 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
                         modifier = Modifier
                             .weight(1f)
                             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                            .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = AppColors.White,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        )
                     )
                 }
             }
@@ -256,6 +302,12 @@ fun NuevaDireccion(navController: NavHostController, token: String, direccionVM:
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                        .border(2.dp, Color.LightGray, RoundedCornerShape(20.dp)),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = AppColors.White,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
                 )
             }
 
