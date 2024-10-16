@@ -71,7 +71,6 @@ fun DireccionEntrega(navController: NavHostController, usuarioVM: UsuarioVM, pay
             )
             Spacer(modifier = Modifier.height(6.dp))
         }
-
         if (estadoUsuario.value.direction?.isEmpty() == true) {
             item {
                 Spacer(modifier = Modifier.height(50.dp))
@@ -81,6 +80,16 @@ fun DireccionEntrega(navController: NavHostController, usuarioVM: UsuarioVM, pay
                         .padding(start = 16.dp, end = 16.dp),
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center
                 )
+            }
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    BotonAgregarDireccion(
+                        onClick = { navController.navigate(Pantallas.RUTA_NUEVA_DIRECCION+"/${usuarioVM.getToken().toString()}") })
+                }
+                Spacer(modifier = Modifier.height(6.dp))
             }
         }
 

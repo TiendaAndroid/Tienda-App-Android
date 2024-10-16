@@ -58,21 +58,6 @@ fun TarjetaDireccion(navController: NavHostController,
                     .weight(6f)
                     .padding(top = 4.dp, start = 5.dp)
             )
-            /*
-            IconButton(
-                onClick = {},
-                modifier = Modifier
-                    .width(30.dp)
-                    .height(30.dp)
-                    .clip(CircleShape)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "Editar dirección",
-                    tint = AppColors.RosaZazil
-                )
-            }
-             */
             IconButton(
                 onClick = { navController.navigate(Pantallas.RUTA_ELIMINAR_DIRECCION + "/${token}" + "/${thisAddressId}") },
                 modifier = Modifier

@@ -154,6 +154,11 @@ class UsuarioVM: ViewModel() {
             clearToken()
             _estadoToken.value = ""
             _loggedUsuario.value = false
+            _errorLogin.value = false
+            _mailEnviado.value = false
+            _errorSendMail.value = false
+            _errorRegister.value = false
+            _registroExitoso.value = false
         }
     }
 

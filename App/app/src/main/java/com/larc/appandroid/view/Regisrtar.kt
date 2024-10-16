@@ -5,6 +5,7 @@ package com.larc.appandroid.view
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -66,12 +68,43 @@ fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: 
                     item {
                         Text(
                             text = "¡Registro exitoso!",
-                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                            textAlign = TextAlign.Center,
                             color = AppColors.RosaZazil,
                             fontWeight = FontWeight.Normal,
                             fontSize = 22.sp,
                             modifier = Modifier.fillMaxWidth()
                         )
+                    }
+                    item {
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
+                    item {
+                        Row(modifier = modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 32.dp)) {
+                            Card(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp)
+                                    .clickable { navController.navigate(Pantallas.RUTA_TIENDA_UNO) },
+                                border = BorderStroke(2.dp, Color.LightGray),
+                                colors = CardDefaults.cardColors(
+                                    containerColor = AppColors.White,
+                                    contentColor = AppColors.White
+                                ),
+                            ) {
+                                Column(modifier = Modifier.padding(16.dp)) {
+                                    Text(
+                                        text = "¡Explora el catálogo!",
+                                        fontWeight = FontWeight.Normal,
+                                        fontSize = 18.sp,
+                                        textAlign = TextAlign.Center,
+                                        modifier = Modifier.fillMaxWidth(),
+                                        color = AppColors.RosaZazil
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             } else {
