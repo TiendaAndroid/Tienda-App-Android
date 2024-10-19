@@ -34,7 +34,6 @@ import com.larc.appandroid.viewmodel.DireccionVM
  * Representa la vista para eliminar una dirección.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @Composable
 fun EliminarDireccion(navController: NavHostController,
                       token: String,

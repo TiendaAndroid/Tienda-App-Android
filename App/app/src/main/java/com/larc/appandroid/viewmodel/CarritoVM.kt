@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
  * Representa el viewmodel relacionado con el carrito.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 class CarritoVM: ViewModel() {
 
     // Modelo
@@ -28,7 +27,6 @@ class CarritoVM: ViewModel() {
     private val _productosCarrito = MutableStateFlow(listOf<CartItem>())
     val productosCarrito: MutableStateFlow<List<CartItem>> = _productosCarrito
     private val _errorGetCart = MutableStateFlow(false)
-    val errorGetCart: MutableStateFlow<Boolean> = _errorGetCart
     private val _messageShowed = MutableStateFlow(false)
     val messageShowed: MutableStateFlow<Boolean> = _messageShowed
     private val _carritoNoRepeat = MutableStateFlow(listOf<CartItemQ>())
@@ -44,8 +42,8 @@ class CarritoVM: ViewModel() {
     /**
      * Agrega un producto al carrito.
      *
-     * Envía una solicitud para agregar un producto al carrito del usuario. Luego actualiza el estado del carrito
-     * y recalcula los totales.
+     * Envía una solicitud para agregar un producto al carrito del usuario. Si la operación es exitosa,
+     * actualiza el estado del carrito y recalcula los totales. En caso de error, marca el estado de error.
      *
      * @param id El ID del producto que se va a agregar.
      * @param producto El nombre del producto que se va a agregar.
@@ -69,14 +67,14 @@ class CarritoVM: ViewModel() {
     }
 
     /**
-     * Indica que el mensaje de éxito ya fue mostrado.
+     * Indica que el mensaje de éxito ya ha sido mostrado al usuario.
      */
     fun setMessageShowed() {
         _messageShowed.value = true
     }
 
     /**
-     * Restablece los errores de agregar producto.
+     * Restablece los estados de error y de éxito relacionados con la adición de productos al carrito.
      */
     fun resetErrores() {
         _errorAgregarProducto.value = false
@@ -84,10 +82,10 @@ class CarritoVM: ViewModel() {
     }
 
     /**
-     * Consulta el carrito del usuario por su ID.
+     * Consulta el carrito del usuario.
      *
-     * Obtiene el contenido del carrito del usuario y agrupa los productos por su ID, calculando las cantidades
-     * totales y actualizando el estado del carrito.
+     * Obtiene el contenido del carrito asociado al ID del usuario. Los productos del carrito se agrupan por su ID
+     * y se calculan las cantidades totales por producto. Luego, se actualiza el estado del carrito y se recalculan los totales.
      *
      * @param id El ID del usuario cuyo carrito se va a consultar.
      */
@@ -121,17 +119,10 @@ class CarritoVM: ViewModel() {
     }
 
     /**
-     * Restablece el error de consulta del carrito.
-     */
-    fun resetErrorGetCart() {
-        _errorGetCart.value = false
-    }
-
-    /**
-     * Calcula el subtotal y el total del carrito.
+     * Calcula los totales del carrito.
      *
-     * Calcula el subtotal sumando los precios y cantidades de los productos en el carrito.
-     * Luego, calcula el total aplicando un 16% de impuestos.
+     * Calcula el subtotal sumando el precio multiplicado por la cantidad de cada producto en el carrito, y luego calcula
+     * el total aplicando un impuesto del 16%.
      */
     private fun calculateCartTotals() {
         val subtotal = _carritoNoRepeat.value.sumOf { it.price * it.quantity }
@@ -142,8 +133,8 @@ class CarritoVM: ViewModel() {
     /**
      * Elimina un producto del carrito.
      *
-     * Busca el producto en el carrito usando su ID de producto, obtiene el ID del `cartItem` y lo elimina.
-     * Luego, actualiza el estado del carrito.
+     * Busca el producto en el carrito usando su ID de producto, obtiene el ID del elemento del carrito (`cartItem`) y lo elimina.
+     * Luego, actualiza el estado del carrito y recalcula los totales.
      *
      * @param productId El ID del producto que se desea eliminar del carrito.
      */
@@ -167,7 +158,9 @@ class CarritoVM: ViewModel() {
     }
 
     /**
-     * Actualiza el estado del carrito agrupando los productos por ID y recalculando los totales.
+     * Actualiza el estado del carrito.
+     *
+     * Agrupa los productos del carrito por su ID, calcula las cantidades totales por producto, y recalcula los totales del carrito.
      */
     private fun refreshCart() {
         val groupedItems = _productosCarrito.value

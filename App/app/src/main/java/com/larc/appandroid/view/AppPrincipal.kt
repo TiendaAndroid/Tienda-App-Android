@@ -42,7 +42,6 @@ import com.stripe.android.paymentsheet.PaymentSheet
  */
 @Composable
 fun AppPrincipal(navController: NavHostController, paymentSheet: PaymentSheet) {
-    //val navController = rememberNavController()
     val productoVM: ProductoVM = viewModel()
     val usuarioVM: UsuarioVM = viewModel()
     val direccionVM: DireccionVM = viewModel()

@@ -40,7 +40,6 @@ import com.larc.appandroid.viewmodel.UsuarioVM
  * Representa un elemento para mostrar cada producto.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @SuppressLint("DefaultLocale")
 @Composable
 fun TarjetaProducto(thisId: String, navController: NavHostController, text: String, price: Double, imgurl: String, cartId: String, carritoVM: CarritoVM, usuarioVM: UsuarioVM) {

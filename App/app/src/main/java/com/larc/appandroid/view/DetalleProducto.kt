@@ -41,7 +41,6 @@ import com.larc.appandroid.viewmodel.UsuarioVM
  * Representa la vista con la información de un producto seleccionado.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @SuppressLint("DefaultLocale")
 @Composable
 fun DetalleProducto(id: String, cartId: String, productoVM: ProductoVM, carritoVM: CarritoVM, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {

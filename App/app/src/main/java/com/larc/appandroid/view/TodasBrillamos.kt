@@ -20,6 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.larc.appandroid.R
 
+/**
+ * Representa la vista para la información de la organización.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 @Composable
 fun TodasBrillamos(modifier: Modifier = Modifier) {
 

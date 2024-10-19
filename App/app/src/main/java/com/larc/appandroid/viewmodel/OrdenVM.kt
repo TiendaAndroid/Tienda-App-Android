@@ -3,13 +3,15 @@ package com.larc.appandroid.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.larc.appandroid.model.CartItem
-import com.larc.appandroid.model.Order
 import com.larc.appandroid.model.ServicioRemotoOrders
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * Representa el viewmodel relacionado con las ordenes.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 class OrdenVM: ViewModel() {
 
     // Modelo
@@ -24,6 +26,12 @@ class OrdenVM: ViewModel() {
 
     //-------------------------------------------------------------------------------------
     // Interface para la vista
+
+    /**
+     * Obtiene las ordenes de un usuario.
+     *
+     * @param id El ID del usuario.
+     */
     fun getOrders(id: String) {
         viewModelScope.launch {
             val result = servicioRemotoDireccion.getOrder(id)
@@ -54,6 +62,9 @@ class OrdenVM: ViewModel() {
         }
     }
 
+    /**
+     * Obtiene el detalle de una orden.
+     */
     private fun groupOrderItemsByName() {
         val groupedItems = _estadoThisOrder.value.orderItems
             ?.groupBy { it.product.name }

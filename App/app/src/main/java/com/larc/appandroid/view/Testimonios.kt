@@ -13,10 +13,8 @@ import androidx.compose.ui.unit.sp
 
 /**
  * Representa la vista de los testimonios en la aplicación.
- * PENDIENTE: CAMBIAR COLORES Y ESTILO
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @Composable
 fun Testimonios(modifier: Modifier = Modifier) {
     Column(

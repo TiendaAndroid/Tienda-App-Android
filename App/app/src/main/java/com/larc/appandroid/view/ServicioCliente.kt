@@ -30,10 +30,8 @@ import androidx.compose.ui.unit.sp
 
 /**
  * Representa la vista de servicio al cliente.
- * PENDIENTE: CAMBIAR COLORES Y ESTILOS
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @Composable
 fun ServicioCliente(modifier: Modifier = Modifier) {
 

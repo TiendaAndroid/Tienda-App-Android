@@ -1,33 +1,35 @@
 package com.larc.appandroid.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.larc.appandroid.model.PaymentIntentResponse
 import com.larc.appandroid.model.PaymentSessionDto
-import com.larc.appandroid.model.PaymentsAPI
 import com.larc.appandroid.model.ServicioRemotoPayments
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import retrofit2.Response
 
+/**
+ * Representa el viewmodel relacionado con los pagos.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 class PaymentsVM : ViewModel() {
 
-    // Instance of the remote service
+    // Modelo
     private val servicioRemotoPayments = ServicioRemotoPayments()
 
+    //-------------------------------------------------------------------------------------
+    // Estado
     private val _clientSecret = MutableStateFlow<String?>(null)
     val clientSecret: StateFlow<String?> = _clientSecret
-
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading
-
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
-
     private val _estadoDireccionEntrega = MutableStateFlow( EstadoDireccionEntrega() )
     val estadoDireccionEntrega: StateFlow<EstadoDireccionEntrega> = _estadoDireccionEntrega
+
+    //-------------------------------------------------------------------------------------
+    // Interface para la vista
 
     /**
      * Crea un PaymentIntent usando el servicio remoto.
@@ -37,6 +39,14 @@ class PaymentsVM : ViewModel() {
      *
      * @param token El token de autorización del usuario.
      * @param currency La moneda de la transacción (ej: "usd").
+     * @param tipo El tipo de vivienda.
+     * @param pais El país.
+     * @param municipio El municipio.
+     * @param estado El estado.
+     * @param calle La calle.
+     * @param noExterior El número exterior.
+     * @param colonia La colonia.
+     * @param cp El código postal.
      */
     fun createPaymentIntent(
         token: String?,
@@ -86,9 +96,20 @@ class PaymentsVM : ViewModel() {
             }
         }
     }
-    fun resetError() {
-        _error.value = null
-    }
+
+    /**
+     * Actualiza el estado de la dirección de entrega.
+     *
+     * @param tipo El tipo de vivienda.
+     * @param pais El país.
+     * @param municipio El municipio.
+     * @param estado El estado.
+     * @param calle La calle.
+     * @param noExterior El número exterior.
+     * @param noInterior El número interior.
+     * @param colonia La colonia.
+     * @param cp El código postal.
+     */
     fun updateEstadoDireccionEntrega(
         tipo: String,
         pais: String,

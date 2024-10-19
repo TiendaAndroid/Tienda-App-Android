@@ -28,7 +28,6 @@ import com.larc.appandroid.viewmodel.UsuarioVM
  * Representa la vista de la cuenta del usuario. Cambia dependiendo de si está o no logueado.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @Composable
 fun Cuenta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier, navigateTo: (String) -> Unit
 ) {

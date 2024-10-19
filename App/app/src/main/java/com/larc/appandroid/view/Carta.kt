@@ -28,6 +28,10 @@ import androidx.navigation.NavHostController
 import com.larc.appandroid.R
 import com.larc.appandroid.viewmodel.UsuarioVM
 
+/**
+ * Representa la vista de la carta al cliente.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 @Composable
 fun Carta(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
 

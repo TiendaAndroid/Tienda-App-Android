@@ -23,7 +23,6 @@ import androidx.compose.ui.window.Dialog
  * Representa un elemento para mostrar el éxito o fracaso al añadir un producto al carrito.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @Composable
 fun ShowProductDialog(
     showDialog: Boolean,

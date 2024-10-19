@@ -19,6 +19,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * Representa la vista del aviso de privacidad de la aplicación.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 @Composable
 fun AvisoPrivacidad(modifier: Modifier = Modifier) {
     LazyColumn(

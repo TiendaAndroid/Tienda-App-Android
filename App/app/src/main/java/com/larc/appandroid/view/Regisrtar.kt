@@ -33,7 +33,6 @@ import com.larc.appandroid.viewmodel.UsuarioVM
  * Representa la vista para el registro de un usuario.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Registrar(navController: NavHostController, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {

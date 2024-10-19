@@ -7,7 +7,6 @@ import com.stripe.android.PaymentConfiguration
  * Representa la aplicación, es útil para la persistencia del token en la app y para inicializar la configuración de Stripe.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 class MyApp : Application() {
     companion object {
         lateinit var instance: MyApp

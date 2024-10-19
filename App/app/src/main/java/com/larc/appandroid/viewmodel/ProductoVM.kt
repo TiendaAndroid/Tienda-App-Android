@@ -14,7 +14,6 @@ import kotlin.math.ceil
  * Representa el viewmodel relacionado con los productos.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 class ProductoVM: ViewModel() {
     // Modelo
     private val servicioRemotoProducto = ServicioRemotoProducto()
@@ -163,6 +162,11 @@ class ProductoVM: ViewModel() {
         }
     }
 
+    /**
+     * Obtiene el stock de un producto.
+     *
+     * @param id El ID del producto.
+     */
     fun getStock(id: String) {
         viewModelScope.launch {
             val result = servicioRemotoProducto.getProductoPorId(id)
@@ -273,6 +277,9 @@ class ProductoVM: ViewModel() {
         _scrollTop.value = false
     }
 
+    /**
+     * Obtiene productos para la pantalla de inicio.
+     */
     fun getProductosHome() {
         viewModelScope.launch {
             val result = servicioRemotoProducto.getProductos(0)
@@ -292,6 +299,9 @@ class ProductoVM: ViewModel() {
         }
     }
 
+    /**
+     * Avanza al siguiente producto en la lista de productos para la pantalla de inicio.
+     */
     fun nextHome() {
         if (_currentHomeIndex.value < _listHome.value.size - 1) {
             _currentHomeIndex.value++
@@ -302,6 +312,9 @@ class ProductoVM: ViewModel() {
         }
     }
 
+    /**
+     * Retrocede al producto anterior en la lista de productos para la pantalla de inicio.
+     */
     fun prevHome() {
         if (_currentHomeIndex.value > 0) {
             _currentHomeIndex.value--

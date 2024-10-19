@@ -9,15 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,11 +25,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.larc.appandroid.viewmodel.OrdenVM
 
+/**
+ * Representa la vista de los detalles de una orden.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 @Composable
 fun DetalleOrden(navController: NavHostController, ordenVM: OrdenVM, orderId: String, modifier: Modifier = Modifier) {
 
     val estadoThisOrder = ordenVM.estadoThisOrder.collectAsState()
-    val productosEnLaOrden = ordenVM.shortList.collectAsState() // estadoThisOrder.value.orderItems
+    val productosEnLaOrden = ordenVM.shortList.collectAsState()
     ordenVM.getOrders(orderId)
 
     // Se muestra la dirección para confirmar la eliminación

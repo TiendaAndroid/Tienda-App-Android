@@ -2,6 +2,10 @@ package com.larc.appandroid.viewmodel
 
 import com.larc.appandroid.model.OrderItem
 
+/**
+ * Representa el estado de una orden.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 data class EstadoOrderDos(
     val id: String = "",
     val status: String = "",

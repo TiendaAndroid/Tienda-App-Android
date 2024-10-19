@@ -1,8 +1,6 @@
 package com.larc.appandroid.view
 
 import android.annotation.SuppressLint
-import android.util.Log
-import androidx.activity.ComponentActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
@@ -13,23 +11,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.larc.appandroid.viewmodel.CarritoVM
 import com.larc.appandroid.viewmodel.PaymentsVM
 import com.larc.appandroid.viewmodel.UsuarioVM
-import com.stripe.android.PaymentConfiguration
-import com.stripe.android.Stripe
-import com.stripe.android.model.ConfirmPaymentIntentParams
 import com.stripe.android.paymentsheet.PaymentSheet
-import com.stripe.android.paymentsheet.PaymentSheetResult
 
+/**
+ * Representa la vista para el pago.
+ * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
+ */
 @SuppressLint("DefaultLocale")
 @Composable
 fun PaymentScreen(navController: NavHostController, paymentsVM: PaymentsVM, usuarioVM: UsuarioVM, carritoVM: CarritoVM, amount: Double, paymentSheet: PaymentSheet, modifier: Modifier = Modifier) {

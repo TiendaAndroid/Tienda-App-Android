@@ -46,7 +46,6 @@ import com.larc.appandroid.viewmodel.UsuarioVM
  * Representa la vista con el listado de direcciones del usuario para seleccionar la dirección de entrega.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @Composable
 fun DireccionEntrega(navController: NavHostController, usuarioVM: UsuarioVM, paymentsVM: PaymentsVM, total: Double, modifier: Modifier = Modifier) {
 

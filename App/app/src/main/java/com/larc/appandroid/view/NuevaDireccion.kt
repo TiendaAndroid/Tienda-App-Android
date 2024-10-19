@@ -46,7 +46,6 @@ import com.larc.appandroid.viewmodel.DireccionVM
  * Representa la vista para agregar una nueva dirección.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NuevaDireccion(navController: NavHostController, token: String, direccionVM: DireccionVM, modifier: Modifier = Modifier) {

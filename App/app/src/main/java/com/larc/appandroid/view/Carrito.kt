@@ -29,7 +29,6 @@ import com.larc.appandroid.viewmodel.UsuarioVM
  * Representa la vista del carrito del usuario.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @SuppressLint("DefaultLocale")
 @Composable
 fun Carrito(navController: NavHostController, carritoVM: CarritoVM, usuarioVM: UsuarioVM, productoVM: ProductoVM, modifier: Modifier = Modifier) {

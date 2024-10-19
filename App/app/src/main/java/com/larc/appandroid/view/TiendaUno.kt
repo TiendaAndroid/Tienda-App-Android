@@ -37,7 +37,6 @@ import com.larc.appandroid.viewmodel.UsuarioVM
  * Representa la vista de las diferentes categorías de productos.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @Composable
 fun TiendaUno(navController: NavHostController, productoVM: ProductoVM, usuarioVM: UsuarioVM, modifier: Modifier = Modifier) {
     LazyColumn(modifier = Modifier

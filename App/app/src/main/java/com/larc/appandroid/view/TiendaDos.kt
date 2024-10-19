@@ -41,7 +41,6 @@ import com.larc.appandroid.viewmodel.UsuarioVM
  * Representa el listado de productos con un criterio de búsqueda (categoría).
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 @Composable
 fun TiendaDos(navController: NavHostController, cat: String, productoVM: ProductoVM, usuarioVM: UsuarioVM, carritoVM: CarritoVM, modifier: Modifier = Modifier) {
     val estadoListaTodosProductos = productoVM.estadoListaTodosProductos.collectAsState()

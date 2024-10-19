@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
  * Representa el viewmodel relacionado con el usuario.
  * @author Arturo Barrios Mendoza, Lucio Arturo Reyes Castillo, Fidel Alexander Bonilla Montalvo, Vicente Jesús Ramos Chávez
  */
-
 class UsuarioVM: ViewModel() {
 
     private val context = MyApp.instance.applicationContext
@@ -264,10 +263,16 @@ class UsuarioVM: ViewModel() {
         }
     }
 
+    /**
+     * Ordena la lista de órdenes por fecha de creación en orden descendente.
+     */
     fun sortOrderList() {
         _ordersList.value = _ordersList.value.sortedByDescending { it.createdAt }
     }
 
+    /**
+     * Calcula la cantidad de personas, kilogramos y ahorro a partir de los valores de las órdenes.
+     */
     fun calcularAyuda() {
         val valores =  _estadoMiUsuario.value.orders?.flatMap { order ->
             order.orderItems?.map { it.product.valor } ?: emptyList()
